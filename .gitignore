@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+
+*.html
+external/glfw/docs/*
+external/glfw/examples/*
+external/glfw/tests/*
+
+external/glm/doc/*
+external/glm/test/*
+
+cmake-build-debug/*
+
+src/.idea/*
