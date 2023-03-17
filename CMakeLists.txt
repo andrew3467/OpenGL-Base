@@ -58,7 +58,7 @@ add_executable(OpenGl_Base
         ${PRJ_SRC}
         ${PRJ_HEADERS}
         ${PRJ_SHADERS}
-        ${EXTERNAL_SRC})
+        ${EXTERNAL_SRC} src/stb_image.cpp)
 
 target_link_libraries(OpenGl_Base
         opengl32

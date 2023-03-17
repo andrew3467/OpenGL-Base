@@ -42,6 +42,8 @@ private:
     int location(const std::string& n) const;
 
 public:
+    void setInt(const std::string& name, int v);
+
     void setVec4(const std::string& name, glm::vec4 v);
     void setVec3(const std::string& name, glm::vec3 v);
 

@@ -4,7 +4,6 @@
 
 #include "application.h"
 
-
 Application::Application(int w, int h, const char* t) : width(w), height(h), title(t), shader(nullptr), texture(nullptr) {
     initGlFW();
     initGLAD();
@@ -40,7 +39,7 @@ void Application::initGLAD() {
 
 void Application::initObjects() {
     shader = new Shader("../../src/shaders/default.vert", "../../src/shaders/default.frag");
-    texture = new Texture2D("../../textures/brick.jpg");
+    texture = new Texture2D("../../resources/textures/brick.jpg");
 }
 
 
@@ -67,7 +66,6 @@ void Application::Run() {
     glEnableVertexAttribArray(2);
 
 
-
     projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
 
     view = glm::mat4(1.0f);
@@ -79,6 +77,11 @@ void Application::Run() {
 
 
     glViewport(0, 0, width, height);
+
+    texture->bind(0);
+    shader->bind();
+    shader->setInt("aTexture", 0);
+
     while(!glfwWindowShouldClose(window)){
         render();
         tick();
@@ -89,10 +92,9 @@ void Application::render() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    transform = glm::rotate(transform, (float)sin(glfwGetTime()) * glm::radians(1.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+    //transform = glm::rotate(transform, (float)sin(glfwGetTime()) * glm::radians(1.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
     shader->bind();
-    texture->bind();
 
     float vSin = (float)sin(glfwGetTime() * 2.0f);
     float vCos = (float)cos(glfwGetTime() * 2.0f);
@@ -102,9 +104,11 @@ void Application::render() {
     shader->setMat4("view", view);
     shader->setMat4("model", transform);
 
+
+
     glBindVertexArray(VAO);
     //glDrawArrays(GL_TRIANGLES, 0, 36);
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
     texture->unbind();
     shader->unbind();
@@ -130,6 +134,9 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 
 //Cleanup
 Application::~Application() {
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+
     glfwDestroyWindow(window);
     glfwTerminate();
 }

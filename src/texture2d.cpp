@@ -3,49 +3,34 @@
 //
 #include "texture2d.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include <stb_image.h>
 
-#include <iostream>
+Texture2D::Texture2D(const std::string& path) : handle(0), filePath(path), localBuffer(nullptr), width(0), height(0), BPP(0) {
+    stbi_set_flip_vertically_on_load(true);
+    localBuffer = stbi_load(path.c_str(), &width, &height, &BPP, 4);
 
-Texture2D::Texture2D(const std::string& texPath) {
-    handle = CreateTexture(texPath);
-}
+    glGenTextures(1, &handle);
+    glBindTexture(TYPE, handle);
 
-unsigned int Texture2D::CreateTexture(const std::string& path) {
-    unsigned char* texData = loadTexture(path);
+    glTexParameteri(TYPE, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(TYPE, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    unsigned int tex;
-    glGenTextures(1, &tex);
-    glBindTexture(TYPE, tex);
+    glTexParameteri(TYPE, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(TYPE, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    //Textures
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-
-    //float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
-    //glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, texData);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    glTexImage2D(TYPE, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer);
 
     glBindTexture(TYPE, 0);
-    return tex;
-}
 
-unsigned char *Texture2D::loadTexture(const std::string& path) {
-    if(path.empty()){
-        throw std::runtime_error("ERROR: Texture received null source");
+    if(localBuffer) {
+        stbi_image_free(localBuffer);
     }
-    unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
-
-    return data;
 }
 
-void Texture2D::bind() const {
+
+
+void Texture2D::bind(unsigned int slot = 0) {
+    glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(TYPE, handle);
 }
 
@@ -57,4 +42,3 @@ void Texture2D::unbind() const {
 Texture2D::~Texture2D() {
     glDeleteTextures(1, &handle);
 }
-

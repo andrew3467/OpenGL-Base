@@ -11,23 +11,25 @@
 #include <string>
 
 class Texture2D{
+private:
+    unsigned int TYPE = GL_TEXTURE_2D;
+
+    unsigned int handle;
+    std::string filePath;
+    unsigned char* localBuffer;
+    int width, height, BPP;
+
+
+
 public:
-    Texture2D(const std::string& texPath);
+    Texture2D(const std::string& path);
     ~Texture2D();
 
-private:
-    int TYPE = GL_TEXTURE_2D;
-    unsigned int handle;
-
-    int width, height, channels;
-
-
-    unsigned int CreateTexture(const std::string& path);
-    unsigned char* loadTexture(const std::string& path);
-
-public:
-    void bind() const;
+    void bind(unsigned int slot);
     void unbind() const;
+
+    inline int getWidth() const {return width;}
+    inline int getHeight() const {return height;}
 };
 
 #endif //OPENGL_BASE_TEXTURE2D_H
