@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.24)
 project(OpenGl_Base)
 
 find_package(OpenGL REQUIRED)
+find_package(imgui REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -25,12 +26,13 @@ option (GLFW_BUILD_TESTS OFF)
 add_subdirectory(${PROJECT_SOURCE_DIR}/external/glfw)
 
 
+
+
 include_directories (src/
         external/glad/include/
         external/glfw/include/
         external/glm/
         external/stb/)
-
 
 file(GLOB EXTERNAL_SRC ${PROJECT_SOURCE_DIR}/external/glad/src/glad.c)
 
@@ -58,7 +60,8 @@ add_executable(OpenGl_Base
         ${PRJ_SRC}
         ${PRJ_HEADERS}
         ${PRJ_SHADERS}
-        ${EXTERNAL_SRC} src/stb_image.cpp)
+        ${EXTERNAL_SRC}
+        )
 
 target_link_libraries(OpenGl_Base
         opengl32

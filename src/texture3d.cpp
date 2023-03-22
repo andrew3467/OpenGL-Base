@@ -1,20 +1,22 @@
 //
-// Created by Andrew Graser on 3/16/2023.
+// Created by apgra on 3/19/2023.
 //
-#include "texture2d.h"
 
+#include <texture3d.h>
+#include <stdexcept>
 #include <stb_image.h>
-#include <iostream>
 
-Texture2D::Texture2D(const std::string& path) : handle(0), filePath(path), localBuffer(nullptr), width(0), height(0), BPP(0) {
-    if (path.empty()) {
+Texture3D::Texture3D(const std::string &path) : handle(0), filePath(path), localBuffer(nullptr),
+    width(0), height(0), BPP(0)
+{
+    if(path.empty()){
         throw std::runtime_error("ERROR: Texture received null path");
     }
 
     stbi_set_flip_vertically_on_load(true);
-    localBuffer = stbi_load(path.c_str(), &width, &height, &BPP, 4);
+    localBuffer = stbi_load(path.c_str(), &width, &height, &BPP, 0);
 
-    if (localBuffer == nullptr) {
+    if(localBuffer == nullptr){
         throw std::runtime_error("ERROR: Failed to load texture");
     }
 
@@ -26,27 +28,28 @@ Texture2D::Texture2D(const std::string& path) : handle(0), filePath(path), local
 
     glTexParameteri(TYPE, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(TYPE, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(TYPE, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    glTexImage2D(TYPE, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer);
-    glGenerateMipmap(TYPE);
 
-    glBindTexture(TYPE, 0);
+    //Create a texture for each face
+    for (int i = 0; i < 6; ++i) {
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                     0, GL_RGB8, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, localBuffer);
+    }
 
     stbi_image_free(localBuffer);
 }
 
-
-
-void Texture2D::bind(unsigned int slot = 0) const {
+void Texture3D::bind(unsigned int slot = 0) const {
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(TYPE, handle);
 }
 
-void Texture2D::unbind() const {
+void Texture3D::unbind() const {
     glBindTexture(TYPE, 0);
 }
 
 //Cleanup
-Texture2D::~Texture2D() {
+Texture3D::~Texture3D() {
     glDeleteTextures(1, &handle);
 }

@@ -1,29 +1,26 @@
 //
-// Created by Andrew Graser on 3/16/2023.
+// Created by apgra on 3/19/2023.
 //
 
-#ifndef OPENGL_BASE_TEXTURE2D_H
-#define OPENGL_BASE_TEXTURE2D_H
+#ifndef OPENGL_BASE_TEXTURE3D_H
+#define OPENGL_BASE_TEXTURE3D_H
 
-#include <glad/glad.h>
+#include <GLAD/glad.h>
 
-//STD
 #include <string>
 
-class Texture2D{
+class Texture3D{
 private:
-    unsigned int TYPE = GL_TEXTURE_2D;
+    unsigned int TYPE = GL_TEXTURE_CUBE_MAP;
 
     unsigned int handle;
     std::string filePath;
     unsigned char* localBuffer;
     int width, height, BPP;
 
-
-
 public:
-    Texture2D(const std::string& path);
-    ~Texture2D();
+    Texture3D(const std::string& path);
+    ~Texture3D();
 
     void bind(unsigned int slot) const;
     void unbind() const;
@@ -32,4 +29,4 @@ public:
     inline int getHeight() const {return height;}
 };
 
-#endif //OPENGL_BASE_TEXTURE2D_H
+#endif //OPENGL_BASE_TEXTURE3D_H
