@@ -46,6 +46,8 @@ public:
     void setFloat(const std::string& name, float v);
 
     void setVec4(const std::string& name, glm::vec4 v);
+    void setVec4(const std::string& name, float x, float y, float z, float w);
+
     void setVec3(const std::string& name, glm::vec3 v);
     void setVec3(const std::string& name, float x, float y, float z);
     void setVec3(const std::string& name, float v);

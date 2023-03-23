@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.24)
 project(OpenGl_Base)
 
 find_package(OpenGL REQUIRED)
-find_package(imgui REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -23,18 +22,25 @@ option (GLFW_INSTALL OFF)
 option (GLFW_BUILD_DOCS OFF)
 option (GLFW_BUILD_EXAMPLES OFF)
 option (GLFW_BUILD_TESTS OFF)
-add_subdirectory(${PROJECT_SOURCE_DIR}/external/glfw)
 
+set(LIB_DIR ${PROJECT_SOURCE_DIR}/external)
 
+add_subdirectory(${LIB_DIR}/glfw)
+
+set(ASSIMP_DIR ${LIB_DIR}/assimp/)
+add_subdirectory(${ASSIMP_DIR})
+include_directories(${ASSIMP_DIR}/include)
 
 
 include_directories (src/
         external/glad/include/
         external/glfw/include/
         external/glm/
-        external/stb/)
+        external/stb/
+        external/assimp/include)
 
-file(GLOB EXTERNAL_SRC ${PROJECT_SOURCE_DIR}/external/glad/src/glad.c)
+
+file(GLOB EXTERNAL_SRC ${LIB_DIR}/glad/src/glad.c)
 
 file(GLOB_RECURSE PRJ_SRC glad.c ${PROJECT_SOURCE_DIR}/src/*.cpp
         ${PROJECT_SOURCE_DIR}/src/*.c
@@ -55,19 +61,19 @@ source_group ("shaders" FILES ${PROJECT_SHADERS})
 source_group ("sources" FILES ${PROJECT_SOURCES})
 source_group ("vendors" FILES ${VENDORS_SOURCES})
 
-
 add_executable(OpenGl_Base
         ${PRJ_SRC}
         ${PRJ_HEADERS}
         ${PRJ_SHADERS}
         ${EXTERNAL_SRC}
-        )
+        src/model.h src/model.cpp)
 
 target_link_libraries(OpenGl_Base
         opengl32
         glfw
         ${GLFW_LIBRARIES}
         ${GLAD_LIBRARIES}
+        assimp
         )
 
 set_target_properties (${PROJECT_NAME} PROPERTIES

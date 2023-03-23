@@ -58,8 +58,13 @@ std::string Shader::readSourceFile(const char* srcPath) {
     std::ifstream file;
     std::stringstream stream;
 
-    file.open(srcPath);
-    stream << file.rdbuf();
+    try{
+        file.open(srcPath);
+        stream << file.rdbuf();
+    }catch(std::exception& e){
+        throw std::runtime_error(e.what());
+    }
+
 
     return stream.str();
 }
@@ -101,6 +106,10 @@ void Shader::setVec3(const std::string &name, float v) {
 
 void Shader::setVec4(const std::string& name, glm::vec4 v) {
     glUniform4f(location(name), v.x, v.y, v.z, v.w);
+}
+
+void Shader::setVec4(const std::string &name, float x, float y, float z, float w) {
+    glUniform4f(location(name), x, y, z, w);
 }
 
 
