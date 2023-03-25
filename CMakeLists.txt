@@ -27,9 +27,9 @@ set(LIB_DIR ${PROJECT_SOURCE_DIR}/external)
 
 add_subdirectory(${LIB_DIR}/glfw)
 
-set(ASSIMP_DIR ${LIB_DIR}/assimp/)
+set(ASSIMP_DIR ${LIB_DIR}/assimp)
 add_subdirectory(${ASSIMP_DIR})
-include_directories(${ASSIMP_DIR}/include)
+
 
 
 include_directories (src/
@@ -37,7 +37,8 @@ include_directories (src/
         external/glfw/include/
         external/glm/
         external/stb/
-        external/assimp/include)
+        ${ASSIMP_DIR}/include
+        )
 
 
 file(GLOB EXTERNAL_SRC ${LIB_DIR}/glad/src/glad.c)
@@ -65,8 +66,7 @@ add_executable(OpenGl_Base
         ${PRJ_SRC}
         ${PRJ_HEADERS}
         ${PRJ_SHADERS}
-        ${EXTERNAL_SRC}
-        src/model.h src/model.cpp)
+        ${EXTERNAL_SRC} src/primitives.cpp)
 
 target_link_libraries(OpenGl_Base
         opengl32

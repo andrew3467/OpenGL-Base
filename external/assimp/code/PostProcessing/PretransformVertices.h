@@ -68,10 +68,8 @@ namespace Assimp {
 */
 class ASSIMP_API PretransformVertices : public BaseProcess {
 public:
-    // -------------------------------------------------------------------
-    /// The default class constructor / destructor.
 	PretransformVertices();
-	~PretransformVertices() override = default;
+	~PretransformVertices();
 
 	// -------------------------------------------------------------------
 	// Check whether step is active

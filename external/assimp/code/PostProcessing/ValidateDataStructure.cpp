@@ -60,7 +60,12 @@ using namespace Assimp;
 
 // ------------------------------------------------------------------------------------------------
 // Constructor to be privately used by Importer
-ValidateDSProcess::ValidateDSProcess() : mScene(nullptr) {}
+ValidateDSProcess::ValidateDSProcess() :
+        mScene() {}
+
+// ------------------------------------------------------------------------------------------------
+// Destructor, private as well
+ValidateDSProcess::~ValidateDSProcess() = default;
 
 // ------------------------------------------------------------------------------------------------
 // Returns whether the processing step is present in the given flag field.
@@ -75,7 +80,7 @@ AI_WONT_RETURN void ValidateDSProcess::ReportError(const char *msg, ...) {
     va_start(args, msg);
 
     char szBuffer[3000];
-    const int iLen = vsnprintf(szBuffer, sizeof(szBuffer), msg, args);
+    const int iLen = vsprintf(szBuffer, msg, args);
     ai_assert(iLen > 0);
 
     va_end(args);
@@ -90,7 +95,7 @@ void ValidateDSProcess::ReportWarning(const char *msg, ...) {
     va_start(args, msg);
 
     char szBuffer[3000];
-    const int iLen = vsnprintf(szBuffer, sizeof(szBuffer), msg, args);
+    const int iLen = vsprintf(szBuffer, msg, args);
     ai_assert(iLen > 0);
 
     va_end(args);
@@ -911,12 +916,7 @@ void ValidateDSProcess::Validate(const aiNode *pNode) {
                     nodeName, pNode->mNumChildren);
         }
         for (unsigned int i = 0; i < pNode->mNumChildren; ++i) {
-            const aiNode *pChild = pNode->mChildren[i];
-            Validate(pChild);
-            if (pChild->mParent != pNode) {
-                const char *parentName = (pChild->mParent != nullptr) ? pChild->mParent->mName.C_Str() : "null";
-                ReportError("aiNode \"%s\" child %i \"%s\" parent is someone else: \"%s\"", pNode->mName.C_Str(), i, pChild->mName.C_Str(), parentName);
-            }
+            Validate(pNode->mChildren[i]);
         }
     }
 }

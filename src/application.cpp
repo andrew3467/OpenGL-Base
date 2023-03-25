@@ -4,7 +4,7 @@
 
 #include "application.h"
 
-
+#include <primitives.h>
 
 Application::Application(int w, int h, const char* t) : width(w), height(h), title(t), shader(nullptr) {
     initGlFW();
@@ -40,14 +40,14 @@ void Application::initGLAD() {
 }
 
 void Application::initObjects() {
-    shader = new Shader("../../src/shaders/default.vert", "../../src/shaders/default.frag");
-    //shader = new Shader("../../src/shaders/lit_cube.vert", "../../src/shaders/lit_cube.frag");
-    lightShader = new Shader("../../src/shaders/light.vert", "../../src/shaders/light.frag");
-
-    diffuseTex = new Texture2D("../../resources/textures/container2.png");
-    specularTex = new Texture2D("../../resources/textures/container2_specular.png");
+    shader = new Shader("../../src/shaders/modelLoading.vert", "../../src/shaders/modelLoading.frag");
+    skyboxShader = new Shader("../../src/shaders/skybox.vert", "../../src/shaders/skybox.frag");
 
     camera = new Camera(width, height);
+
+    model = new Model("../../resources/models/backpack/backpack.obj");
+
+    skyboxTex = new Texture3D(faces);
 }
 
 
@@ -55,40 +55,26 @@ void Application::Run() {
     glEnable(GL_DEPTH_TEST);
 
     glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-
-
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
+
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-
-    //glGenBuffers(1, &EBO);
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-
-
     glBindVertexArray(VAO);
-    //position
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    //normal
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    //texCoord
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
 
+    glBindVertexArray(0);
 
-    //Light VAO
-    glGenVertexArrays(1, &lightVAO);
-    glBindVertexArray(lightVAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)0);
+    unsigned int skyboxVBO;
+    glGenVertexArrays(1, &skyboxVAO);
+    glGenBuffers(1, &skyboxVBO);
+    glBindVertexArray(skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 
     //Disable cursor
@@ -97,6 +83,11 @@ void Application::Run() {
     glViewport(0, 0, width, height);
     while(!glfwWindowShouldClose(window)){
         processInput(window);
+
+        GLenum err;
+        while ((err = glGetError()) != GL_NO_ERROR) {
+            std::cerr << "OpenGL error: " << err << std::endl;
+        }
 
         render();
         update();
@@ -135,96 +126,40 @@ void Application::processInput(GLFWwindow *window) {
     }
 }
 
+
+
 void Application::render() {
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    transform = glm::mat4(1.0f);
+    transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.0f));
+    transform = glm::scale(transform, glm::vec3(1.0f, 1.0f, 1.0f));
 
     shader->bind();
-    diffuseTex->bind(0);
-    specularTex->bind(1);
 
-
-    shader->setMat4("proj", camera->projection(width, height));
+    shader->setMat4("proj", projection);
     shader->setMat4("view", camera->view());
+    shader->setMat4("model", transform);
 
-    glBindVertexArray(VAO);
-    for (int i = 0; i < 10; ++i) {
-        transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, cubePositions[i]);
-        float angle = 20.0f * i;
-        transform = glm::rotate(transform, glm::radians(angle), glm::vec3(0.3f, 1.0f, 0.5f));
-        shader->setMat4("model", transform);
+    model->draw(shader);
 
-
-        shader->setVec3("viewPos", camera->position());
-
-        shader->setInt("material.diffuse", 0);
-        shader->setInt("material.specular", 1);
-        shader->setFloat("material.shininess", 32.0f);
-
-
-        //Directional light properties
-        shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-
-        shader->setVec3("dirLight.ambient", 0.2f, 0.2f, 0.2f);
-        shader->setVec3("dirLight.diffuse", 0.5f, 0.5f, 0.5f);
-        shader->setVec3("dirLight.specular", 1.0f, 1.0f, 1.0f);
-
-        shader->setInt("pointLightCount", 4);
-        // point light 1
-        for(int i = 0; i < 4; ++i){
-            std::string index = std::to_string(i);
-            shader->setVec3(("pointLights[" + index + "].position"), pointLightPositions[0]);
-            shader->setVec3(("pointLights[" + index + "].ambient"), 0.05f, 0.05f, 0.05f);
-            shader->setVec3(("pointLights[" + index + "].diffuse"), 0.8f, 0.8f, 0.8f);
-            shader->setVec3(("pointLights[" + index + "].specular"), 1.0f, 1.0f, 1.0f);
-            shader->setFloat(("pointLights[" + index + "].constant"), 1.0f);
-            shader->setFloat(("pointLights[" + index + "].linear"), 0.09f);
-            shader->setFloat(("pointLights[" + index + "].quadratic"), 0.032f);
-        }
-
-        // spotLight
-        shader->setVec3("spotLight.position", camera->position());
-        shader->setVec3("spotLight.direction", camera->front());
-        shader->setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
-        shader->setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
-        shader->setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-        shader->setFloat("spotLight.constant", 1.0f);
-        shader->setFloat("spotLight.linear", 0.09f);
-        shader->setFloat("spotLight.quadratic", 0.032f);
-        shader->setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-        shader->setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
-
-
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-    }
-
-    specularTex->unbind();
-    diffuseTex->unbind();
     shader->unbind();
 
-    //draw lights
-    lightShader->bind();
-
-    lightShader->setMat4("proj", camera->projection(width, height));
-    lightShader->setMat4("view", camera->view());
-
-    //Draw Lights
-    glBindVertexArray(lightVAO);
-
-    for (int i = 0; i < 4; ++i) {
-        transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, pointLightPositions[i]);
-        transform = glm::scale(transform, glm::vec3(0.5f));
-
-        lightShader->setMat4("model", transform);
-
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-    }
 
 
-    lightShader->unbind();
+    // draw skybox as last
+    glDepthFunc(GL_LEQUAL);
+    skyboxShader->bind();
+    glm::mat4 view = glm::mat4(glm::mat3(camera->view())); // remove translation from the view matrix
+    skyboxShader->setMat4("view", view);
+    skyboxShader->setMat4("projection", projection);
+    // skybox cube
+    glBindVertexArray(skyboxVAO);
+    skyboxTex->bind();
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    glDepthFunc(GL_LESS);
 }
 
 void Application::update() {
@@ -232,8 +167,7 @@ void Application::update() {
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
-
-    pointLightPositions[0] += glm::vec3(-std::cos(glfwGetTime()) * 0.1f, 0, -std::sin(glfwGetTime()) * 0.1f);
+    projection = camera->projection(width, height);
 }
 
 void Application::tick(){
