@@ -37,7 +37,7 @@ Texture2D::Texture2D(const std::string& path) : handle(0), filePath(path), local
 
 
 
-void Texture2D::bind(unsigned int slot = 0) const {
+void Texture2D::bind(unsigned int slot) const {
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(TYPE, handle);
 }

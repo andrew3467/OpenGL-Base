@@ -25,7 +25,7 @@ public:
     Texture2D(const std::string& path);
     ~Texture2D();
 
-    void bind(unsigned int slot) const;
+    void bind(unsigned int slot = 0) const;
     void unbind() const;
 
     inline int getWidth() const {return width;}

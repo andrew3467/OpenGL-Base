@@ -4,7 +4,8 @@
 
 #include "application.h"
 
-#include <primitives.h>
+#include <glPrimitives.h>
+
 
 Application::Application(int w, int h, const char* t) : width(w), height(h), title(t), shader(nullptr) {
     initGlFW();
@@ -40,32 +41,23 @@ void Application::initGLAD() {
 }
 
 void Application::initObjects() {
+    lightingShader = new Shader("../../src/shaders/texturedLit.vert", "../../src/shaders/texturedLit.frag");
     shader = new Shader("../../src/shaders/modelLoading.vert", "../../src/shaders/modelLoading.frag");
     skyboxShader = new Shader("../../src/shaders/skybox.vert", "../../src/shaders/skybox.frag");
 
-    camera = new Camera(width, height);
+    camera = new Camera(cameraPosition, width, height);
 
     model = new Model("../../resources/models/backpack/backpack.obj");
 
     skyboxTex = new Texture3D(faces);
+
+    floorTex = new Texture2D("../../resources/textures/wood.png");
 }
 
 
 void Application::Run() {
     glEnable(GL_DEPTH_TEST);
-
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindVertexArray(VAO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glBindVertexArray(0);
+    glEnable(GL_PROGRAM_POINT_SIZE);
 
     unsigned int skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -75,6 +67,12 @@ void Application::Run() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+
+
+    transform = glm::mat4(1.0f);
+    transform = glm::scale(transform, glm::vec3(1.0f));
+    transform = glm::translate(transform, glm::vec3(0.0f, 2.0f, 0.0f));
 
 
     //Disable cursor
@@ -88,6 +86,8 @@ void Application::Run() {
         while ((err = glGetError()) != GL_NO_ERROR) {
             std::cerr << "OpenGL error: " << err << std::endl;
         }
+
+
 
         render();
         update();
@@ -132,24 +132,46 @@ void Application::render() {
     glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    transform = glm::mat4(1.0f);
-    transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.0f));
-    transform = glm::scale(transform, glm::vec3(1.0f, 1.0f, 1.0f));
 
     shader->bind();
+    skyboxTex->bind();
 
     shader->setMat4("proj", projection);
     shader->setMat4("view", camera->view());
     shader->setMat4("model", transform);
 
+    shader->setVec3("cameraPos", camera->position());
+
     model->draw(shader);
 
+    skyboxTex->unbind();
     shader->unbind();
+
+    lightingShader->bind();
+    floorTex->bind();
+
+    lightingShader->setMat4("proj", projection);
+    lightingShader->setMat4("view", camera->view());
+
+    lightingShader->setInt("texture_diffuse0", 0);
+
+    lightingShader->setVec3("viewPos", camera->position());
+
+    lightingShader->setVec3("lightPos", lightPos);
+
+
+    glPrimitive::drawPlane(lightingShader, glm::vec3(0.0, 0.0, 0.0),
+                           glm::vec3(20.0f, 0.2f, 20.0f));
+
+
+    floorTex->unbind();
+    lightingShader->unbind();
 
 
 
     // draw skybox as last
     glDepthFunc(GL_LEQUAL);
+    //glDepthMask(GL_FALSE);
     skyboxShader->bind();
     glm::mat4 view = glm::mat4(glm::mat3(camera->view())); // remove translation from the view matrix
     skyboxShader->setMat4("view", view);
@@ -159,6 +181,7 @@ void Application::render() {
     skyboxTex->bind();
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
+    //glDepthMask(GL_TRUE);
     glDepthFunc(GL_LESS);
 }
 
@@ -190,8 +213,7 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 
 //Cleanup
 Application::~Application() {
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+    glDeleteVertexArrays(1, &skyboxVAO);
 
     glfwDestroyWindow(window);
     glfwTerminate();

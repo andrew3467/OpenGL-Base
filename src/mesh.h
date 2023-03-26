@@ -36,7 +36,7 @@ public:
     std::vector<Texture> textures;
 
     Mesh(std::vector<Vertex> v, std::vector<unsigned int> i, std::vector<Texture> t);
-    void draw(Shader* shader);
+    void draw(Shader* shader, int numInstances = 1);
 
 private:
     unsigned int VAO, VBO, EBO;

@@ -18,6 +18,7 @@
 #include <model.h>
 
 
+
 class Application{
 public:
     Application(int w, int h, const char* t);
@@ -26,17 +27,18 @@ public:
 
 
 private:
-    unsigned int VAO, VBO, EBO, skyboxVAO;
+    unsigned int skyboxVAO;
     int width, height;
     const char* title;
 
     GLFWwindow* window;
 
     Shader* shader;
-    Shader* lightShader;
+    Shader* lightingShader;
     Shader* skyboxShader;
 
     Texture3D* skyboxTex;
+    Texture2D* floorTex;
 
     Camera* camera;
     glm::mat4 projection;
@@ -52,6 +54,9 @@ private:
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
+    bool blinn = false;
+    bool blinnKeyPressed = false;
+
     std::vector<std::string> faces =
     {
         "../../resources/textures/skybox/right.jpg",
@@ -60,78 +65,6 @@ private:
         "../../resources/textures/skybox/bottom.jpg",
         "../../resources/textures/skybox/front.jpg",
         "../../resources/textures/skybox/back.jpg"
-    };
-
-    unsigned int indices[36] {
-            //Top
-            2, 6, 7,
-            2, 3, 7,
-
-            //Bottom
-            0, 4, 5,
-            0, 1, 5,
-
-            //Left
-            0, 2, 6,
-            0, 4, 6,
-
-            //Right
-            1, 3, 7,
-            1, 5, 7,
-
-            //Front
-            0, 2, 3,
-            0, 1, 3,
-
-            //Back
-            4, 6, 7,
-            4, 5, 7
-    };
-
-
-    float vertices[108] = {
-            // positions
-            -0.5f, -0.5f, -0.5f,
-            0.5f, -0.5f, -0.5f,
-            0.5f,  0.5f, -0.5f,
-            0.5f,  0.5f, -0.5f,
-            -0.5f,  0.5f, -0.5f,
-            -0.5f, -0.5f, -0.5f,
-
-            -0.5f, -0.5f,  0.5f,
-            0.5f, -0.5f,  0.5f,
-            0.5f,  0.5f,  0.5f,
-            0.5f,  0.5f,  0.5f,
-            -0.5f,  0.5f,  0.5f,
-            -0.5f, -0.5f,  0.5f,
-
-            -0.5f,  0.5f,  0.5f,
-            -0.5f,  0.5f, -0.5f,
-            -0.5f, -0.5f, -0.5f,
-            -0.5f, -0.5f, -0.5f,
-            -0.5f, -0.5f,  0.5f,
-            -0.5f,  0.5f,  0.5f,
-
-            0.5f,  0.5f,  0.5f,
-            0.5f,  0.5f, -0.5f,
-            0.5f, -0.5f, -0.5f,
-            0.5f, -0.5f, -0.5f,
-            0.5f, -0.5f,  0.5f,
-            0.5f,  0.5f,  0.5f,
-
-            -0.5f, -0.5f, -0.5f,
-            0.5f, -0.5f, -0.5f,
-            0.5f, -0.5f,  0.5f,
-            0.5f, -0.5f,  0.5f,
-            -0.5f, -0.5f,  0.5f,
-            -0.5f, -0.5f, -0.5f,
-
-            -0.5f,  0.5f, -0.5f,
-            0.5f,  0.5f, -0.5f,
-            0.5f,  0.5f,  0.5f,
-            0.5f,  0.5f,  0.5f,
-            -0.5f,  0.5f,  0.5f,
-            -0.5f,  0.5f, -0.5f
     };
 
     float skyboxVertices[108] = {
@@ -179,13 +112,8 @@ private:
             1.0f, -1.0f,  1.0f
     };
 
-
-    glm::vec3 pointLightPositions[4] = {
-            glm::vec3( 0.7f,  0.2f,  2.0f),
-            glm::vec3( 2.3f, -3.3f, -4.0f),
-            glm::vec3(-4.0f,  2.0f, -12.0f),
-            glm::vec3( 0.0f,  0.0f, -3.0f)
-    };
+    glm::vec3 cameraPosition = glm::vec3(0.0f, 1.0f, -4.0f);
+    glm::vec3 lightPos = glm::vec3(0.0f, 3.0f, 0.0f);
 
 
 public:

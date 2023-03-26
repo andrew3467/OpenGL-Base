@@ -5,7 +5,7 @@
 #include <camera.h>
 
 
-Camera::Camera(int windowWidth, int windowHeight) : lastX(windowWidth / 2.0f), lastY(windowHeight / 2.0f) {
+Camera::Camera(glm::vec3 pos, int windowWidth, int windowHeight) : lastX(windowWidth / 2.0f), lastY(windowHeight / 2.0f) {
 
 }
 

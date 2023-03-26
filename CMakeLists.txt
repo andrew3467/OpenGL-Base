@@ -38,12 +38,13 @@ include_directories (src/
         external/glm/
         external/stb/
         ${ASSIMP_DIR}/include
+        src/shaders/
         )
 
 
 file(GLOB EXTERNAL_SRC ${LIB_DIR}/glad/src/glad.c)
 
-file(GLOB_RECURSE PRJ_SRC glad.c ${PROJECT_SOURCE_DIR}/src/*.cpp
+file(GLOB_RECURSE PRJ_SOURCES glad.c ${PROJECT_SOURCE_DIR}/src/*.cpp
         ${PROJECT_SOURCE_DIR}/src/*.c
         ${PROJECT_SOURCE_DIR}/src/*.cc
         ${PROJECT_SOURCE_DIR}/src/*.cxx)
@@ -54,19 +55,19 @@ file(GLOB_RECURSE PRJ_HEADERS ${PROJECT_SOURCE_DIR}/src/*.h
 file(GLOB_RECURSE PRJ_SHADERS ${PROJECT_SOURCE_DIR}/src/shaders/*.frag
         ${PROJECT_SOURCE_DIR}/src/shaders/*.vert
         ${PROJECT_SOURCE_DIR}/src/shaders/*.geom
-        ${PROJECT_SOURCE_DIR}/src/shaders/*.comp)
+        ${PROJECT_SOURCE_DIR}/src/shaders/*.comp
+        ${PROJECT_SOURCE_DIR}/src/shaders/*.shader)
 
 
-source_group ("headers" FILES ${PROJECT_HEADERS})
-source_group ("shaders" FILES ${PROJECT_SHADERS})
-source_group ("sources" FILES ${PROJECT_SOURCES})
-source_group ("vendors" FILES ${VENDORS_SOURCES})
+source_group ("headers" FILES ${PRJ_HEADERS})
+source_group ("sources" FILES ${PRJ_SOURCES})
+source_group ("shaders" FILES ${PRJ_SHADERS})
+source_group ("vendors" FILES ${EXTERNAL_SRC})
 
 add_executable(OpenGl_Base
-        ${PRJ_SRC}
+        ${PRJ_SOURCES}
         ${PRJ_HEADERS}
-        ${PRJ_SHADERS}
-        ${EXTERNAL_SRC} src/primitives.cpp)
+        ${EXTERNAL_SRC} src/light.h src/pointlight.h src/glPrimitives.h src/glPrimitives.h)
 
 target_link_libraries(OpenGl_Base
         opengl32

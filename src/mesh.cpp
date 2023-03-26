@@ -51,7 +51,7 @@ void Mesh::setupMesh()
     glBindVertexArray(0);
 }
 
-void Mesh::draw(Shader* shader)
+void Mesh::draw(Shader* shader, int numInstances)
 {
     unsigned int diffuseNr  = 1;
     unsigned int specularNr = 1;
@@ -79,8 +79,11 @@ void Mesh::draw(Shader* shader)
 
     // draw mesh
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
+    //glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
+    glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, nullptr, numInstances);
     glBindVertexArray(0);
+
+
 
     glActiveTexture(GL_TEXTURE0);
 }

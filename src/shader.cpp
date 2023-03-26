@@ -5,18 +5,22 @@
 #include "shader.h"
 
 
-Shader::Shader(const char *vertPath, const char *fragPath) {
-    handle = createShaderProgram(vertPath, fragPath);
+Shader::Shader(const char *vertPath, const char *fragPath, const char* geometryPath) {
+    handle = createShaderProgram(vertPath, fragPath, geometryPath);
 }
 
-unsigned int Shader::createShaderProgram(const char *vertPath, const char *fragPath) {
-    unsigned int vert, frag;
+unsigned int Shader::createShaderProgram(const char *vertPath, const char *fragPath, const char* geometryPath) {
+    unsigned int vert, frag, geom;
     vert = createShader(GL_VERTEX_SHADER, readSourceFile(vertPath).c_str());
     frag = createShader(GL_FRAGMENT_SHADER, readSourceFile(fragPath).c_str());
-
+    if(geometryPath != nullptr){
+        geom = createShader(GL_GEOMETRY_SHADER, readSourceFile(geometryPath).c_str());
+    }
     unsigned int id = glCreateProgram();
     glAttachShader(id, vert);
     glAttachShader(id, frag);
+    if(geometryPath != nullptr)
+        glAttachShader(id, geom);
     glLinkProgram(id);
 
     int success;
@@ -30,6 +34,8 @@ unsigned int Shader::createShaderProgram(const char *vertPath, const char *fragP
     //Cleanup
     glDeleteShader(vert);
     glDeleteShader(frag);
+    if(geometryPath != nullptr)
+        glDeleteShader(geom);
 
     return id;
 }
@@ -89,6 +95,14 @@ void Shader::setInt(const std::string &name, int v) {
 
 void Shader::setFloat(const std::string &name, float v) {
     glUniform1f(location(name), v);
+}
+
+void Shader::setVec2(const std::string &name, glm::vec2 v) {
+    glUniform2f(location(name), v.x, v.y);
+}
+
+void Shader::setVec2(const std::string &name, float x, float y) {
+    glUniform2f(location(name), x, y);
 }
 
 

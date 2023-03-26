@@ -13,9 +13,9 @@ Model::Model(const char* path, bool gamma) : gammaCorrection(gamma) {
     loadModel(path);
 }
 
-void Model::draw(Shader* shader) {
+void Model::draw(Shader* shader, int numInstances) {
     for (auto & mesh : meshes) {
-        mesh.draw(shader);
+        mesh.draw(shader, numInstances);
     }
 }
 

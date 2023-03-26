@@ -24,13 +24,13 @@ private:
     unsigned int handle;
 
 public:
-    Shader(const char*, const char*);
+    Shader(const char *vertPath, const char *fragPath, const char* geometryPath = nullptr);
     ~Shader();
 
 private:
-    unsigned int createShaderProgram(const char*, const char*);
-    std::string readSourceFile(const char*);
-    unsigned int createShader(unsigned int, const char*);
+    unsigned int createShaderProgram(const char* vertPath, const char* fragPath, const char* geometryPath);
+    std::string readSourceFile(const char* srcPath);
+    unsigned int createShader(unsigned int SHADER_TYPE, const char *src);
 
 public:
     void bind() const;
@@ -51,6 +51,9 @@ public:
     void setVec3(const std::string& name, glm::vec3 v);
     void setVec3(const std::string& name, float x, float y, float z);
     void setVec3(const std::string& name, float v);
+
+    void setVec2(const std::string& name, glm::vec2 v);
+    void setVec2(const std::string& name, float x, float y);
 
     void setMat4(const std::string& name, glm::mat4 v);
 };

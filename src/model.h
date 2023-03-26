@@ -25,7 +25,7 @@ private:
 
 public:
     Model(const char* path, bool gamma = false);
-    void draw(Shader* shader);
+    void draw(Shader* shader, int numInstances = 1);
 
 private:
     void loadModel(std::string const &path);
