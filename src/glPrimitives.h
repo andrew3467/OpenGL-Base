@@ -9,15 +9,15 @@
 #include <glad/glad.h>
 
 namespace glPrimitive {
-    std::vector<float> planeVertices = {
-            // positions            // normals         // texcoords
-            10.0f, -0.5f,  10.0f,  0.0f, 1.0f, 0.0f,  10.0f,  0.0f,
-            -10.0f, -0.5f,  10.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
-            -10.0f, -0.5f, -10.0f,  0.0f, 1.0f, 0.0f,   0.0f, 10.0f,
+    float planeVertices[48] = {
+            // positions                // normals                          // texcoords
+            0.5, -0.5f,  0.5,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
+            -0.5, -0.5f,  0.5,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+            -0.5, -0.5f, -0.5,  0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
 
-            10.0f, -0.5f,  10.0f,  0.0f, 1.0f, 0.0f,  10.0f,  0.0f,
-            -10.0f, -0.5f, -10.0f,  0.0f, 1.0f, 0.0f,   0.0f, 10.0f,
-            10.0f, -0.5f, -10.0f,  0.0f, 1.0f, 0.0f,  10.0f, 10.0f
+            0.5, -0.5f,  0.5,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
+            -0.5, -0.5f, -0.5,  0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
+            0.5, -0.5f, -0.5,  0.0f, 1.0f, 0.0f,  1.0f, 1.0f
     };
 
     void drawPlane(Shader* shader, glm::vec3 position, glm::vec3 scale){
@@ -27,7 +27,7 @@ namespace glPrimitive {
         glBindVertexArray(planeVAO);
 
         glBindBuffer(GL_ARRAY_BUFFER, planeVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), &planeVertices[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), planeVertices, GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);

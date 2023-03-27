@@ -142,7 +142,7 @@ void Application::render() {
 
     shader->setVec3("cameraPos", camera->position());
 
-    model->draw(shader);
+    //model->draw(shader);
 
     skyboxTex->unbind();
     shader->unbind();
@@ -161,7 +161,7 @@ void Application::render() {
 
 
     glPrimitive::drawPlane(lightingShader, glm::vec3(0.0, 0.0, 0.0),
-                           glm::vec3(20.0f, 0.2f, 20.0f));
+                           glm::vec3(1.0f, 1.0f, 1.0f));
 
 
     floorTex->unbind();
