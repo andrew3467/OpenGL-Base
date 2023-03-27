@@ -17,6 +17,7 @@
 #include <glm/vec3.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <lights.h>
 
 
 class Shader{
@@ -42,6 +43,8 @@ private:
     int location(const std::string& n) const;
 
 public:
+    void setPointLight(const PointLight& light, const std::string& arrIndex);
+
     void setInt(const std::string& name, int v);
     void setFloat(const std::string& name, float v);
 

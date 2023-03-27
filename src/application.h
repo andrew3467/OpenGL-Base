@@ -16,7 +16,7 @@
 #include <texture3d.h>
 #include <camera.h>
 #include <model.h>
-
+#include <lights.h>
 
 
 class Application{
@@ -33,7 +33,7 @@ private:
 
     GLFWwindow* window;
 
-    Shader* shader;
+    Shader* lightShader;
     Shader* lightingShader;
     Shader* skyboxShader;
 
@@ -114,6 +114,27 @@ private:
 
     glm::vec3 cameraPosition = glm::vec3(0.0f, 1.0f, -4.0f);
     glm::vec3 lightPos = glm::vec3(0.0f, 3.0f, 0.0f);
+
+    std::vector<PointLight> pointLights = {
+            PointLight(
+                glm::vec3(0.0f, 5.0f, 0.0f),
+                glm::vec3(0.0f, 0.0f, 0.0f),
+                glm::vec3(0.0f, 0.0f, 0.0f),
+                glm::vec3(0.0f, 0.0f, 0.0f),
+                0.0f,
+                0.0f,
+                0.0f
+            ),
+            PointLight(
+                    glm::vec3(4.0f, 5.0f, 4.0f),
+                    glm::vec3(0.0f, 0.0f, 0.0f),
+                    glm::vec3(0.0f, 0.0f, 0.0f),
+                    glm::vec3(0.0f, 0.0f, 0.0f),
+                    0.0f,
+                    0.0f,
+                    0.0f
+            )
+    };
 
 
 public:

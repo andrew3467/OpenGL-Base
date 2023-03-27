@@ -6,8 +6,7 @@
 
 #include <glPrimitives.h>
 
-
-Application::Application(int w, int h, const char* t) : width(w), height(h), title(t), shader(nullptr) {
+Application::Application(int w, int h, const char* t) : width(w), height(h), title(t){
     initGlFW();
     initGLAD();
     initObjects();
@@ -42,12 +41,10 @@ void Application::initGLAD() {
 
 void Application::initObjects() {
     lightingShader = new Shader("../../src/shaders/texturedLit.vert", "../../src/shaders/texturedLit.frag");
-    shader = new Shader("../../src/shaders/modelLoading.vert", "../../src/shaders/modelLoading.frag");
+    lightShader = new Shader("../../src/shaders/light.vert", "../../src/shaders/light.frag");
     skyboxShader = new Shader("../../src/shaders/skybox.vert", "../../src/shaders/skybox.frag");
 
     camera = new Camera(cameraPosition, width, height);
-
-    model = new Model("../../resources/models/backpack/backpack.obj");
 
     skyboxTex = new Texture3D(faces);
 
@@ -93,6 +90,7 @@ void Application::Run() {
         update();
         tick();
     }
+
 }
 
 void Application::processInput(GLFWwindow *window) {
@@ -133,20 +131,6 @@ void Application::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-    shader->bind();
-    skyboxTex->bind();
-
-    shader->setMat4("proj", projection);
-    shader->setMat4("view", camera->view());
-    shader->setMat4("model", transform);
-
-    shader->setVec3("cameraPos", camera->position());
-
-    //model->draw(shader);
-
-    skyboxTex->unbind();
-    shader->unbind();
-
     lightingShader->bind();
     floorTex->bind();
 
@@ -157,15 +141,39 @@ void Application::render() {
 
     lightingShader->setVec3("viewPos", camera->position());
 
+    lightingShader->setInt("numPointLights", pointLights.size());
+    for (unsigned int i = 0; i < pointLights.size(); ++i){
+        lightingShader->setPointLight(pointLights[i], std::to_string(i));
+    }
+
     lightingShader->setVec3("lightPos", lightPos);
 
 
     glPrimitive::drawPlane(lightingShader, glm::vec3(0.0, 0.0, 0.0),
-                           glm::vec3(1.0f, 1.0f, 1.0f));
+                           glm::vec3(5.0f, 1.0f, 5.0f));
 
 
     floorTex->unbind();
     lightingShader->unbind();
+
+    //Draw lights
+    lightShader->bind();
+
+    lightShader->setMat4("proj", projection);
+    lightShader->setMat4("view", camera->view());
+
+    glBindVertexArray(skyboxVAO);
+    for (unsigned int i = 0; i < pointLights.size(); ++i) {
+        transform = glm::mat4(1.0f);
+        transform = glm::translate(transform, pointLights[i].position);
+
+        lightShader->setMat4("model", transform);
+
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
+    glBindVertexArray(0);
+
+    lightShader->unbind();
 
 
 
@@ -183,6 +191,9 @@ void Application::render() {
     glBindVertexArray(0);
     //glDepthMask(GL_TRUE);
     glDepthFunc(GL_LESS);
+
+    skyboxTex->unbind();
+    skyboxShader->unbind();
 }
 
 void Application::update() {

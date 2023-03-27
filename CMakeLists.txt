@@ -67,7 +67,8 @@ source_group ("vendors" FILES ${EXTERNAL_SRC})
 add_executable(OpenGl_Base
         ${PRJ_SOURCES}
         ${PRJ_HEADERS}
-        ${EXTERNAL_SRC} src/light.h src/pointlight.h src/glPrimitives.h src/glPrimitives.h)
+        ${EXTERNAL_SRC}
+        )
 
 target_link_libraries(OpenGl_Base
         opengl32

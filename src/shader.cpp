@@ -89,6 +89,19 @@ int Shader::location(const std::string& n) const {
 }
 
 
+
+void Shader::setPointLight(const PointLight &light, const std::string& arrIndex) {
+    setVec3("pointLights[" + arrIndex + "].position", light.position);
+
+    setVec3("pointLights[" + arrIndex + "].ambient", light.ambient);
+    setVec3("pointLights[" + arrIndex + "].diffuse", light.diffuse);
+    setVec3("pointLights[" + arrIndex + "].specular", light.specular);
+
+    setVec3("pointLights[" + arrIndex + "].constant", light.constant);
+    setVec3("pointLights[" + arrIndex + "].linear", light.linear);
+    setVec3("pointLights[" + arrIndex + "].quadratic", light.quadratic);
+}
+
 void Shader::setInt(const std::string &name, int v) {
     glUniform1i(location(name), v);
 }
