@@ -115,10 +115,11 @@ private:
     glm::vec3 cameraPosition = glm::vec3(0.0f, 1.0f, -4.0f);
     glm::vec3 lightPos = glm::vec3(0.0f, 3.0f, 0.0f);
 
+    int numPointLights = 4;
     std::vector<PointLight> pointLights = {
             PointLight(
-                glm::vec3(0.0f, 5.0f, 0.0f),
-                glm::vec3(0.0f, 0.0f, 0.0f),
+                    glm::vec3(-3.0f, 0.0f, 0.0f),
+                glm::vec3(0.25f),
                 glm::vec3(0.0f, 0.0f, 0.0f),
                 glm::vec3(0.0f, 0.0f, 0.0f),
                 0.0f,
@@ -126,8 +127,26 @@ private:
                 0.0f
             ),
             PointLight(
-                    glm::vec3(4.0f, 5.0f, 4.0f),
+                    glm::vec3(-1.0f, 0.0f, 0.0f),
+                    glm::vec3(0.50f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
+                    glm::vec3(0.0f, 0.0f, 0.0f),
+                    0.0f,
+                    0.0f,
+                    0.0f
+            ),
+            PointLight(
+                    glm::vec3 (1.0f, 0.0f, 0.0f),
+                    glm::vec3(0.75f),
+                    glm::vec3(0.0f, 0.0f, 0.0f),
+                    glm::vec3(0.0f, 0.0f, 0.0f),
+                    0.0f,
+                    0.0f,
+                    0.0f
+            ),
+            PointLight(
+                    glm::vec3 (1.0f, 0.0f, 0.0f),
+                    glm::vec3(1.0f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
                     0.0f,

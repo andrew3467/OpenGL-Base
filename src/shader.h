@@ -45,6 +45,7 @@ private:
 public:
     void setPointLight(const PointLight& light, const std::string& arrIndex);
 
+
     void setInt(const std::string& name, int v);
     void setFloat(const std::string& name, float v);
 

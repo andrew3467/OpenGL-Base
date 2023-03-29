@@ -55,6 +55,8 @@ void Application::initObjects() {
 void Application::Run() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_PROGRAM_POINT_SIZE);
+    glEnable(GL_FRAMEBUFFER_SRGB);
+
 
     unsigned int skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -75,15 +77,14 @@ void Application::Run() {
     //Disable cursor
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+    GLenum err;
+    while ((err = glGetError()) != GL_NO_ERROR) {
+        std::cerr << "OpenGL error: " << err << std::endl;
+    }
+
     glViewport(0, 0, width, height);
     while(!glfwWindowShouldClose(window)){
         processInput(window);
-
-        GLenum err;
-        while ((err = glGetError()) != GL_NO_ERROR) {
-            std::cerr << "OpenGL error: " << err << std::endl;
-        }
-
 
 
         render();
@@ -139,18 +140,22 @@ void Application::render() {
 
     lightingShader->setInt("texture_diffuse0", 0);
 
-    lightingShader->setVec3("viewPos", camera->position());
 
-    lightingShader->setInt("numPointLights", pointLights.size());
+    lightingShader->setInt("numPointLights", numPointLights);
     for (unsigned int i = 0; i < pointLights.size(); ++i){
         lightingShader->setPointLight(pointLights[i], std::to_string(i));
     }
 
+    lightingShader->setVec3("viewPos", camera->position());
     lightingShader->setVec3("lightPos", lightPos);
+
+    lightingShader->setFloat("shininess", 128.0f);
+    lightingShader->setInt("blinn", blinn);
+    lightingShader->setInt("gamma", 0);
 
 
     glPrimitive::drawPlane(lightingShader, glm::vec3(0.0, 0.0, 0.0),
-                           glm::vec3(5.0f, 1.0f, 5.0f));
+                           glm::vec3(20.0f, 1.0f, 20.0f));
 
 
     floorTex->unbind();
@@ -166,6 +171,7 @@ void Application::render() {
     for (unsigned int i = 0; i < pointLights.size(); ++i) {
         transform = glm::mat4(1.0f);
         transform = glm::translate(transform, pointLights[i].position);
+        transform = glm::scale(transform, glm::vec3(0.125f));
 
         lightShader->setMat4("model", transform);
 

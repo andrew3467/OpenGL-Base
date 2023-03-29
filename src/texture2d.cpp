@@ -27,7 +27,7 @@ Texture2D::Texture2D(const std::string& path) : handle(0), filePath(path), local
     glTexParameteri(TYPE, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(TYPE, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    glTexImage2D(TYPE, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer);
+    glTexImage2D(TYPE, 0, GL_SRGB8_ALPHA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer);
     glGenerateMipmap(TYPE);
 
     glBindTexture(TYPE, 0);

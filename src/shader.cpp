@@ -84,7 +84,6 @@ void Shader::unbind() const {
 }
 
 int Shader::location(const std::string& n) const {
-
     return glGetUniformLocation(handle, n.c_str());
 }
 
@@ -109,6 +108,7 @@ void Shader::setInt(const std::string &name, int v) {
 void Shader::setFloat(const std::string &name, float v) {
     glUniform1f(location(name), v);
 }
+
 
 void Shader::setVec2(const std::string &name, glm::vec2 v) {
     glUniform2f(location(name), v.x, v.y);

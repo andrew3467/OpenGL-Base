@@ -42,6 +42,7 @@ external/glm/test/*
 cmake-build-debug/*
 
 src/.idea/*
+.idea/*
 
 external/imgui/.github/*
 external/imgui/examples/*
