@@ -142,16 +142,15 @@ void Application::render() {
 
 
     lightingShader->setInt("numPointLights", numPointLights);
-    for (unsigned int i = 0; i < pointLights.size(); ++i){
+    for (unsigned int i = 0; i < numPointLights; ++i){
         lightingShader->setPointLight(pointLights[i], std::to_string(i));
     }
 
     lightingShader->setVec3("viewPos", camera->position());
-    lightingShader->setVec3("lightPos", lightPos);
 
     lightingShader->setFloat("shininess", 128.0f);
     lightingShader->setInt("blinn", blinn);
-    lightingShader->setInt("gamma", 0);
+    lightingShader->setInt("gamma", false);
 
 
     glPrimitive::drawPlane(lightingShader, glm::vec3(0.0, 0.0, 0.0),
@@ -168,7 +167,7 @@ void Application::render() {
     lightShader->setMat4("view", camera->view());
 
     glBindVertexArray(skyboxVAO);
-    for (unsigned int i = 0; i < pointLights.size(); ++i) {
+    for (unsigned int i = 0; i < numPointLights; ++i) {
         transform = glm::mat4(1.0f);
         transform = glm::translate(transform, pointLights[i].position);
         transform = glm::scale(transform, glm::vec3(0.125f));

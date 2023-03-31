@@ -25,13 +25,13 @@ struct PointLight{
 };
 
 
-vec3 viewPos;
-float shininess;
-bool blinn;
-bool gamma;
+uniform vec3 viewPos;
+uniform float shininess;
+uniform bool blinn;
+uniform bool gamma;
 
-int numPointLights;
-PointLight pointLights[MAX_POINT_LIGHTS];
+uniform int numPointLights;
+uniform PointLight pointLights[MAX_POINT_LIGHTS];
 
 uniform sampler2D texture_diffuse0;
 
@@ -61,7 +61,6 @@ vec3 BlinnPhong(vec3 normal, vec3 fragPos, vec3 lightPos, vec3 lightColor)
 
 
 void main() {
-
     vec3 color = texture(texture_diffuse0, fs_in.TexCoords).rgb;
     vec3 lighting = vec3(0.0);
 
