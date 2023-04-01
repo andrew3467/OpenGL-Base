@@ -14,6 +14,8 @@
 
 #include "renderer/VertexBuffer.h"
 #include "renderer/IndexBuffer.h"
+#include "renderer/VertexArray.h"
+
 #include "renderer/Shader.h"
 #include "renderer/Texture2D.h"
 #include "renderer/Texture3D.h"
@@ -34,9 +36,12 @@ public:
 private:
     const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
     unsigned int depthMap;
-    unsigned int skyboxVAO, depthmapFBO;
+    unsigned int depthmapFBO;
     int width, height;
     const char* title;
+
+    VertexBuffer* skyboxVB;
+    VertexArray* skyboxVA;
 
     GLFWwindow* window;
 

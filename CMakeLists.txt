@@ -71,7 +71,7 @@ add_executable(OpenGl_Base
         ${PRJ_SOURCES}
         ${PRJ_HEADERS}
         ${EXTERNAL_SRC}
-        src/renderer/VertexBuffer.h src/renderer/VertexBuffer.cpp src/renderer/IndexBuffer.h src/renderer/IndexBuffer.cpp src/renderer/Renderer.h src/renderer/Renderer.cpp)
+        src/renderer/VertexBuffer.h src/renderer/VertexBuffer.cpp src/renderer/IndexBuffer.h src/renderer/IndexBuffer.cpp src/renderer/Renderer.h src/renderer/Renderer.cpp src/renderer/VertexArray.h src/renderer/VertexArray.cpp src/renderer/VertexBufferLayout.h)
 
 target_link_libraries(OpenGl_Base
         opengl32

@@ -57,15 +57,12 @@ void Application::Run() {
     glEnable(GL_PROGRAM_POINT_SIZE);
     glEnable(GL_FRAMEBUFFER_SRGB);
 
+    skyboxVA = new VertexArray();
+    skyboxVB = new VertexBuffer(skyboxVertices, sizeof(skyboxVertices));
 
-
-    glGenVertexArrays(1, &skyboxVAO);
-    glBindVertexArray(skyboxVAO);
-
-    VertexBuffer VB(skyboxVertices, sizeof(skyboxVertices));
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+    skyboxVA->AddBuffer(*(skyboxVB), layout);
 
 
     glGenFramebuffers(1, &depthmapFBO);
@@ -221,10 +218,10 @@ void Application::render() {
     skyboxShader->setMat4("view", view);
     skyboxShader->setMat4("projection", projection);
     // skybox cube
-    glBindVertexArray(skyboxVAO);
+    //skyboxVA->bind();
     skyboxTex->bind();
-    //glDrawArrays(GL_TRIANGLES, 0, 36);
-    glBindVertexArray(0);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    //skyboxVA->unbind();
     //glDepthMask(GL_TRUE);
     glDepthFunc(GL_LESS);
 
@@ -260,8 +257,6 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 
 //Cleanup
 Application::~Application() {
-    glDeleteVertexArrays(1, &skyboxVAO);
-
     glfwDestroyWindow(window);
     glfwTerminate();
 }
