@@ -5,7 +5,7 @@
 #ifndef OPENGL_BASE_TEXTURE3D_H
 #define OPENGL_BASE_TEXTURE3D_H
 
-#include <GLAD/glad.h>
+#include "glad/glad.h"
 
 #include <string>
 #include <vector>

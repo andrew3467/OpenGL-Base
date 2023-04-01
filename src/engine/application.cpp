@@ -4,7 +4,7 @@
 
 #include "application.h"
 
-#include <glPrimitives.h>
+#include "engine/glPrimitives.h"
 
 Application::Application(int w, int h, const char* t) : width(w), height(h), title(t){
     initGlFW();
@@ -41,7 +41,7 @@ void Application::initGLAD() {
 
 void Application::initObjects() {
     lightingShader = new Shader("../../src/shaders/texturedLit.vert", "../../src/shaders/texturedLit.frag");
-    lightShader = new Shader("../../src/shaders/light.vert", "../../src/shaders/light.frag");
+    colorShader = new Shader("../../src/shaders/solidColor.vert", "../../src/shaders/solidColor.frag");
     skyboxShader = new Shader("../../src/shaders/skybox.vert", "../../src/shaders/skybox.frag");
 
     camera = new Camera(cameraPosition, width, height);
@@ -58,20 +58,32 @@ void Application::Run() {
     glEnable(GL_FRAMEBUFFER_SRGB);
 
 
-    unsigned int skyboxVBO;
+
     glGenVertexArrays(1, &skyboxVAO);
-    glGenBuffers(1, &skyboxVBO);
     glBindVertexArray(skyboxVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+
+    VertexBuffer VB(skyboxVertices, sizeof(skyboxVertices));
+
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
+
+    glGenFramebuffers(1, &depthmapFBO);
+
+    glGenTextures(1, &depthMap);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+                 SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 
     transform = glm::mat4(1.0f);
     transform = glm::scale(transform, glm::vec3(1.0f));
     transform = glm::translate(transform, glm::vec3(0.0f, 2.0f, 0.0f));
+
 
 
     //Disable cursor
@@ -128,10 +140,24 @@ void Application::processInput(GLFWwindow *window) {
 
 
 void Application::render() {
+    glBindFramebuffer(GL_FRAMEBUFFER, depthmapFBO);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthmapFBO, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+    glBindFramebuffer(GL_FRAMEBUFFER, depthmapFBO);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+    glViewport(0, 0, width, height);
     glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
 
-
+    //Floor
     lightingShader->bind();
     floorTex->bind();
 
@@ -147,11 +173,10 @@ void Application::render() {
     }
 
     lightingShader->setVec3("viewPos", camera->position());
-
     lightingShader->setFloat("shininess", 128.0f);
-    lightingShader->setInt("blinn", blinn);
-    lightingShader->setInt("gamma", false);
 
+    lightingShader->setInt("blinn", blinn);
+    lightingShader->setInt("gamma", true);
 
     glPrimitive::drawPlane(lightingShader, glm::vec3(0.0, 0.0, 0.0),
                            glm::vec3(20.0f, 1.0f, 20.0f));
@@ -161,24 +186,30 @@ void Application::render() {
     lightingShader->unbind();
 
     //Draw lights
-    lightShader->bind();
+    colorShader->bind();
 
-    lightShader->setMat4("proj", projection);
-    lightShader->setMat4("view", camera->view());
+    colorShader->setMat4("proj", projection);
+    colorShader->setMat4("view", camera->view());
 
-    glBindVertexArray(skyboxVAO);
     for (unsigned int i = 0; i < numPointLights; ++i) {
-        transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, pointLights[i].position);
-        transform = glm::scale(transform, glm::vec3(0.125f));
-
-        lightShader->setMat4("model", transform);
-
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        colorShader->setVec3("color", pointLights[i].ambient);
+        glPrimitive::drawCube(colorShader, pointLights[i].position, glm::vec3(0.25f));
     }
-    glBindVertexArray(0);
 
-    lightShader->unbind();
+    colorShader->unbind();
+
+    //Draw Cubes
+    colorShader->bind();
+
+    colorShader->setMat4("proj", projection);
+    colorShader->setMat4("view", camera->view());
+
+    for(int i = 0; i < cubePositions.size(); i++){
+        colorShader->setVec3("color", 0.3f, 0.5f, 0.8f);
+        glPrimitive::drawCube(colorShader, cubePositions[i], glm::vec3(1.0f), cubeRotations[i], 30);
+    }
+
+    colorShader->unbind();
 
 
 
@@ -192,7 +223,7 @@ void Application::render() {
     // skybox cube
     glBindVertexArray(skyboxVAO);
     skyboxTex->bind();
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+    //glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
     //glDepthMask(GL_TRUE);
     glDepthFunc(GL_LESS);

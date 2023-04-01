@@ -8,15 +8,20 @@
 #include <string>
 #include <exception>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 
-#include <shader.h>
-#include <texture2d.h>
-#include <texture3d.h>
-#include <camera.h>
-#include <model.h>
-#include <lights.h>
+
+#include "renderer/VertexBuffer.h"
+#include "renderer/IndexBuffer.h"
+#include "renderer/Shader.h"
+#include "renderer/Texture2D.h"
+#include "renderer/Texture3D.h"
+
+#include "engine/camera.h"
+#include "engine/model.h"
+#include "engine/lights.h"
+
 
 
 class Application{
@@ -27,13 +32,15 @@ public:
 
 
 private:
-    unsigned int skyboxVAO;
+    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+    unsigned int depthMap;
+    unsigned int skyboxVAO, depthmapFBO;
     int width, height;
     const char* title;
 
     GLFWwindow* window;
 
-    Shader* lightShader;
+    Shader* colorShader;
     Shader* lightingShader;
     Shader* skyboxShader;
 
@@ -113,12 +120,11 @@ private:
     };
 
     glm::vec3 cameraPosition = glm::vec3(0.0f, 1.0f, -4.0f);
-    glm::vec3 lightPos = glm::vec3(0.0f, 3.0f, 0.0f);
 
     int numPointLights = 4;
     std::vector<PointLight> pointLights = {
             PointLight(
-                    glm::vec3(-3.0f, 0.0f, 0.0f),
+                    glm::vec3(-2.0f, 1.0f, -2.0f),
                 glm::vec3(0.25f),
                 glm::vec3(0.0f, 0.0f, 0.0f),
                 glm::vec3(0.0f, 0.0f, 0.0f),
@@ -127,7 +133,7 @@ private:
                 0.0f
             ),
             PointLight(
-                    glm::vec3(-1.0f, 0.0f, 0.0f),
+                    glm::vec3(2.0f, 1.0f, 2.0f),
                     glm::vec3(0.50f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
@@ -136,7 +142,7 @@ private:
                     0.0f
             ),
             PointLight(
-                    glm::vec3 (1.0f, 0.0f, 0.0f),
+                    glm::vec3 (-2.0f, 1.0f, 2.0f),
                     glm::vec3(0.75f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
@@ -145,7 +151,7 @@ private:
                     0.0f
             ),
             PointLight(
-                    glm::vec3 (1.0f, 0.0f, 0.0f),
+                    glm::vec3 (2.0f, 1.0f, -2.0f),
                     glm::vec3(1.0f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
@@ -153,6 +159,14 @@ private:
                     0.0f,
                     0.0f
             )
+    };
+
+    std::vector<glm::vec3> cubePositions = {
+            glm::vec3(0.0f,1.5f, 0.0f)
+    };
+
+    std::vector<glm::vec3> cubeRotations = {
+            glm::vec3(45.0f, 0.0f, 30.0f)
     };
 
 

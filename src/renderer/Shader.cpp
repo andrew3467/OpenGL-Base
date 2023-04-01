@@ -2,7 +2,7 @@
 // Created by Andrew Graser on 2/26/2023.
 //
 
-#include "shader.h"
+#include "Shader.h"
 
 
 Shader::Shader(const char *vertPath, const char *fragPath, const char* geometryPath) {

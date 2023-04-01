@@ -1,9 +1,9 @@
 //
 // Created by Andrew Graser on 3/16/2023.
 //
-#include "texture2d.h"
+#include "Texture2D.h"
 
-#include <stb_image.h>
+#include "stb_image.h"
 #include <iostream>
 
 Texture2D::Texture2D(const std::string& path) : handle(0), filePath(path), localBuffer(nullptr), width(0), height(0), BPP(0) {

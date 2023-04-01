@@ -2,9 +2,9 @@
 // Created by apgra on 3/19/2023.
 //
 
-#include <texture3d.h>
+#include "Texture3D.h"
 #include <stdexcept>
-#include <stb_image.h>
+#include "stb_image.h"
 
 #include <iostream>
 

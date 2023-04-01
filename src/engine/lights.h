@@ -5,7 +5,7 @@
 #ifndef OPENGL_BASE_LIGHTS_H
 #define OPENGL_BASE_LIGHTS_H
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 
 
 struct Light{

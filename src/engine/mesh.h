@@ -8,9 +8,9 @@
 #include <vector>
 #include <string>
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 
-#include "shader.h"
+#include "renderer/Shader.h"
 
 struct Vertex{
     glm::vec3 Position;

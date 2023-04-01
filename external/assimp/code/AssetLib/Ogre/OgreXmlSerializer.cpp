@@ -155,9 +155,9 @@ static const char *nnGeometry = "geometry";
 static const char *nnBoneAssignments = "boneassignments";
 
 // <sharedgeometry/geometry>
-static const char *nnVertexBuffer = "vertexbuffer";
+static const char *nnVertexBuffer = "vertexBuffer";
 
-// <vertexbuffer>
+// <vertexBuffer>
 //static const char *nnVertex = "vertex";
 static const char *nnPosition = "position";
 static const char *nnNormal = "normal";

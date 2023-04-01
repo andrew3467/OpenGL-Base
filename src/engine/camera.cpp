@@ -2,7 +2,7 @@
 // Created by apgra on 3/19/2023.
 //
 
-#include <camera.h>
+#include "camera.h"
 
 
 Camera::Camera(glm::vec3 pos, int windowWidth, int windowHeight) : lastX(windowWidth / 2.0f), lastY(windowHeight / 2.0f) {

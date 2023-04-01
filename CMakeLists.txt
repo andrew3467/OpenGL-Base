@@ -38,7 +38,6 @@ include_directories (src/
         external/glm/
         external/stb/
         ${ASSIMP_DIR}/include
-        src/shaders/
         )
 
 
@@ -47,10 +46,14 @@ file(GLOB EXTERNAL_SRC ${LIB_DIR}/glad/src/glad.c)
 file(GLOB_RECURSE PRJ_SOURCES glad.c ${PROJECT_SOURCE_DIR}/src/*.cpp
         ${PROJECT_SOURCE_DIR}/src/*.c
         ${PROJECT_SOURCE_DIR}/src/*.cc
-        ${PROJECT_SOURCE_DIR}/src/*.cxx)
+        ${PROJECT_SOURCE_DIR}/src/*.cxx
+        ${PROJECT_SOURCE_DIR}/src/renderer/*.cpp
+        ${PROJECT_SOURCE_DIR}/src/engine/*.cpp)
 
 file(GLOB_RECURSE PRJ_HEADERS ${PROJECT_SOURCE_DIR}/src/*.h
-        ${PROJECT_SOURCE_DIR}/src/*.hpp)
+        ${PROJECT_SOURCE_DIR}/src/*.hpp
+        ${PROJECT_SOURCE_DIR}/src/renderer/*.h
+        ${PROJECT_SOURCE_DIR}/src/engine/*.h)
 
 file(GLOB_RECURSE PRJ_SHADERS ${PROJECT_SOURCE_DIR}/src/shaders/*.frag
         ${PROJECT_SOURCE_DIR}/src/shaders/*.vert
@@ -68,7 +71,7 @@ add_executable(OpenGl_Base
         ${PRJ_SOURCES}
         ${PRJ_HEADERS}
         ${EXTERNAL_SRC}
-        )
+        src/renderer/VertexBuffer.h src/renderer/VertexBuffer.cpp src/renderer/IndexBuffer.h src/renderer/IndexBuffer.cpp src/renderer/Renderer.h src/renderer/Renderer.cpp)
 
 target_link_libraries(OpenGl_Base
         opengl32

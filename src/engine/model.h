@@ -8,11 +8,11 @@
 #include <string>
 #include <vector>
 
-#include <shader.h>
-#include <mesh.h>
+#include "renderer/Shader.h"
+#include "engine/mesh.h"
 
-#include <assimp/scene.h>
-#include <stb_image.h>
+#include "assimp/scene.h"
+#include "stb_image.h"
 
 
 class Model{

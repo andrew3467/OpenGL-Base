@@ -5,8 +5,8 @@
 #ifndef OPENGL_BASE_CAMERA_H
 #define OPENGL_BASE_CAMERA_H
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 enum CameraMoveDir{
     Forward = 0,

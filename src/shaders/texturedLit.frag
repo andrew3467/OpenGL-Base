@@ -70,9 +70,8 @@ void main() {
     color *= lighting;
 
     if(gamma){
-        color = pow(color, vec3(1.0 / 2.2));
+        color = pow(color, vec3(1.0 / 2));
     }
 
     FragColor = vec4(color, 1.0);
-   //FragColor.rgb = pow(FragColor.rgb, vec3(1.0 / gamma));
 }
