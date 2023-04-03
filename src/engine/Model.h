@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "renderer/Shader.h"
-#include "engine/mesh.h"
+#include "engine/Mesh.h"
 
 #include "assimp/scene.h"
 #include "stb_image.h"
@@ -24,6 +24,7 @@ private:
     bool gammaCorrection;
 
 public:
+    Model();
     Model(const char* path, bool gamma = false);
     void draw(Shader* shader, int numInstances = 1);
 

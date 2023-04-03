@@ -5,7 +5,7 @@
 #ifndef OPENGL_BASE_TEXTURE2D_H
 #define OPENGL_BASE_TEXTURE2D_H
 
-#include "glad/glad.h"
+#include "Renderer.h"
 
 //STD
 #include <string>
@@ -14,22 +14,23 @@ class Texture2D{
 private:
     unsigned int TYPE = GL_TEXTURE_2D;
 
-    unsigned int handle;
-    std::string filePath;
-    unsigned char* localBuffer;
-    int width, height, BPP;
+    unsigned int m_RendererID;
+    std::string m_FilePath;
+    unsigned char* m_LocalBuffer;
+    int m_Width, m_Height, m_BPP;
 
 
 
 public:
+    Texture2D();
     Texture2D(const std::string& path);
     ~Texture2D();
 
-    void bind(unsigned int slot = 0) const;
-    void unbind() const;
+    void Bind(unsigned int slot = 0) const;
+    void Unbind() const;
 
-    inline int getWidth() const {return width;}
-    inline int getHeight() const {return height;}
+    inline int GetWidth() const {return m_Width;}
+    inline int GetHeight() const {return m_Height;}
 };
 
 #endif //OPENGL_BASE_TEXTURE2D_H

@@ -11,6 +11,9 @@
 #include "glm/glm.hpp"
 
 #include "renderer/Shader.h"
+#include "renderer/VertexBuffer.h"
+#include "renderer/IndexBuffer.h"
+#include "renderer/VertexArray.h"
 
 struct Vertex{
     glm::vec3 Position;
@@ -36,10 +39,12 @@ public:
     std::vector<Texture> textures;
 
     Mesh(std::vector<Vertex> v, std::vector<unsigned int> i, std::vector<Texture> t);
-    void draw(Shader* shader, int numInstances = 1);
+    void Draw(Shader* shader, int numInstances = 1);
 
 private:
-    unsigned int VAO, VBO, EBO;
+    VertexBuffer VB;
+    IndexBuffer IB;
+    VertexArray VA;
 
     void setupMesh();
 };

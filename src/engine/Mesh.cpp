@@ -1,7 +1,7 @@
 //
 // Created by apgra on 3/22/2023.
 //
-#include "mesh.h"
+#include "Mesh.h"
 
 
 Mesh::Mesh(std::vector<Vertex> v, std::vector<unsigned int> i, std::vector<Texture> t) :
@@ -12,18 +12,19 @@ Mesh::Mesh(std::vector<Vertex> v, std::vector<unsigned int> i, std::vector<Textu
 void Mesh::setupMesh()
 {
     // create buffers/arrays
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+    VB = VertexBuffer(&vertices[0], vertices.size() * sizeof(Vertex));
+    IB = IndexBuffer(&indices[0], indices.size() * sizeof(unsigned int));
 
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    VertexBufferLayout layout;
+    layout.Push<float>(3);  //Position
+    layout.Push<float>(3);  //Normals
+    layout.Push<float>(2);  //TexCoords
+    layout.Push<float>(3);  //Tangent
+    layout.Push<float>(4);  //Bitangent
+    layout.Push<int>(4);    //Bone IDS
+    layout.Push<float>(4);  //Bone Weights
 
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
-
+    /*
     // set the vertex attribute pointers
     // vertex Positions
     glEnableVertexAttribArray(0);
@@ -47,11 +48,10 @@ void Mesh::setupMesh()
     // weights
     glEnableVertexAttribArray(6);
     glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
-
-    glBindVertexArray(0);
+    */
 }
 
-void Mesh::draw(Shader* shader, int numInstances)
+void Mesh::Draw(Shader* shader, int numInstances)
 {
     unsigned int diffuseNr  = 1;
     unsigned int specularNr = 1;
@@ -59,7 +59,7 @@ void Mesh::draw(Shader* shader, int numInstances)
     unsigned int heightNr   = 1;
     for(unsigned int i = 0; i < textures.size(); i++)
     {
-        glActiveTexture(GL_TEXTURE0 + i);
+        GLCall(glActiveTexture(GL_TEXTURE0 + i));
 
         std::string number;
         std::string name = textures[i].type;
@@ -73,18 +73,16 @@ void Mesh::draw(Shader* shader, int numInstances)
             number = std::to_string(heightNr++); // transfer unsigned int to string
 
 
-        shader->setInt(name + number, i);
-        glBindTexture(GL_TEXTURE_2D, textures[i].ID);
+        shader->SetInt(name + number, i);
+        GLCall(glBindTexture(GL_TEXTURE_2D, textures[i].ID));
     }
 
     // draw mesh
-    glBindVertexArray(VAO);
+    VA.Bind();
     //glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
-    glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, nullptr, numInstances);
-    glBindVertexArray(0);
+    GLCall(glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, nullptr, numInstances));
+    VA.Unbind();
 
-
-
-    glActiveTexture(GL_TEXTURE0);
+    GLCall(glActiveTexture(GL_TEXTURE0));
 }
 

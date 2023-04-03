@@ -68,7 +68,7 @@ namespace glPrimitive {
             -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
     };
 
-    void drawPlane(Shader* shader, glm::vec3 position, glm::vec3 scale){
+    void DrawPlane(Shader shader, glm::vec3 position, glm::vec3 scale){
         VertexArray va;
         VertexBuffer vb(planeVertices, sizeof(planeVertices) * 4);
 
@@ -83,15 +83,15 @@ namespace glPrimitive {
         trans = glm::translate(trans, position);
         trans = glm::scale(trans, scale);
 
-        shader->bind();
-        shader->setMat4("model", trans);
+        shader.Bind();
+        shader.SetMat4("model", trans);
 
-        va.bind();
+        va.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 6);
-        va.unbind();
+        va.Unbind();
     }
 
-    void drawCube(Shader* shader, glm::vec3 position, glm::vec3 scale, glm::vec3 rotation = glm::vec3(1), float rotAngle = 0){
+    void DrawCube(Shader shader, glm::vec3 position, glm::vec3 scale, glm::vec3 rotation = glm::vec3(1), float rotAngle = 0){
         VertexArray va;
         VertexBuffer vb(cubeVertices, sizeof(cubeVertices) * 4);
 
@@ -108,12 +108,12 @@ namespace glPrimitive {
         trans = glm::scale(trans, scale);
         trans = glm::rotate(trans, glm::radians(rotAngle), rotation);
 
-        shader->bind();
-        shader->setMat4("model", trans);
+        shader.Bind();
+        shader.SetMat4("model", trans);
 
-        va.bind();
+        va.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 36);
-        va.unbind();
+        va.Unbind();
     }
 }
 

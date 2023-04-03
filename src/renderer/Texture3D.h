@@ -5,7 +5,7 @@
 #ifndef OPENGL_BASE_TEXTURE3D_H
 #define OPENGL_BASE_TEXTURE3D_H
 
-#include "glad/glad.h"
+#include "Renderer.h"
 
 #include <string>
 #include <vector>
@@ -14,7 +14,7 @@ class Texture3D{
 private:
     unsigned int TYPE = GL_TEXTURE_CUBE_MAP;
 
-    unsigned int handle;
+    unsigned int m_RendererID;
     std::string filePaths[6];
 
     // loads a cubemap texture from 6 individual texture faces
@@ -24,9 +24,10 @@ private:
     // -Y (bottom)
     // +Z (front)
     // -Z (back)
-    static unsigned int loadCubemap(std::vector<std::string> faces);
+    unsigned int loadCubemap(std::vector<std::string> faces);
 
 public:
+    Texture3D();
     Texture3D(std::vector<std::string> faces);
     ~Texture3D();
 

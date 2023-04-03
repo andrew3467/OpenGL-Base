@@ -2,14 +2,14 @@
 // Created by apgra on 3/19/2023.
 //
 
-#include "camera.h"
+#include "Camera.h"
 
 
 Camera::Camera(glm::vec3 pos, int windowWidth, int windowHeight) : lastX(windowWidth / 2.0f), lastY(windowHeight / 2.0f) {
 
 }
 
-void Camera::move(CameraMoveDir moveDir, float deltaTime) {
+void Camera::Move(CameraMoveDir moveDir, float deltaTime) {
     switch(moveDir){
         case Forward:
             camPos += camSpeed * camFront * deltaTime;
@@ -26,7 +26,7 @@ void Camera::move(CameraMoveDir moveDir, float deltaTime) {
     }
 }
 
-void Camera::rotate(float mouseX, float mouseY) {
+void Camera::Rotate(float mouseX, float mouseY) {
     if (firstMouse)
     {
         lastX = mouseX;

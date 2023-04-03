@@ -16,8 +16,8 @@ public:
     VertexBuffer();
     ~VertexBuffer();
 
-    void bind() const;
-    void unbind() const;
+    void Bind() const;
+    void Unbind() const;
 };
 
 #endif //OPENGL_BASE_VERTEXBUFFER_H

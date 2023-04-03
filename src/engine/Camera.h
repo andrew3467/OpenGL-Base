@@ -41,11 +41,12 @@ private:
 public:
     Camera(glm::vec3 pos, int windowWidth, int windowHeight);
 
-    void move(CameraMoveDir moveDir, float deltaTime);
-    void rotate(float mouseX, float mouseY);
+    void Move(CameraMoveDir moveDir, float deltaTime);
+    void Rotate(float mouseX, float mouseY);
 
-    inline float getYaw() const { return yaw;}
-    inline float getPitch() const { return pitch;}
+    inline float GetYaw() const { return yaw;}
+    inline float GetPitch() const { return pitch;}
+
     inline glm::mat4 projection(int w, int h) const {return glm::perspective(glm::radians(60.0f), (float)w / (float)h, 0.1f, 100.0f);}
     inline glm::mat4 view() const {return glm::lookAt(camPos, camPos + camFront, camUp);}
     inline glm::vec3 position() const {return camPos;}

@@ -8,7 +8,7 @@
 #include <string>
 #include <exception>
 
-#include "glad/glad.h"
+#include "renderer/Renderer.h"
 #include "GLFW/glfw3.h"
 
 
@@ -20,9 +20,9 @@
 #include "renderer/Texture2D.h"
 #include "renderer/Texture3D.h"
 
-#include "engine/camera.h"
-#include "engine/model.h"
-#include "engine/lights.h"
+#include "engine/Camera.h"
+#include "engine/Model.h"
+#include "engine/Lights.h"
 
 
 
@@ -34,28 +34,23 @@ public:
 
 
 private:
-    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
-    unsigned int depthMap;
-    unsigned int depthmapFBO;
-    int width, height;
-    const char* title;
+    int windowWidth, windowHeight;
+    const char* windowTitle;
 
-    VertexBuffer* skyboxVB;
-    VertexArray* skyboxVA;
+    VertexBuffer skyboxVB;
+    VertexArray skyboxVA;
 
     GLFWwindow* window;
 
-    Shader* colorShader;
-    Shader* lightingShader;
-    Shader* skyboxShader;
+    Shader colorShader;
+    Shader lightingShader;
+    Shader skyboxShader;
 
-    Texture3D* skyboxTex;
-    Texture2D* floorTex;
+    Texture3D skyboxTex;
+    Texture2D floorTex;
 
     Camera* camera;
     glm::mat4 projection;
-
-    Model* model;
 
     glm::mat4 transform;
 
@@ -65,9 +60,6 @@ private:
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
-
-    bool blinn = false;
-    bool blinnKeyPressed = false;
 
     std::vector<std::string> faces =
     {
