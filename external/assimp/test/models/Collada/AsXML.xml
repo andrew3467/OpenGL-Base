@@ -164,22 +164,22 @@ limitations under the License.
         <visual_scene id="VisualSceneNode" name="untitled">
             <node id="Camera" name="Camera">
                 <translate sid="translate">-427.749 333.855 655.017</translate>
-                <rotate sid="rotateY">0 1 0 -33</rotate>
-                <rotate sid="rotateX">1 0 0 -22.1954</rotate>
-                <rotate sid="rotateZ">0 0 1 0</rotate>
+                <Rotate sid="rotateY">0 1 0 -33</Rotate>
+                <Rotate sid="rotateX">1 0 0 -22.1954</Rotate>
+                <Rotate sid="rotateZ">0 0 1 0</Rotate>
                 <instance_camera url="#PerspCamera"/>
             </node>
             <node id="Light" name="Light">
                 <translate sid="translate">-500 1000 400</translate>
-                <rotate sid="rotateZ">0 0 1 0</rotate>
-                <rotate sid="rotateY">0 1 0 0</rotate>
-                <rotate sid="rotateX">1 0 0 0</rotate>
+                <Rotate sid="rotateZ">0 0 1 0</Rotate>
+                <Rotate sid="rotateY">0 1 0 0</Rotate>
+                <Rotate sid="rotateX">1 0 0 0</Rotate>
                 <instance_light url="#light-lib"/>
             </node>
             <node id="Box" name="Box">
-                <rotate sid="rotateZ">0 0 1 0</rotate>
-                <rotate sid="rotateY">0 1 0 0</rotate>
-                <rotate sid="rotateX">1 0 0 0</rotate>
+                <Rotate sid="rotateZ">0 0 1 0</Rotate>
+                <Rotate sid="rotateY">0 1 0 0</Rotate>
+                <Rotate sid="rotateX">1 0 0 0</Rotate>
                 <instance_geometry url="#box-lib">
                     <bind_material>
                         <technique_common>
@@ -190,16 +190,16 @@ limitations under the License.
             </node>
             <node id="testCamera" name="testCamera">
                 <translate sid="translate">-427.749 333.855 655.017</translate>
-                <rotate sid="rotateY">0 1 0 -33</rotate>
-                <rotate sid="rotateX">1 0 0 -22.1954</rotate>
-                <rotate sid="rotateZ">0 0 1 0</rotate>
+                <Rotate sid="rotateY">0 1 0 -33</Rotate>
+                <Rotate sid="rotateX">1 0 0 -22.1954</Rotate>
+                <Rotate sid="rotateZ">0 0 1 0</Rotate>
                 <instance_camera url="#testCameraShape"/>
             </node>
             <node id="pointLight1" name="pointLight1">
                 <translate sid="translate">3 4 10</translate>
-                <rotate sid="rotateZ">0 0 1 0</rotate>
-                <rotate sid="rotateY">0 1 0 0</rotate>
-                <rotate sid="rotateX">1 0 0 0</rotate>
+                <Rotate sid="rotateZ">0 0 1 0</Rotate>
+                <Rotate sid="rotateY">0 1 0 0</Rotate>
+                <Rotate sid="rotateX">1 0 0 0</Rotate>
                 <instance_light url="#pointLightShape1-lib"/>
             </node>
         </visual_scene>

@@ -623,7 +623,7 @@ bool MD3Importer::ReadMultipartFile() {
                         AI_INT_MERGE_SCENE_RESOLVE_CROSS_ATTACHMENTS |
                         (!configSpeedFlag ? AI_INT_MERGE_SCENE_GEN_UNIQUE_NAMES_IF_NECESSARY : 0));
 
-        // Now rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
+        // Now Rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
         mScene->mRootNode->mTransformation = aiMatrix4x4(1.f, 0.f, 0.f, 0.f,
                 0.f, 0.f, 1.f, 0.f, 0.f, -1.f, 0.f, 0.f, 0.f, 0.f, 0.f, 1.f);
 
@@ -1049,7 +1049,7 @@ void MD3Importer::InternReadFile(const std::string &pFile, aiScene *pScene, IOSy
     for (unsigned int i = 0; i < pScene->mNumMeshes; ++i)
         pScene->mRootNode->mMeshes[i] = i;
 
-    // Now rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
+    // Now Rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
     pScene->mRootNode->mTransformation = aiMatrix4x4(
             1.f, 0.f, 0.f, 0.f,
             0.f, 0.f, 1.f, 0.f,

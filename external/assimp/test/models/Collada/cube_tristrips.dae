@@ -11,7 +11,7 @@
 		<visual_scene id="defaultScene">
 			<node id="sceneRoot">
 				<node id="Collada visual scene group">
-					<rotate sid="rotate">1 0 0 90</rotate>
+					<rotate sid="rotate">1 0 0 90</Rotate>
 					<node id="Camera">
 						<matrix sid="Camera_matrix">0.838671 0.205746 -0.504282 -427.749 0 0.925901 0.377766 333.855 0.544639 -0.316822 0.776526 655.017 0 0 0 1</matrix>
 						<instance_camera url="#PerspCamera"/>

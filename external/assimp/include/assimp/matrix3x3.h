@@ -132,7 +132,7 @@ public:
      *    an arbitrary axis.
      *
      *  @param a Rotation angle, in radians
-     *  @param axis Axis to rotate around
+     *  @param axis Axis to Rotate around
      *  @param out To be filled
      */
     static aiMatrix3x3t& Rotation( TReal a, const aiVector3t<TReal>& axis, aiMatrix3x3t& out);

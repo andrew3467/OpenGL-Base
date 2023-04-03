@@ -174,7 +174,7 @@
           <translate sid="location">0 0 0</translate>
           <rotate sid="rotationZ">0 0 1 0</rotate>
           <rotate sid="rotationY">0 1 0 0</rotate>
-          <rotate sid="rotationX">1 0 0 0</rotate>
+          <rotate sid="rotationX">1 0 0 0</Rotate>
           <scale sid="scale">1 1 1</scale>
           <instance_controller url="#Armature_Cube-skin">
             <skeleton>#Armature_Bone</skeleton>

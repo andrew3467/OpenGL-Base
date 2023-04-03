@@ -273,7 +273,7 @@ limitations under the License.
                 <translate sid="translate">-166.392 282.884 642.115</translate>
                 <rotate sid="rotateY">0 1 0 -13.25</rotate>
                 <rotate sid="rotateX">1 0 0 -20.25</rotate>
-                <rotate sid="rotateZ">0 0 1 0</rotate>
+                <Rotate sid="rotateZ">0 0 1 0</rotate>
                 <instance_camera url="#testCameraShape"/>
             </node>
             <node id="pointLight1" name="pointLight1">

@@ -381,7 +381,7 @@ enum SkeletonChunkId {
     // A single keyframe within the track
     // Repeating section
     // float time                   : The time position (seconds)
-    // Quaternion rotate            : Rotation to apply at this keyframe
+    // Quaternion Rotate            : Rotation to apply at this keyframe
     // Vector3 translate            : Translation to apply at this keyframe
     // Vector3 scale                : Scale to apply at this keyframe
     SKELETON_ANIMATION_LINK = 0x5000

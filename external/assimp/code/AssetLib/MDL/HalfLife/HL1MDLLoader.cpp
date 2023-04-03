@@ -263,7 +263,7 @@ void HL1MDLLoader::validate_header(const Header_HL1 *header, bool is_texture_hea
 
     There are two ways for textures to be stored in a Half-Life model:
 
-    1. Directly in the MDL file (filePath) or
+    1. Directly in the MDL file (m_FilePath) or
     2. In an external MDL file.
 
     Due to the way StudioMDL works (tool used to compile SMDs into MDLs),

@@ -196,7 +196,7 @@ static const char *nnTrack = "track";
 static const char *nnKeyFrames = "keyframes";
 static const char *nnKeyFrame = "keyframe";
 static const char *nnTranslate = "translate";
-static const char *nnRotate = "rotate";
+static const char *nnRotate = "Rotate";
 
 // Common XML constants
 static const char *anX = "x";

@@ -437,7 +437,7 @@ void MD2Importer::InternReadFile( const std::string& pFile,
         // flip the face order
         std::swap( pScene->mMeshes[0]->mFaces[i].mIndices[0], pScene->mMeshes[0]->mFaces[i].mIndices[2] );
     }
-    // Now rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
+    // Now Rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
     pScene->mRootNode->mTransformation = aiMatrix4x4(
             1.f, 0.f, 0.f, 0.f,
             0.f, 0.f, 1.f, 0.f,

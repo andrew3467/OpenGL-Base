@@ -203,7 +203,7 @@ void DXFImporter::InternReadFile( const std::string& filename, aiScene* pScene, 
 
     ConvertMeshes(pScene,output);
 
-    // Now rotate the whole scene by 90 degrees around the x axis to convert from AutoCAD's to Assimp's coordinate system
+    // Now Rotate the whole scene by 90 degrees around the x axis to convert from AutoCAD's to Assimp's coordinate system
     pScene->mRootNode->mTransformation = aiMatrix4x4(
         1.f,0.f,0.f,0.f,
         0.f,0.f,1.f,0.f,

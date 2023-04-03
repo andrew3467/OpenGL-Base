@@ -87,7 +87,7 @@ namespace {
         /**
          * @brief Encode the current triangle, and make sure it is recognized as a triangle.
          *
-         * This method will rotate indices in tri if needed in order to avoid tri to be considered
+         * This method will Rotate indices in tri if needed in order to avoid tri to be considered
          * part of the previous ngon. This method is to be used whenever you want to emit a real triangle,
          * and make sure it is seen as a triangle.
          *
@@ -124,11 +124,11 @@ namespace {
             // for tri-fanning a concave quad.
             // ref: https://github.com/assimp/assimp/pull/3695#issuecomment-805999760
             if (isConsideredSameAsLastNgon(tri1)) {
-                // Right-rotate indices for tri1 (index 2 becomes the new fanning vertex)
+                // Right-Rotate indices for tri1 (index 2 becomes the new fanning vertex)
                 std::swap(tri1->mIndices[0], tri1->mIndices[2]);
                 std::swap(tri1->mIndices[1], tri1->mIndices[2]);
 
-                // Left-rotate indices for tri2 (index 2 becomes the new fanning vertex)
+                // Left-Rotate indices for tri2 (index 2 becomes the new fanning vertex)
                 std::swap(tri2->mIndices[1], tri2->mIndices[2]);
                 std::swap(tri2->mIndices[0], tri2->mIndices[2]);
 

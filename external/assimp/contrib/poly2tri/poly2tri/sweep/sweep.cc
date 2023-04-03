@@ -365,7 +365,7 @@ bool Sweep::Legalize(SweepContext& tcx, Triangle& t)
         t.delaunay_edge[i] = true;
         ot->delaunay_edge[oi] = true;
 
-        // Lets rotate shared edge one vertex CW to legalize it
+        // Lets Rotate shared edge one vertex CW to legalize it
         RotateTrianglePair(t, *p, *ot, *op);
 
         // We now got one valid Delaunay Edge shared by two triangles
@@ -710,7 +710,7 @@ void Sweep::FlipEdgeEvent(SweepContext& tcx, Point& ep, Point& eq, Triangle* t, 
   Point& op = *ot.OppositePoint(*t, p);
 
   if (InScanArea(p, *t->PointCCW(p), *t->PointCW(p), op)) {
-    // Lets rotate shared edge one vertex CW
+    // Lets Rotate shared edge one vertex CW
     RotateTrianglePair(*t, p, ot, op);
     tcx.MapTriangleToNodes(*t);
     tcx.MapTriangleToNodes(ot);

@@ -248,7 +248,7 @@ limitations under the License.
                 <instance_light url="#light-lib"/>
             </node>
             <node id="Floor" name="Floor">
-                <rotate sid="rotateZ">0 0 1 0</rotate>
+                <rotate sid="rotateZ">0 0 1 0</Rotate>
                 <rotate sid="rotateY">0 1 0 0</rotate>
                 <rotate sid="rotateX">1 0 0 0</rotate>
                 <instance_geometry url="#floor-lib">

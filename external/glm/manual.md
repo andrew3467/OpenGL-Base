@@ -184,14 +184,14 @@ To extend the feature set supported by GLM and keeping the library as close to G
 #include <glm/glm.hpp> // vec2, vec3, mat4, radians
 
 // Include all GLM extensions
-#include <glm/ext.hpp> // perspective, translate, rotate
+#include <glm/ext.hpp> // perspective, translate, Rotate
 
 glm::mat4 transform(glm::vec2 const& Orientation, glm::vec3 const& Translate, glm::vec3 const& Up)
 {
     glm::mat4 Proj = glm::perspective(glm::radians(45.f), 1.33f, 0.1f, 10.f);
     glm::mat4 ViewTranslate = glm::translate(glm::mat4(1.f), Translate);
-    glm::mat4 ViewRotateX = glm::rotate(ViewTranslate, Orientation.y, Up);
-    glm::mat4 View = glm::rotate(ViewRotateX, Orientation.x, Up);
+    glm::mat4 ViewRotateX = glm::Rotate(ViewTranslate, Orientation.y, Up);
+    glm::mat4 View = glm::Rotate(ViewRotateX, Orientation.x, Up);
     glm::mat4 Model = glm::mat4(1.0f);
     return Proj * View * Model;
 }
@@ -234,14 +234,14 @@ The following is a code sample using separated core headers and an extension:
 #include <glm/trigonometric.hpp>  //radians
 
 // Include GLM extension
-#include <glm/ext/matrix_transform.hpp> // perspective, translate, rotate
+#include <glm/ext/matrix_transform.hpp> // perspective, translate, Rotate
 
 glm::mat4 transform(glm::vec2 const& Orientation, glm::vec3 const& Translate, glm::vec3 const& Up)
 {
     glm::mat4 Proj = glm::perspective(glm::radians(45.f), 1.33f, 0.1f, 10.f);
     glm::mat4 ViewTranslate = glm::translate(glm::mat4(1.f), Translate);
-    glm::mat4 ViewRotateX = glm::rotate(ViewTranslate, Orientation.y, Up);
-    glm::mat4 View = glm::rotate(ViewRotateX, Orientation.x, Up);
+    glm::mat4 ViewRotateX = glm::Rotate(ViewTranslate, Orientation.y, Up);
+    glm::mat4 View = glm::Rotate(ViewRotateX, Orientation.x, Up);
     glm::mat4 Model = glm::mat4(1.0f);
     return Proj * View * Model;
 }
@@ -258,14 +258,14 @@ Using GLM through split headers to minimize the project build time:
 
 // Include GLM matrix extensions:
 #include <glm/ext/matrix_float4x4.hpp>              // mat4
-#include <glm/ext/matrix_transform.hpp>             // perspective, translate, rotate
+#include <glm/ext/matrix_transform.hpp>             // perspective, translate, Rotate
 
 glm::mat4 transform(glm::vec2 const& Orientation, glm::vec3 const& Translate, glm::vec3 const& Up)
 {
     glm::mat4 Proj = glm::perspective(glm::radians(45.f), 1.33f, 0.1f, 10.f);
     glm::mat4 ViewTranslate = glm::translate(glm::mat4(1.f), Translate);
-    glm::mat4 ViewRotateX = glm::rotate(ViewTranslate, Orientation.y, Up);
-    glm::mat4 View = glm::rotate(ViewRotateX, Orientation.x, Up);
+    glm::mat4 ViewRotateX = glm::Rotate(ViewTranslate, Orientation.y, Up);
+    glm::mat4 View = glm::Rotate(ViewRotateX, Orientation.x, Up);
     glm::mat4 Model = glm::mat4(1.0f);
     return Proj * View * Model;
 }
@@ -1301,19 +1301,19 @@ Include `<glm/ext/matrix_relational.hpp>` to use these features.
 
 #### 3.8.2. GLM_EXT_matrix_transform
 
-This extension exposes matrix transformation functions: `translate`, `rotate` and `scale`.
+This extension exposes matrix transformation functions: `translate`, `Rotate` and `scale`.
 
 ```cpp
 #include <glm/ext/vector_float2.hpp> // vec2
 #include <glm/ext/vector_float3.hpp> // vec3
 #include <glm/ext/matrix_float4x4.hpp> // mat4x4
-#include <glm/ext/matrix_transform.hpp> // translate, rotate, scale, identity
+#include <glm/ext/matrix_transform.hpp> // translate, Rotate, scale, identity
 
 glm::mat4 computeModelViewMatrix(float Translate, glm::vec2 const & Rotate)
 {
 	glm::mat4 View = glm::translate(glm::identity(), glm::vec3(0.0f, 0.0f, -Translate));
-	View = glm::rotate(View, Rotate.y, glm::vec3(-1.0f, 0.0f, 0.0f));
-	View = glm::rotate(View, Rotate.x, glm::vec3(0.0f, 1.0f, 0.0f));
+	View = glm::Rotate(View, Rotate.y, glm::vec3(-1.0f, 0.0f, 0.0f));
+	View = glm::Rotate(View, Rotate.x, glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::mat4 Model = glm::scale(glm::identity(), glm::vec3(0.5f));
 	return View * Model;
 }
@@ -1666,8 +1666,8 @@ OpenGL 3.1 specification has deprecated some features that have been removed fro
 [***glRotate{f, d}:***](https://www.opengl.org/sdk/docs/man2/xhtml/glRotate.xml)
 
 ```cpp
-glm::mat4 glm::rotate(glm::mat4 const& m, float angle, glm::vec3 const& axis);
-glm::dmat4 glm::rotate(glm::dmat4 const& m, double angle, glm::dvec3 const& axis);
+glm::mat4 glm::Rotate(glm::mat4 const& m, float angle, glm::vec3 const& axis);
+glm::dmat4 glm::Rotate(glm::dmat4 const& m, double angle, glm::dvec3 const& axis);
 ```
 
 From `GLM_GTC_matrix_transform` extension: &lt;glm/gtc/matrix\_transform.hpp&gt;
@@ -1948,7 +1948,7 @@ glm::vec3 computeNormal(glm::vec3 const& a, glm::vec3 const& b, glm::vec3 const&
 
 ```cpp
 #include <glm/glm.hpp> // vec3, vec4, ivec4, mat4
-#include <glm/gtc/matrix_transform.hpp> // translate, rotate, scale, perspective
+#include <glm/gtc/matrix_transform.hpp> // translate, Rotate, scale, perspective
 #include <glm/gtc/type_ptr.hpp> // value_ptr
 
 void setUniformMVP(GLuint Location, glm::vec3 const& Translate, glm::vec3 const& Rotate)
@@ -1956,9 +1956,9 @@ void setUniformMVP(GLuint Location, glm::vec3 const& Translate, glm::vec3 const&
     glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.f);
     glm::mat4 ViewTranslate = glm::translate(
         glm::mat4(1.0f), Translate);
-    glm::mat4 ViewRotateX = glm::rotate(
+    glm::mat4 ViewRotateX = glm::Rotate(
         ViewTranslate, Rotate.y, glm::vec3(-1.0f, 0.0f, 0.0f));
-    glm::mat4 View = glm::rotate(ViewRotateX,
+    glm::mat4 View = glm::Rotate(ViewRotateX,
         Rotate.x, glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 Model = glm::scale(
         glm::mat4(1.0f), glm::vec3(0.5f));

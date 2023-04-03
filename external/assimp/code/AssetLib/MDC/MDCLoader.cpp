@@ -447,7 +447,7 @@ void MDCImporter::InternReadFile(
         }
     }
 
-    // Now rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
+    // Now Rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
     pScene->mRootNode->mTransformation = aiMatrix4x4(
             1.f, 0.f, 0.f, 0.f,
             0.f, 0.f, 1.f, 0.f,

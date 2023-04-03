@@ -172,7 +172,7 @@ limitations under the License.
             <node id="Light" name="カタカナ">
                 <translate sid="translate">-500 1000 400</translate>
                 <rotate sid="rotateZ">0 0 1 0</rotate>
-                <rotate sid="rotateY">0 1 0 0</rotate>
+                <rotate sid="rotateY">0 1 0 0</Rotate>
                 <rotate sid="rotateX">1 0 0 0</rotate>
                 <instance_light url="#light-lib"/>
             </node>

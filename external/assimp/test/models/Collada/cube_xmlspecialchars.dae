@@ -199,7 +199,7 @@ limitations under the License.
                 <translate sid="translate">3 4 10</translate>
                 <rotate sid="rotateZ">0 0 1 0</rotate>
                 <rotate sid="rotateY">0 1 0 0</rotate>
-                <rotate sid="rotateX">1 0 0 0</rotate>
+                <rotate sid="rotateX">1 0 0 0</Rotate>
                 <instance_light url="#pointLightShape1-lib"/>
             </node>
         </visual_scene>

@@ -44,9 +44,9 @@
                     <keyframes>
                         <keyframe time="0">
                             <translate x="0" y="0" z="0" />
-                            <rotate angle="0">
+                            <Rotate angle="0">
                                 <axis x="1" y="0" z="0" />
-                            </rotate>
+                            </Rotate>
                         </keyframe>
                     </keyframes>
                 </track>
@@ -54,9 +54,9 @@
                     <keyframes>
                         <keyframe time="0">
                             <translate x="0" y="0" z="0" />
-                            <rotate angle="0">
+                            <Rotate angle="0">
                                 <axis x="1" y="0" z="0" />
-                            </rotate>
+                            </Rotate>
                         </keyframe>
                     </keyframes>
                 </track>
@@ -64,21 +64,21 @@
                     <keyframes>
                         <keyframe time="0">
                             <translate x="0" y="0" z="0" />
-                            <rotate angle="0">
+                            <Rotate angle="0">
                                 <axis x="1" y="0" z="0" />
-                            </rotate>
+                            </Rotate>
                         </keyframe>
                         <keyframe time="1">
                             <translate x="0" y="0" z="0" />
-                            <rotate angle="0.680678">
+                            <Rotate angle="0.680678">
                                 <axis x="-0" y="-0" z="-1" />
-                            </rotate>
+                            </Rotate>
                         </keyframe>
                         <keyframe time="2">
                             <translate x="0" y="0" z="0" />
-                            <rotate angle="0">
+                            <Rotate angle="0">
                                 <axis x="1" y="0" z="0" />
-                            </rotate>
+                            </Rotate>
                         </keyframe>
                     </keyframes>
                 </track>
@@ -86,21 +86,21 @@
                     <keyframes>
                         <keyframe time="0">
                             <translate x="0" y="0" z="0" />
-                            <rotate angle="0">
+                            <Rotate angle="0">
                                 <axis x="1" y="0" z="0" />
-                            </rotate>
+                            </Rotate>
                         </keyframe>
                         <keyframe time="1">
                             <translate x="0" y="0" z="0" />
-                            <rotate angle="0.610865">
+                            <Rotate angle="0.610865">
                                 <axis x="-0" y="-0" z="-1" />
-                            </rotate>
+                            </Rotate>
                         </keyframe>
                         <keyframe time="2">
                             <translate x="0" y="0" z="0" />
-                            <rotate angle="0">
+                            <Rotate angle="0">
                                 <axis x="1" y="0" z="0" />
-                            </rotate>
+                            </Rotate>
                         </keyframe>
                     </keyframes>
                 </track>
@@ -108,9 +108,9 @@
                     <keyframes>
                         <keyframe time="0">
                             <translate x="0" y="0" z="0" />
-                            <rotate angle="0">
+                            <Rotate angle="0">
                                 <axis x="1" y="0" z="0" />
-                            </rotate>
+                            </Rotate>
                         </keyframe>
                     </keyframes>
                 </track>

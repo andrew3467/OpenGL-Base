@@ -404,7 +404,7 @@ void ProcessSweptDiskSolid(const Schema_2x3::IfcSweptDiskSolid &solid, TempMesh&
         q *= solid.Radius / q.Length();
         startvec = q;
 
-        // generate a rotation matrix to rotate q around d
+        // generate a rotation matrix to Rotate q around d
         IfcMatrix4 rot;
         IfcMatrix4::Rotation(deltaAngle,d,rot);
 

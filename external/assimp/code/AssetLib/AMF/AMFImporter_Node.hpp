@@ -127,7 +127,7 @@ struct AMFInstance : public AMFNodeElementBase {
 	/// create an instance of the object in the current constellation.
 	aiVector3D Delta;
 
-	/// \var Rotation - The rotation, in degrees, to rotate the referenced object about its x, y, and z axes, respectively, to create an
+	/// \var Rotation - The rotation, in degrees, to Rotate the referenced object about its x, y, and z axes, respectively, to create an
 	/// instance of the object in the current constellation. Rotations shall be executed in order of x first, then y, then z.
 	aiVector3D Rotation;
 

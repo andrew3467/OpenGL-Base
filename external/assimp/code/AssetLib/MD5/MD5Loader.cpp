@@ -155,7 +155,7 @@ void MD5Importer::InternReadFile(const std::string &pFile, aiScene *_pScene, IOS
         throw DeadlyImportError("Failed to read valid contents out of this MD5* file");
     }
 
-    // Now rotate the whole scene 90 degrees around the x axis to match our internal coordinate system
+    // Now Rotate the whole scene 90 degrees around the x axis to match our internal coordinate system
     mScene->mRootNode->mTransformation = aiMatrix4x4(1.f, 0.f, 0.f, 0.f,
             0.f, 0.f, 1.f, 0.f, 0.f, -1.f, 0.f, 0.f, 0.f, 0.f, 0.f, 1.f);
 

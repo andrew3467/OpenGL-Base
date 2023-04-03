@@ -829,8 +829,8 @@ ASSIMP_API void aiVector3NormalizeSafe(
 
 // --------------------------------------------------------------------------------
 /** Rotate a 3D vector by a quaternion.
- *  @param v The vector to rotate by \p q
- *  @param q Quaternion to use to rotate \p v
+ *  @param v The vector to Rotate by \p q
+ *  @param q Quaternion to use to Rotate \p v
  */
 ASSIMP_API void aiVector3RotateByQuaternion(
         C_STRUCT aiVector3D *v,
@@ -924,8 +924,8 @@ ASSIMP_API void aiMatrix3Translation(
 // --------------------------------------------------------------------------------
 /** Create a 3x3 matrix that rotates one vector to another vector.
  *  @param mat Receives the output matrix
- *  @param from Vector to rotate from
- *  @param to Vector to rotate to
+ *  @param from Vector to Rotate from
+ *  @param to Vector to Rotate to
  */
 ASSIMP_API void aiMatrix3FromTo(
         C_STRUCT aiMatrix3x3 *mat,
@@ -1127,8 +1127,8 @@ ASSIMP_API void aiMatrix4Scaling(
 // --------------------------------------------------------------------------------
 /** Create a 4x4 matrix that rotates one vector to another vector.
  *  @param mat Receives the output matrix
- *  @param from Vector to rotate from
- *  @param to Vector to rotate to
+ *  @param from Vector to Rotate from
+ *  @param to Vector to Rotate to
  */
 ASSIMP_API void aiMatrix4FromTo(
         C_STRUCT aiMatrix4x4 *mat,

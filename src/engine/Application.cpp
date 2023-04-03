@@ -139,7 +139,7 @@ void Application::render() {
     lightingShader.SetVec3("viewPos", camera->position());
     lightingShader.SetFloat("shininess", 128.0f);
 
-    lightingShader.SetInt("blinn", blinn);
+    lightingShader.SetInt("blinn", false);
     lightingShader.SetInt("gamma", true);
 
     glPrimitive::DrawPlane(lightingShader, glm::vec3(0.0, 0.0, 0.0),

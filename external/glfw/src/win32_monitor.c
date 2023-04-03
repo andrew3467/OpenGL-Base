@@ -415,7 +415,7 @@ GLFWvidmode* _glfwPlatformGetVideoModes(_GLFWmonitor* monitor, int* count)
 
         modeIndex++;
 
-        // Skip modes with less than 15 BPP
+        // Skip modes with less than 15 m_BPP
         if (dm.dmBitsPerPel < 15)
             continue;
 

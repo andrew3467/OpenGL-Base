@@ -118,7 +118,7 @@ limitations under the License.
             <node id="pSphere1" name="pSphere1">
                 <rotate sid="rotateZ">0 0 1 0</rotate>
                 <rotate sid="rotateY">0 1 0 0</rotate>
-                <rotate sid="rotateX">1 0 0 0</rotate>
+                <rotate sid="rotateX">1 0 0 0</Rotate>
                 <instance_geometry url="#pSphereShape1-lib">
                     <bind_material>
                         <technique_common>

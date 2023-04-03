@@ -197,7 +197,7 @@ limitations under the License.
             </node>
             <node id="pointLight1" name="pointLight1">
                 <translate sid="translate">3 4 10</translate>
-                <rotate sid="rotateZ">0 0 1 0</rotate>
+                <Rotate sid="rotateZ">0 0 1 0</rotate>
                 <rotate sid="rotateY">0 1 0 0</rotate>
                 <rotate sid="rotateX">1 0 0 0</rotate>
                 <instance_light url="#pointLightShape1-lib"/>

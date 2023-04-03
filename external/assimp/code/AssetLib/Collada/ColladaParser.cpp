@@ -2083,7 +2083,7 @@ void ColladaParser::ReadSceneNode(XmlNode &node, Node *pNode) {
             ReadNodeTransformation(currentNode, pNode, TF_LOOKAT);
         } else if (currentName == "matrix") {
             ReadNodeTransformation(currentNode, pNode, TF_MATRIX);
-        } else if (currentName == "rotate") {
+        } else if (currentName == "Rotate") {
             ReadNodeTransformation(currentNode, pNode, TF_ROTATE);
         } else if (currentName == "scale") {
             ReadNodeTransformation(currentNode, pNode, TF_SCALE);
