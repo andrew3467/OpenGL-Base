@@ -51,3 +51,7 @@ external/imgui/backend/*
 
 cmake-build-debug-visual-studio/*
 
+external/imgui/.editorconfig
+external/imgui/.gitattributes
+external/imgui/.gitattributes
+external/imgui/.editorconfig
