@@ -1,6 +1,7 @@
 //
 // Created by apgra on 3/23/2023.
 //
+#include "ErrorManager.h"
 #include "Model.h"
 
 #include "assimp/Importer.hpp"
@@ -160,7 +161,7 @@ unsigned int Model::TextureFromFile(const char *path, const std::string &directo
     filename = directory + '/' + filename;
 
     unsigned int textureID;
-    GLCall(glGenTextures(1, &textureID));
+    GLErrorManager(glGenTextures(1, &textureID));
 
     stbi_set_flip_vertically_on_load(true);
     int width, height, nrComponents;
@@ -175,14 +176,14 @@ unsigned int Model::TextureFromFile(const char *path, const std::string &directo
         else if (nrComponents == 4)
             format = GL_RGBA;
 
-        GLCall(glBindTexture(GL_TEXTURE_2D, textureID));
-        GLCall(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data));
-        GLCall(glGenerateMipmap(GL_TEXTURE_2D));
+        GLErrorManager(glBindTexture(GL_TEXTURE_2D, textureID));
+        GLErrorManager(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data));
+        GLErrorManager(glGenerateMipmap(GL_TEXTURE_2D));
 
-        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
-        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+        GLErrorManager(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+        GLErrorManager(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+        GLErrorManager(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
+        GLErrorManager(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 
         stbi_image_free(data);
     }

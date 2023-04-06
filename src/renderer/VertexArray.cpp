@@ -2,16 +2,17 @@
 // Created by Andrew Graser on 4/1/2023.
 //
 
+#include "engine/ErrorManager.h"
 #include "VertexArray.h"
-#include "Renderer.h"
+#include "VertexBufferLayout.h"
 
 
 VertexArray::VertexArray() {
-    GLCall(glGenVertexArrays(1, &m_RendererID));
+    glGenVertexArrays(1, &m_RendererID);
 }
 
 VertexArray::~VertexArray() {
-    GLCall(glDeleteVertexArrays(1, &m_RendererID));
+    GLErrorManager(glDeleteVertexArrays(1, &m_RendererID));
 }
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout){
@@ -22,16 +23,16 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 
     for(unsigned int i = 0; i < elements.size(); i++){
         const auto& element = elements[i];
-        GLCall(glEnableVertexAttribArray(i));
-        GLCall(glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.GetStride(), (const void*)offset));
+        GLErrorManager(glEnableVertexAttribArray(i));
+        GLErrorManager(glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.GetStride(), (const void*)offset));
         offset += element.count *  VertexBufferElement::GetSizeOfType(element.type);
     }
 }
 
 void VertexArray::Bind() const {
-    GLCall(glBindVertexArray(m_RendererID));
+    GLErrorManager(glBindVertexArray(m_RendererID));
 }
 
 void VertexArray::Unbind() const {
-    GLCall(glBindVertexArray(0))
+    GLErrorManager(glBindVertexArray(0))
 }

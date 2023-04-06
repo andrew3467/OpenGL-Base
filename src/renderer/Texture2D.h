@@ -5,7 +5,7 @@
 #ifndef OPENGL_BASE_TEXTURE2D_H
 #define OPENGL_BASE_TEXTURE2D_H
 
-#include "Renderer.h"
+#include "engine/ErrorManager.h"
 
 //STD
 #include <string>

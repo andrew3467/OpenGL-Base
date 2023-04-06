@@ -10,7 +10,7 @@
 #include <sstream>
 #include <string>
 
-#include "Renderer.h"
+
 
 #include "glm/glm.hpp"
 #include "glm/vec4.hpp"
@@ -37,6 +37,8 @@ private:
 public:
     void Bind() const;
     void Unbind() const;
+
+    inline unsigned int getID() {return m_RendererID;}
 
 
     //Uniforms

@@ -6,14 +6,13 @@
 #define OPENGL_BASE_VERTEXBUFFERLAYOUT_H
 
 
-#include <glad/glad.h>
 #include <vector>
-#include "Renderer.h"
+#include "engine/ErrorManager.h"
 
 struct VertexBufferElement{
     unsigned int type;
     unsigned int count;
-    unsigned int normalized;
+    bool normalized;
 
     static unsigned int GetSizeOfType(unsigned int type){
         switch(type){

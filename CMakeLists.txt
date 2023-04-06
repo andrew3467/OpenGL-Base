@@ -30,6 +30,12 @@ add_subdirectory(${LIB_DIR}/glfw)
 set(ASSIMP_DIR ${LIB_DIR}/assimp)
 add_subdirectory(${ASSIMP_DIR})
 
+set(IMGUI_PATH ${LIB_DIR}/imgui)
+
+#imgui static library
+file(GLOB IMGUI_SOURCES ${IMGUI_PATH}/*.cpp)
+add_library("ImGui" STATIC ${IMGUI_SOURCES})
+
 
 
 include_directories (src/
@@ -41,7 +47,8 @@ include_directories (src/
         )
 
 
-file(GLOB EXTERNAL_SRC ${LIB_DIR}/glad/src/glad.c)
+file(GLOB EXTERNAL_SRC ${LIB_DIR}/glad/src/glad.c
+        )
 
 file(GLOB_RECURSE PRJ_SOURCES glad.c ${PROJECT_SOURCE_DIR}/src/*.cpp
         ${PROJECT_SOURCE_DIR}/src/*.c
@@ -71,7 +78,12 @@ add_executable(OpenGl_Base
         ${PRJ_SOURCES}
         ${PRJ_HEADERS}
         ${EXTERNAL_SRC}
-        src/renderer/VertexBuffer.h src/renderer/VertexBuffer.cpp src/renderer/IndexBuffer.h src/renderer/IndexBuffer.cpp src/renderer/Renderer.h src/renderer/Renderer.cpp src/renderer/VertexArray.h src/renderer/VertexArray.cpp src/renderer/VertexBufferLayout.h)
+        ${IMGUI_PATH}/examples/imgui_impl_glfw.h
+        ${IMGUI_PATH}/examples/imgui_impl_glfw.cpp
+        ${IMGUI_PATH}/examples/imgui_impl_opengl3.h
+        ${IMGUI_PATH}/examples/imgui_impl_opengl3.cpp
+        ${IMGUI_PATH}/examples/imgui_impl_opengl3_loader.h
+        )
 
 target_link_libraries(OpenGl_Base
         opengl32
@@ -79,7 +91,12 @@ target_link_libraries(OpenGl_Base
         ${GLFW_LIBRARIES}
         ${GLAD_LIBRARIES}
         assimp
+        ImGui
         )
+
+target_include_directories(
+        "ImGui" PUBLIC ${IMGUI_PATH}
+)
 
 set_target_properties (${PROJECT_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})

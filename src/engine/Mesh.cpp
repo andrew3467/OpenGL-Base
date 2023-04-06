@@ -2,6 +2,7 @@
 // Created by apgra on 3/22/2023.
 //
 #include "Mesh.h"
+#include "renderer/VertexBufferLayout.h"
 
 
 Mesh::Mesh(std::vector<Vertex> v, std::vector<unsigned int> i, std::vector<Texture> t) :
@@ -59,7 +60,7 @@ void Mesh::Draw(Shader* shader, int numInstances)
     unsigned int heightNr   = 1;
     for(unsigned int i = 0; i < textures.size(); i++)
     {
-        GLCall(glActiveTexture(GL_TEXTURE0 + i));
+        GLErrorManager(glActiveTexture(GL_TEXTURE0 + i));
 
         std::string number;
         std::string name = textures[i].type;
@@ -74,15 +75,15 @@ void Mesh::Draw(Shader* shader, int numInstances)
 
 
         shader->SetInt(name + number, i);
-        GLCall(glBindTexture(GL_TEXTURE_2D, textures[i].ID));
+        GLErrorManager(glBindTexture(GL_TEXTURE_2D, textures[i].ID));
     }
 
     // draw mesh
     VA.Bind();
     //glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
-    GLCall(glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, nullptr, numInstances));
+    GLErrorManager(glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, nullptr, numInstances));
     VA.Unbind();
 
-    GLCall(glActiveTexture(GL_TEXTURE0));
+    GLErrorManager(glActiveTexture(GL_TEXTURE0));
 }
 

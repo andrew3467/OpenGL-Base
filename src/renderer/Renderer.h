@@ -1,20 +1,24 @@
 //
-// Created by Andrew Graser on 3/31/2023.
+// Created by Andrew Graser on 4/3/2023.
 //
 
-#ifndef OPENGL_BASE_RENDERER_H
-#define OPENGL_BASE_RENDERER_H
-
-#include <glad/glad.h>
-
-
-#define ASSERT(x) if(!(x)) __debugbreak();
-#define GLCall(x) GLClearError(); \
-    x;                            \
-    ASSERT(GLLogCall(#x, __FILE__, __LINE__))
+#pragma once
+//#ifndef OPENGL_BASE_RENDERER_H
+//#define OPENGL_BASE_RENDERER_H
 
 
-void GLClearError();
-bool GLLogCall(const char* function, const char* file, int line);
+#include "Shader.h"
+#include "VertexArray.h"
+#include "IndexBuffer.h"
 
-#endif //OPENGL_BASE_RENDERER_H
+
+class Renderer {
+public:
+    void Clear();
+    void Draw(Shader* shader, const VertexArray& va, const IndexBuffer& ib) const;
+
+private:
+
+};
+
+//#endif //OPENGL_BASE_RENDERER_H

@@ -5,7 +5,7 @@
 #ifndef OPENGL_BASE_TEXTURE3D_H
 #define OPENGL_BASE_TEXTURE3D_H
 
-#include "Renderer.h"
+#include "engine/ErrorManager.h"
 
 #include <string>
 #include <vector>
@@ -31,8 +31,8 @@ public:
     Texture3D(std::vector<std::string> faces);
     ~Texture3D();
 
-    void bind(unsigned int slot = 0) const;
-    void unbind() const;
+    void Bind(unsigned int slot = 0) const;
+    void Unbind() const;
 };
 
 #endif //OPENGL_BASE_TEXTURE3D_H

@@ -39,7 +39,6 @@ void Camera::Rotate(float mouseX, float mouseY) {
     lastX = mouseX;
     lastY = mouseY;
 
-    float sensitivity = 0.1f;
     xoffset *= sensitivity;
     yoffset *= sensitivity;
 

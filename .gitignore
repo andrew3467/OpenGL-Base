@@ -47,5 +47,7 @@ src/.idea/*
 external/imgui/.github/*
 external/imgui/examples/*
 external/imgui/docs/*
+external/imgui/backend/*
 
 cmake-build-debug-visual-studio/*
+

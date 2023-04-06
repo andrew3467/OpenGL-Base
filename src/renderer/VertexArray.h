@@ -2,12 +2,16 @@
 // Created by Andrew Graser on 4/1/2023.
 //
 
-#ifndef OPENGL_BASE_VERTEXARRAY_H
-#define OPENGL_BASE_VERTEXARRAY_H
+#pragma once
+
+//#ifndef OPENGL_BASE_VERTEXARRAY_H
+//#define OPENGL_BASE_VERTEXARRAY_H
 
 
 #include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
+
+
+class VertexBufferLayout;
 
 class VertexArray{
 private:
@@ -23,4 +27,4 @@ public:
     void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
 };
 
-#endif //OPENGL_BASE_VERTEXARRAY_H
+//#endif //OPENGL_BASE_VERTEXARRAY_H

@@ -39,6 +39,7 @@ private:
     glm::vec3 camUp = glm::cross(camDir, camRight);
 
 public:
+    Camera();
     Camera(glm::vec3 pos, int windowWidth, int windowHeight);
 
     void Move(CameraMoveDir moveDir, float deltaTime);

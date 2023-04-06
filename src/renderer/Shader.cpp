@@ -4,6 +4,8 @@
 
 #include "Shader.h"
 
+#include "engine/ErrorManager.h"
+
 
 Shader::Shader() : m_RendererID(0) {
 
@@ -20,27 +22,27 @@ unsigned int Shader::createShaderProgram(const char *vertPath, const char *fragP
     if (geometryPath != nullptr) {
         geom = createShader(GL_GEOMETRY_SHADER, readSourceFile(geometryPath).c_str());
     }
-    GLCall(unsigned int id = glCreateProgram());
-    GLCall(glAttachShader(id, vert));
-    GLCall(glAttachShader(id, frag));
+    GLErrorManager(unsigned int id = glCreateProgram());
+    GLErrorManager(glAttachShader(id, vert));
+    GLErrorManager(glAttachShader(id, frag));
     if (geometryPath != nullptr) {
-        GLCall(glAttachShader(id, geom));
+        GLErrorManager(glAttachShader(id, geom));
     }
-    GLCall(glLinkProgram(id));
+    GLErrorManager(glLinkProgram(id));
 
     int success;
     char infoLog[512];
-    GLCall(glGetProgramiv(id, GL_LINK_STATUS, &success));
+    GLErrorManager(glGetProgramiv(id, GL_LINK_STATUS, &success));
     if (!success) {
-        GLCall(glGetProgramInfoLog(id, 512, nullptr, infoLog));
+        GLErrorManager(glGetProgramInfoLog(id, 512, nullptr, infoLog));
         std::cout << "ERROR::SHADER::LINKING_FAILURE\n" << infoLog << "\n";
     }
 
     //Cleanup
-    GLCall(glDeleteShader(vert));
-    GLCall(glDeleteShader(frag));
+    GLErrorManager(glDeleteShader(vert));
+    GLErrorManager(glDeleteShader(frag));
     if (geometryPath != nullptr) {
-        GLCall(glDeleteShader(geom));
+        GLErrorManager(glDeleteShader(geom));
     }
     return id;
 }
@@ -49,16 +51,16 @@ unsigned int Shader::createShader(unsigned int SHADER_TYPE, const char *src) {
     if(src == nullptr){
         throw std::runtime_error("ERROR: Shader received null source");
     }
-    GLCall(unsigned int shader = glCreateShader(SHADER_TYPE));
-    GLCall(glShaderSource(shader, 1, &src, nullptr));
-    GLCall(glCompileShader(shader));
+    GLErrorManager(unsigned int shader = glCreateShader(SHADER_TYPE));
+    GLErrorManager(glShaderSource(shader, 1, &src, nullptr));
+    GLErrorManager(glCompileShader(shader));
 
 
     int success;
     char infoLog[512];
-    GLCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &success));
+    GLErrorManager(glGetShaderiv(shader, GL_COMPILE_STATUS, &success));
     if (!success) {
-        GLCall(glGetShaderInfoLog(shader, 512, nullptr, infoLog));
+        GLErrorManager(glGetShaderInfoLog(shader, 512, nullptr, infoLog));
         std::cout << "ERROR::" << ((SHADER_TYPE == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT") << "::SHADER::COMPILATION_FAILED\n" << infoLog << "\n";
     }
 
@@ -81,15 +83,15 @@ std::string Shader::readSourceFile(const char* srcPath) {
 }
 
 void Shader::Bind() const {
-    GLCall(glUseProgram(m_RendererID));
+    GLErrorManager(glUseProgram(m_RendererID));
 }
 
 void Shader::Unbind() const {
-    GLCall(glUseProgram(0));
+    GLErrorManager(glUseProgram(0));
 }
 
 int Shader::location(const std::string& n) const {
-    GLCall(return glGetUniformLocation(m_RendererID, n.c_str()));
+    GLErrorManager(return glGetUniformLocation(m_RendererID, n.c_str()));
 }
 
 
@@ -107,50 +109,50 @@ void Shader::SetPointLight(const PointLight &light, const std::string& arrIndex)
 }
 
 void Shader::SetInt(const std::string &name, int v) {
-    GLCall(glUniform1i(location(name), v));
+    GLErrorManager(glUniform1i(location(name), v));
 }
 
 void Shader::SetFloat(const std::string &name, float v) {
-    GLCall(glUniform1f(location(name), v));
+    GLErrorManager(glUniform1f(location(name), v));
 }
 
 
 void Shader::setVec2(const std::string &name, glm::vec2 v) {
-    GLCall(glUniform2f(location(name), v.x, v.y));
+    GLErrorManager(glUniform2f(location(name), v.x, v.y));
 }
 
 void Shader::setVec2(const std::string &name, float x, float y) {
-    GLCall(glUniform2f(location(name), x, y));
+    GLErrorManager(glUniform2f(location(name), x, y));
 }
 
 
 void Shader::SetVec3(const std::string &name, glm::vec3 v) {
-    GLCall(glUniform3f(location(name), v.x, v.y, v.z));
+    GLErrorManager(glUniform3f(location(name), v.x, v.y, v.z));
 }
 
 void Shader::SetVec3(const std::string &name, float x, float y, float z) {
-    GLCall(glUniform3f(location(name), x, y, z));
+    GLErrorManager(glUniform3f(location(name), x, y, z));
 }
 
 void Shader::setVec3(const std::string &name, float v) {
-    GLCall(glUniform3f(location(name), v, v, v));
+    GLErrorManager(glUniform3f(location(name), v, v, v));
 }
 
 void Shader::setVec4(const std::string& name, glm::vec4 v) {
-    GLCall(glUniform4f(location(name), v.x, v.y, v.z, v.w));
+    GLErrorManager(glUniform4f(location(name), v.x, v.y, v.z, v.w));
 }
 
 void Shader::setVec4(const std::string &name, float x, float y, float z, float w) {
-    GLCall(glUniform4f(location(name), x, y, z, w));
+    GLErrorManager(glUniform4f(location(name), x, y, z, w));
 }
 
 
 void Shader::SetMat4(const std::string &name, glm::mat4 v) {
-    GLCall(glUniformMatrix4fv(location(name), 1, GL_FALSE, glm::value_ptr(v)));
+    GLErrorManager(glUniformMatrix4fv(location(name), 1, GL_FALSE, glm::value_ptr(v)));
 }
 
 
 //Cleanup
 Shader::~Shader() {
-    GLCall(glDeleteProgram(m_RendererID));
+    GLErrorManager(glDeleteProgram(m_RendererID));
 }

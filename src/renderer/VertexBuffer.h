@@ -5,7 +5,6 @@
 #ifndef OPENGL_BASE_VERTEXBUFFER_H
 #define OPENGL_BASE_VERTEXBUFFER_H
 
-#include <glad/glad.h>
 
 class VertexBuffer{
 private:
