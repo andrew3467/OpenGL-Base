@@ -1,14 +1,7 @@
 #include "engine/ErrorManager.h"
 #include "GLFW/glfw3.h"
 
-
-#include "engine/Camera.h"
-
-
 #include "renderer/VertexBufferLayout.h"
-#include "renderer/Shader.h"
-#include "renderer/Texture2D.h"
-#include "renderer/Texture3D.h"
 #include "renderer/Renderer.h"
 
 #include "ObjectData.h"
@@ -19,6 +12,7 @@
 
 #include "tests/TestClearColor.h"
 #include "tests/TestTexture2D.h"
+#include "tests/Test3DCamera.h"
 
 
 #include <iostream>
@@ -31,18 +25,14 @@ GLFWwindow* window;
 
 Renderer renderer;
 
-Camera* camera;
 glm::mat4 projection;
 glm::mat4 transform;
-
-bool cursorEnabled = false;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 void initGlFW();
 void initGLAD();
-void initObjects();
 
 void processInput(GLFWwindow* window);
 
@@ -56,18 +46,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 int main() {
     initGlFW();
     initGLAD();
-    initObjects();
 
     GLErrorManager(glEnable(GL_DEPTH_TEST));
-
-    Texture3D skyboxTex(faces);
-    Texture2D woodTex("../../resources/textures/wood.png");
-    Texture2D brickTex("../../resources/textures/brick.png");
-
-    Shader lightingShader("../../src/shaders/texturedLit.vert", "../../src/shaders/texturedLit.frag");
-    Shader colorShader("../../src/shaders/solidColor.vert", "../../src/shaders/solidColor.frag");
-    Shader skyboxShader("../../src/shaders/skybox.vert", "../../src/shaders/skybox.frag");
-
 
 
     IMGUI_CHECKVERSION();
@@ -88,6 +68,7 @@ int main() {
 
     testMenu->RegisterTest<test::TestClearColor>("Clear Color");
     testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
+    testMenu->RegisterTest<test::Test3DCamera>("3D Camera");
 
 
     //Disable cursor
@@ -96,9 +77,6 @@ int main() {
     GLErrorManager(glViewport(0, 0, windowWidth, windowHeight));
 
     while(!glfwWindowShouldClose(window)) {
-        processInput(window);
-
-
         renderer.Clear();
         GLErrorManager(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 
@@ -109,7 +87,7 @@ int main() {
         ImGui::NewFrame();
 
         if(currentTest){
-            currentTest->OnUpdate(deltaTime);
+            currentTest->OnUpdate(deltaTime, window);
             currentTest->OnRender();
 
             ImGui::Begin("test");
@@ -126,6 +104,10 @@ int main() {
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        float currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
 
         tick();
     }
@@ -172,49 +154,10 @@ void initGLAD() {
     }
 }
 
-void initObjects() {
-    camera = new Camera(cameraPosition, windowWidth, windowHeight);
-}
-
-
-
-void processInput(GLFWwindow *window) {
-    //Toggle Cursor
-    if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS){
-        cursorEnabled = !cursorEnabled;
-        int mode = cursorEnabled ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED;
-        glfwSetInputMode(window, GLFW_CURSOR, mode);
-    }
-
-
-    //Camera Input
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        camera->Move(Forward, deltaTime);
-    }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        camera->Move(Backward, deltaTime);
-    }
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        camera->Move(Left, deltaTime);
-    }
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        camera->Move(Right, deltaTime);
-    }
-
-    //Mouse Input
-    if(!cursorEnabled) {
-        double mouseX, mouseY;
-        glfwGetCursorPos(window, &mouseX, &mouseY);
-        camera->Rotate((float) mouseX, (float) mouseY);
-    }
-}
-
 void update() {
     float currentFrame = static_cast<float>(glfwGetTime());
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
-
-    projection = camera->projection(windowWidth, windowHeight);
 }
 
 void tick(){

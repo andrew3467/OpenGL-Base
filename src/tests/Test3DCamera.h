@@ -1,29 +1,31 @@
 //
-// Created by Andrew Graser on 4/6/2023.
+// Created by Andrew Graser on 4/7/2023.
 //
 
-#ifndef OPENGL_BASE_TestTexture2D_H
-#define OPENGL_BASE_TestTexture2D_H
+#ifndef OPENGL_BASE_TEST3DCAMERA_H
+#define OPENGL_BASE_TEST3DCAMERA_H
 
 #include "Test.h"
 #include "renderer/VertexArray.h"
-
-#include "renderer/Shader.h"
-#include "renderer/Texture2D.h"
 #include "renderer/Renderer.h"
+#include "renderer/Texture2D.h"
+#include "engine/Camera.h"
 
-namespace test {
-    class TestTexture2D : public test::Test {
+
+namespace test{
+    class Test3DCamera : public Test {
     public:
-        TestTexture2D();
-        ~TestTexture2D() override;
+        Test3DCamera();
+        ~Test3DCamera();
 
         void OnUpdate(float deltaTime, void* window) override;
         void OnRender() override;
-        void OnImGuiRender();
+        void OnImGuiRender() override;
 
     private:
         Renderer renderer;
+
+        std::unique_ptr<Camera> camera;
 
         std::unique_ptr<VertexArray> va;
         std::unique_ptr<VertexBuffer> vb;
@@ -32,10 +34,8 @@ namespace test {
         std::unique_ptr<Shader> shader;
         std::unique_ptr<Texture2D> tex;
 
-        glm::vec3 m_TranslationA;
-        glm::vec3 m_TranslationB;
+        glm::vec4 cubeColor;
     };
 }
 
-
-#endif //OPENGL_BASE_TestTexture2D_H
+#endif //OPENGL_BASE_TEST3DCAMERA_H

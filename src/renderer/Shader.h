@@ -9,6 +9,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 
 
 
@@ -23,6 +24,7 @@
 class Shader{
 private:
     unsigned int m_RendererID;
+    mutable std::unordered_map<std::string, int> m_UniformCache;
 
 public:
     Shader();
@@ -33,6 +35,7 @@ private:
     unsigned int createShaderProgram(const char* vertPath, const char* fragPath, const char* geometryPath);
     std::string readSourceFile(const char* srcPath);
     unsigned int createShader(unsigned int SHADER_TYPE, const char *src);
+    int getUniformLocation(const std::string& name) const;
 
 public:
     void Bind() const;
@@ -40,11 +43,7 @@ public:
 
     inline unsigned int getID() {return m_RendererID;}
 
-
-    //Uniforms
-private:
-    int location(const std::string& n) const;
-
+//Uniforms
 public:
     void SetPointLight(const PointLight& light, const std::string& arrIndex);
 

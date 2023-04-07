@@ -5,7 +5,7 @@
 #include "Camera.h"
 
 
-Camera::Camera(glm::vec3 pos, int windowWidth, int windowHeight) : lastX(windowWidth / 2.0f), lastY(windowHeight / 2.0f) {
+Camera::Camera(glm::vec3 pos, int windowWidth, int windowHeight) : lastX(windowWidth / 2.0f), lastY(windowHeight / 2.0f), windowWidth(windowWidth), windowHeight(windowHeight) {
 
 }
 

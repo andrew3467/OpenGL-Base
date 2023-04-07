@@ -90,8 +90,14 @@ void Shader::Unbind() const {
     GLErrorManager(glUseProgram(0));
 }
 
-int Shader::location(const std::string& n) const {
-    GLErrorManager(return glGetUniformLocation(m_RendererID, n.c_str()));
+int Shader::getUniformLocation(const std::string &name) const {
+    if(m_UniformCache.find(name) != m_UniformCache.end()){
+        return m_UniformCache[name];
+    }
+
+    int location = glGetUniformLocation(m_RendererID, name.c_str());
+    m_UniformCache[name] = location;
+    return location;
 }
 
 
@@ -109,46 +115,46 @@ void Shader::SetPointLight(const PointLight &light, const std::string& arrIndex)
 }
 
 void Shader::SetInt(const std::string &name, int v) {
-    GLErrorManager(glUniform1i(location(name), v));
+    GLErrorManager(glUniform1i(getUniformLocation(name), v));
 }
 
 void Shader::SetFloat(const std::string &name, float v) {
-    GLErrorManager(glUniform1f(location(name), v));
+    GLErrorManager(glUniform1f(getUniformLocation(name), v));
 }
 
 
 void Shader::setVec2(const std::string &name, glm::vec2 v) {
-    GLErrorManager(glUniform2f(location(name), v.x, v.y));
+    GLErrorManager(glUniform2f(getUniformLocation(name), v.x, v.y));
 }
 
 void Shader::setVec2(const std::string &name, float x, float y) {
-    GLErrorManager(glUniform2f(location(name), x, y));
+    GLErrorManager(glUniform2f(getUniformLocation(name), x, y));
 }
 
 
 void Shader::SetVec3(const std::string &name, glm::vec3 v) {
-    GLErrorManager(glUniform3f(location(name), v.x, v.y, v.z));
+    GLErrorManager(glUniform3f(getUniformLocation(name), v.x, v.y, v.z));
 }
 
 void Shader::SetVec3(const std::string &name, float x, float y, float z) {
-    GLErrorManager(glUniform3f(location(name), x, y, z));
+    GLErrorManager(glUniform3f(getUniformLocation(name), x, y, z));
 }
 
 void Shader::setVec3(const std::string &name, float v) {
-    GLErrorManager(glUniform3f(location(name), v, v, v));
+    GLErrorManager(glUniform3f(getUniformLocation(name), v, v, v));
 }
 
 void Shader::setVec4(const std::string& name, glm::vec4 v) {
-    GLErrorManager(glUniform4f(location(name), v.x, v.y, v.z, v.w));
+    GLErrorManager(glUniform4f(getUniformLocation(name), v.x, v.y, v.z, v.w));
 }
 
 void Shader::setVec4(const std::string &name, float x, float y, float z, float w) {
-    GLErrorManager(glUniform4f(location(name), x, y, z, w));
+    GLErrorManager(glUniform4f(getUniformLocation(name), x, y, z, w));
 }
 
 
 void Shader::SetMat4(const std::string &name, glm::mat4 v) {
-    GLErrorManager(glUniformMatrix4fv(location(name), 1, GL_FALSE, glm::value_ptr(v)));
+    GLErrorManager(glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(v)));
 }
 
 

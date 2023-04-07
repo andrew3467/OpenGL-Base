@@ -16,7 +16,7 @@ namespace test {
         Test() {}
         virtual ~Test() {}
 
-        virtual void OnUpdate(float deltaTime) {}
+        virtual void OnUpdate(float deltaTime, void* window){}
         virtual void OnRender() {}
         virtual void OnImGuiRender() {}
     };
@@ -31,7 +31,7 @@ namespace test {
 
         template<typename T>
         void RegisterTest(const std::string& name){
-            std::cout << "Registering test " << name << '\n';
+            std::cout << "Registering Test " << name << '\n';
 
             m_Tests.push_back(std::make_pair(name, [](){return new T;}));
         }

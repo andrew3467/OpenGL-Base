@@ -23,6 +23,8 @@ private:
     float yaw = -90.0f;
     float pitch = 0.0f;
 
+    int windowWidth;
+    int windowHeight;
 
     float lastX;
     float lastY;
@@ -48,7 +50,8 @@ public:
     inline float GetYaw() const { return yaw;}
     inline float GetPitch() const { return pitch;}
 
-    inline glm::mat4 projection(int w, int h) const {return glm::perspective(glm::radians(60.0f), (float)w / (float)h, 0.1f, 100.0f);}
+    inline glm::mat4 projection() const {return glm::perspective(glm::radians(60.0f),
+                                                                 (float)windowWidth / (float)windowHeight,0.1f, 100.0f);}
     inline glm::mat4 view() const {return glm::lookAt(camPos, camPos + camFront, camUp);}
     inline glm::vec3 position() const {return camPos;}
     inline glm::vec3 front() const {return camFront;}
