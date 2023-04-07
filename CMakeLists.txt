@@ -34,7 +34,7 @@ set(IMGUI_PATH ${LIB_DIR}/imgui)
 
 #imgui static library
 file(GLOB IMGUI_SOURCES ${IMGUI_PATH}/*.cpp)
-add_library("ImGui" STATIC ${IMGUI_SOURCES})
+add_library("ImGui" STATIC ${IMGUI_SOURCES} src/tests/Test.h src/tests/TestClearColor.h src/tests/TestClearColor.cpp src/tests/Test.cpp)
 
 
 

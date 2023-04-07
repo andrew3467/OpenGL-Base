@@ -5,10 +5,9 @@
 #include "engine/ErrorManager.h"
 
 
-void Renderer::Draw(Shader *shader, const VertexArray &va, const IndexBuffer &ib) const {
-    shader->Bind();
+void Renderer::Draw(const Shader& shader, const VertexArray &va, const IndexBuffer &ib) const {
+    shader.Bind();
     va.Bind();
-    ib.Bind();
     GLErrorManager(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
 

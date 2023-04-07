@@ -2,7 +2,6 @@
 #include "GLFW/glfw3.h"
 
 
-#include "engine/GLPrimitives.h"
 #include "engine/Camera.h"
 
 
@@ -18,7 +17,8 @@
 #include "../../external/imgui/examples/imgui_impl_glfw.h"
 #include "../../external/imgui/examples/imgui_impl_opengl3.h"
 
-
+#include "tests/TestClearColor.h"
+#include "tests/TestTexture2D.h"
 
 
 #include <iostream>
@@ -30,11 +30,6 @@ const char* windowTitle = "OpenGL Base";
 GLFWwindow* window;
 
 Renderer renderer;
-
-
-Shader* colorShader;
-Shader* lightingShader;
-Shader* skyboxShader;
 
 Camera* camera;
 glm::mat4 projection;
@@ -64,39 +59,15 @@ int main() {
     initObjects();
 
     GLErrorManager(glEnable(GL_DEPTH_TEST));
-    GLErrorManager(glEnable(GL_PROGRAM_POINT_SIZE));
-    GLErrorManager(glEnable(GL_FRAMEBUFFER_SRGB));
-
-    GLErrorManager(glEnable(GL_BLEND));
-    GLErrorManager(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
     Texture3D skyboxTex(faces);
     Texture2D woodTex("../../resources/textures/wood.png");
     Texture2D brickTex("../../resources/textures/brick.png");
 
+    Shader lightingShader("../../src/shaders/texturedLit.vert", "../../src/shaders/texturedLit.frag");
+    Shader colorShader("../../src/shaders/solidColor.vert", "../../src/shaders/solidColor.frag");
+    Shader skyboxShader("../../src/shaders/skybox.vert", "../../src/shaders/skybox.frag");
 
-    VertexArray cubeVA;
-    VertexBuffer cubeVB(cubeVertices, sizeof(cubeVertices));
-    IndexBuffer cubeIB(cubeIndices, 36);
-
-    VertexBufferLayout cubeLayout;
-    cubeLayout.Push<float>(3);
-    cubeLayout.Push<float>(2);
-    cubeVA.AddBuffer(cubeVB, cubeLayout);
-
-    VertexArray planeVA;
-    VertexBuffer planeVB(planeVertices, sizeof(planeVertices));
-    IndexBuffer planeIB(planeIndices, 6);
-
-    VertexBufferLayout planeLayout;
-    planeLayout.Push<float>(3);
-    planeLayout.Push<float>(3);
-    planeLayout.Push<float>(2);
-    planeVA.AddBuffer(planeVB, planeLayout);
-
-    transform = glm::mat4(1.0f);
-    transform = glm::scale(transform, glm::vec3(1.0f));
-    transform = glm::translate(transform, glm::vec3(0.0f, 2.0f, 0.0f));
 
 
     IMGUI_CHECKVERSION();
@@ -111,11 +82,16 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
-    glm::vec3 cubePosition = glm::vec3(0.0f, 2.0f, 0.0f);
+    test::Test* currentTest = nullptr;
+    test::TestMenu* testMenu = new test::TestMenu(currentTest);
+    currentTest = testMenu;
+
+    testMenu->RegisterTest<test::TestClearColor>("Clear Color");
+    testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
 
 
     //Disable cursor
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     GLErrorManager(glViewport(0, 0, windowWidth, windowHeight));
 
@@ -123,121 +99,42 @@ int main() {
         processInput(window);
 
 
-        GLErrorManager(glClearColor(0.05f, 0.05f, 0.05f, 1.0f));
         renderer.Clear();
+        GLErrorManager(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 
+
+        //Draw ImGui Windows
+        ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
 
+        if(currentTest){
+            currentTest->OnUpdate(deltaTime);
+            currentTest->OnRender();
 
-        //Floor
-        lightingShader->Bind();
-        woodTex.Bind();
+            ImGui::Begin("test");
 
-        lightingShader->SetMat4("proj", projection);
-        lightingShader->SetMat4("view", camera->view());
-
-        lightingShader->SetInt("texture_diffuse0", 0);
-
-
-        lightingShader->SetInt("numPointLights", numPointLights);
-        for (unsigned int i = 0; i < numPointLights; ++i) {
-            lightingShader->SetPointLight(pointLights[i], std::to_string(i));
-        }
-
-        lightingShader->SetVec3("viewPos", camera->position());
-        lightingShader->SetFloat("shininess", 128.0f);
-
-        lightingShader->SetInt("blinn", false);
-        lightingShader->SetInt("gamma", true);
-
-        transform = glm::mat4(1.0f);
-        transform = glm::scale(transform, glm::vec3(20.0f, 1.0f, 20.0f));
-
-        glPrimitive::DrawPlane(lightingShader, glm::vec3(0.0, 0.0, 0.0),
-                               glm::vec3(20.0f, 1.0f, 20.0f));
-
-
-        //Draw lights
-        colorShader->Bind();
-
-        colorShader->SetMat4("proj", projection);
-        colorShader->SetMat4("view", camera->view());
-
-        for (unsigned int i = 0; i < numPointLights; ++i) {
-            transform = glm::mat4(1.0f);
-            transform = glm::translate(transform, pointLights[i].position);
-            transform = glm::scale(transform, glm::vec3(0.25f));
-
-            colorShader->SetMat4("model", transform);
-            colorShader->SetVec3("color", pointLights[i].ambient);
-            renderer.Draw(colorShader, cubeVA, cubeIB);
-        }
-
-        colorShader->Unbind();
-
-        //Draw Cubes
-        colorShader->Bind();
-
-        colorShader->SetMat4("proj", projection);
-        colorShader->SetMat4("view", camera->view());
-
-        transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, cubePosition);
-        transform = glm::scale(transform, glm::vec3(0.5f));
-        transform = glm::rotate(transform, glm::radians(30.0f), cubeRotations[0]);
-
-        colorShader->SetMat4("model", transform);
-        colorShader->SetVec3("color", 0.3f, 0.5f, 0.8f);
-        renderer.Draw(colorShader, cubeVA, cubeIB);
-
-        colorShader->Unbind();
-
-
-
-        // draw skybox as last
-        skyboxShader->Bind();
-        glm::mat4 view = glm::mat4(glm::mat3(camera->view()));
-        skyboxShader->SetMat4("view", view);
-        skyboxShader->SetMat4("projection", projection);
-
-        skyboxTex.Bind();
-        GLErrorManager(glDepthFunc(GL_LEQUAL));
-        renderer.Draw(skyboxShader, cubeVA, cubeIB);
-        GLErrorManager(glDepthFunc(GL_LESS));
-
-
-        //ImGUI Windowing
-        {
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-
-
-            {
-                ImGui::Begin("FPS");
-
-                ImGui::SetWindowSize({400, 100});
-
-                ImGui::SliderFloat3("Cube Position", &cubePosition.x, 0.0f, 10.0f);
-
-                ImGui::Spacing();
-                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-                ImGui::End();
+            if(currentTest != testMenu && ImGui::Button("<-")){
+                delete currentTest;
+                currentTest = testMenu;
             }
 
+            currentTest->OnImGuiRender();
 
-            //Rendering
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            ImGui::End();
         }
 
-
-        update();
-
-        //auto data = ImGui::GetDrawData();
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         tick();
     }
+
+
+    if(currentTest != testMenu){
+        delete testMenu;
+    }
+    delete currentTest;
 
 
     ImGui_ImplOpenGL3_Shutdown();
@@ -276,10 +173,6 @@ void initGLAD() {
 }
 
 void initObjects() {
-    lightingShader = new Shader("../../src/shaders/texturedLit.vert", "../../src/shaders/texturedLit.frag");
-    colorShader = new Shader("../../src/shaders/solidColor.vert", "../../src/shaders/solidColor.frag");
-    skyboxShader = new Shader("../../src/shaders/skybox.vert", "../../src/shaders/skybox.frag");
-
     camera = new Camera(cameraPosition, windowWidth, windowHeight);
 }
 
