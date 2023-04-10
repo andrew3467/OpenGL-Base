@@ -45,7 +45,7 @@ public:
     Camera(glm::vec3 pos, int windowWidth, int windowHeight);
 
     void Move(CameraMoveDir moveDir, float deltaTime);
-    void Rotate(float mouseX, float mouseY);
+    void Rotate(float mouseX, float mouseY, bool cursorEnabled = false);
 
     inline float GetYaw() const { return yaw;}
     inline float GetPitch() const { return pitch;}

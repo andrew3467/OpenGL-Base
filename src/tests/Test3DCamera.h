@@ -23,18 +23,28 @@ namespace test{
         void OnImGuiRender() override;
 
     private:
+        bool cursorEnabled;
+
         Renderer renderer;
 
         std::unique_ptr<Camera> camera;
 
-        std::unique_ptr<VertexArray> va;
-        std::unique_ptr<VertexBuffer> vb;
-        std::unique_ptr<IndexBuffer> ib;
+        std::unique_ptr<VertexArray> cubeVA;
+        std::unique_ptr<VertexBuffer> cubeVB;
+        std::unique_ptr<IndexBuffer> cubeIB;
+
+        std::unique_ptr<VertexArray> planeVA;
+        std::unique_ptr<VertexBuffer> planeVB;
+        std::unique_ptr<IndexBuffer> planeIB;
 
         std::unique_ptr<Shader> shader;
-        std::unique_ptr<Texture2D> tex;
 
-        glm::vec4 cubeColor;
+        glm::vec3 cubeColor;
+        glm::vec3 cubeRotationAxis;
+        float cubeRotationAngle;
+
+        glm::vec3 planeScale;
+        glm::vec3 planeColor;
     };
 }
 

@@ -16,6 +16,7 @@ class Renderer {
 public:
     void Clear();
     void Draw(const Shader& shader, const VertexArray& va, const IndexBuffer& ib) const;
+    void Draw(const Shader& shader, const VertexArray& va, unsigned int count) const;
 
 private:
 

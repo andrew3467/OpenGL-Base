@@ -78,12 +78,12 @@ add_executable(OpenGl_Base
         ${PRJ_SOURCES}
         ${PRJ_HEADERS}
         ${EXTERNAL_SRC}
-        ${IMGUI_PATH}/examples/imgui_impl_glfw.h
-        ${IMGUI_PATH}/examples/imgui_impl_glfw.cpp
-        ${IMGUI_PATH}/examples/imgui_impl_opengl3.h
-        ${IMGUI_PATH}/examples/imgui_impl_opengl3.cpp
-        ${IMGUI_PATH}/examples/imgui_impl_opengl3_loader.h
-        )
+        ${IMGUI_PATH}/imgui_impl_glfw.h
+        ${IMGUI_PATH}/imgui_impl_glfw.cpp
+        ${IMGUI_PATH}/imgui_impl_opengl3.h
+        ${IMGUI_PATH}/imgui_impl_opengl3.cpp
+        ${IMGUI_PATH}/imgui_impl_opengl3_loader.h
+        ${IMGUI_PATH}/imgui_impl_glfw.cpp src/engine/application.cpp src/engine/application.h src/tests/TestLighting.cpp src/tests/TestLighting.h)
 
 target_link_libraries(OpenGl_Base
         opengl32

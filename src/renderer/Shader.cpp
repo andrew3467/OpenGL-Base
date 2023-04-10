@@ -109,9 +109,9 @@ void Shader::SetPointLight(const PointLight &light, const std::string& arrIndex)
     SetVec3("pointLights[" + arrIndex + "].diffuse", light.diffuse);
     SetVec3("pointLights[" + arrIndex + "].specular", light.specular);
 
-    setVec3("pointLights[" + arrIndex + "].constant", light.constant);
-    setVec3("pointLights[" + arrIndex + "].linear", light.linear);
-    setVec3("pointLights[" + arrIndex + "].quadratic", light.quadratic);
+    SetVec3("pointLights[" + arrIndex + "].constant", light.constant, 0, 0);
+    SetVec3("pointLights[" + arrIndex + "].linear", light.linear, 0, 0);
+    SetVec3("pointLights[" + arrIndex + "].quadratic", light.quadratic, 0, 0);
 }
 
 void Shader::SetInt(const std::string &name, int v) {
@@ -123,11 +123,11 @@ void Shader::SetFloat(const std::string &name, float v) {
 }
 
 
-void Shader::setVec2(const std::string &name, glm::vec2 v) {
+void Shader::SetVec2(const std::string &name, glm::vec2 v) {
     GLErrorManager(glUniform2f(getUniformLocation(name), v.x, v.y));
 }
 
-void Shader::setVec2(const std::string &name, float x, float y) {
+void Shader::SetVec2(const std::string &name, float x, float y) {
     GLErrorManager(glUniform2f(getUniformLocation(name), x, y));
 }
 
@@ -140,15 +140,15 @@ void Shader::SetVec3(const std::string &name, float x, float y, float z) {
     GLErrorManager(glUniform3f(getUniformLocation(name), x, y, z));
 }
 
-void Shader::setVec3(const std::string &name, float v) {
+void Shader::SetVec3(const std::string &name, float v) {
     GLErrorManager(glUniform3f(getUniformLocation(name), v, v, v));
 }
 
-void Shader::setVec4(const std::string& name, glm::vec4 v) {
+void Shader::SetVec4(const std::string& name, glm::vec4 v) {
     GLErrorManager(glUniform4f(getUniformLocation(name), v.x, v.y, v.z, v.w));
 }
 
-void Shader::setVec4(const std::string &name, float x, float y, float z, float w) {
+void Shader::SetVec4(const std::string &name, float x, float y, float z, float w) {
     GLErrorManager(glUniform4f(getUniformLocation(name), x, y, z, w));
 }
 

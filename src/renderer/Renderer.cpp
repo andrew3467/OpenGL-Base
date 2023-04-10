@@ -11,6 +11,12 @@ void Renderer::Draw(const Shader& shader, const VertexArray &va, const IndexBuff
     GLErrorManager(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
 
+void Renderer::Draw(const Shader &shader, const VertexArray &va, unsigned int count) const {
+    shader.Bind();
+    va.Bind();
+    GLErrorManager(glDrawArrays(GL_TRIANGLES, 0, count));
+}
+
 void Renderer::Clear() {
     GLErrorManager(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }

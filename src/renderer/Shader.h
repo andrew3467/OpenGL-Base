@@ -41,7 +41,7 @@ public:
     void Bind() const;
     void Unbind() const;
 
-    inline unsigned int getID() {return m_RendererID;}
+    inline unsigned int getID() const {return m_RendererID;}
 
 //Uniforms
 public:
@@ -51,15 +51,15 @@ public:
     void SetInt(const std::string& name, int v);
     void SetFloat(const std::string& name, float v);
 
-    void setVec4(const std::string& name, glm::vec4 v);
-    void setVec4(const std::string& name, float x, float y, float z, float w);
+    void SetVec4(const std::string& name, glm::vec4 v);
+    void SetVec4(const std::string& name, float x, float y, float z, float w);
 
     void SetVec3(const std::string& name, glm::vec3 v);
     void SetVec3(const std::string& name, float x, float y, float z);
-    void setVec3(const std::string& name, float v);
+    void SetVec3(const std::string &name, float v);
 
-    void setVec2(const std::string& name, glm::vec2 v);
-    void setVec2(const std::string& name, float x, float y);
+    void SetVec2(const std::string& name, glm::vec2 v);
+    void SetVec2(const std::string& name, float x, float y);
 
     void SetMat4(const std::string& name, glm::mat4 v);
 };

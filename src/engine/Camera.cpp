@@ -26,7 +26,7 @@ void Camera::Move(CameraMoveDir moveDir, float deltaTime) {
     }
 }
 
-void Camera::Rotate(float mouseX, float mouseY) {
+void Camera::Rotate(float mouseX, float mouseY, bool cursorEnabled) {
     if (firstMouse)
     {
         lastX = mouseX;
@@ -36,6 +36,7 @@ void Camera::Rotate(float mouseX, float mouseY) {
 
     float xoffset = mouseX - lastX;
     float yoffset = lastY - mouseY;
+
     lastX = mouseX;
     lastY = mouseY;
 
