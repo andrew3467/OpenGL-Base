@@ -18,6 +18,8 @@ uniform sampler2D texture_metallic;
 uniform sampler2D texture_roughness;
 uniform sampler2D texture_ao;
 
+uniform sampler3D cubemap_environment;
+
 uniform float metallic;
 uniform float roughness;
 uniform float ao;

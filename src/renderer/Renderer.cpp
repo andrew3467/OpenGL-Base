@@ -5,16 +5,16 @@
 #include "engine/ErrorManager.h"
 
 
-void Renderer::Draw(const Shader& shader, const VertexArray &va, const IndexBuffer &ib) {
+void Renderer::Draw(const Shader& shader, const VertexArray &va, const IndexBuffer &ib, unsigned int numInstances) {
     shader.Bind();
     va.Bind();
-    GLErrorManager(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+    GLErrorManager(glDrawElementsInstanced(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr, numInstances));
 }
 
-void Renderer::Draw(const Shader &shader, const VertexArray &va, unsigned int count) {
+void Renderer::Draw(const Shader &shader, const VertexArray &va, unsigned int count, unsigned int numInstances) {
     shader.Bind();
     va.Bind();
-    GLErrorManager(glDrawArrays(GL_TRIANGLES, 0, count));
+    GLErrorManager(glDrawArraysInstanced(GL_TRIANGLES, 0, count, numInstances));
 }
 
 void Renderer::Clear() {

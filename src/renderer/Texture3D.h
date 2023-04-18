@@ -17,7 +17,7 @@ private:
     unsigned int m_RendererID;
     std::string filePaths[6];
 
-    // loads a cubemap texture from 6 individual texture faces
+    // loads a skybox texture from 6 individual texture faces
     // +X (right)
     // -X (left)
     // +Y (top)
@@ -25,10 +25,12 @@ private:
     // +Z (front)
     // -Z (back)
     unsigned int loadCubemap(std::vector<std::string> faces);
+    unsigned int loadHDR(const std::string& path);
 
 public:
     Texture3D();
     Texture3D(std::vector<std::string> faces);
+    Texture3D(const std::string& path);
     ~Texture3D();
 
     void Bind(unsigned int slot = 0) const;

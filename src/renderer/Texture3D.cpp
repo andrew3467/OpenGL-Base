@@ -18,6 +18,10 @@ Texture3D::Texture3D(std::vector<std::string> faces) : m_RendererID(0)
     m_RendererID = loadCubemap(faces);
 }
 
+Texture3D::Texture3D(const std::string &path)  : m_RendererID(0) {
+    m_RendererID = loadHDR(path);
+}
+
 unsigned int Texture3D::loadCubemap(std::vector<std::string> faces)
 {
     unsigned int textureID;
@@ -45,6 +49,31 @@ unsigned int Texture3D::loadCubemap(std::vector<std::string> faces)
     GLErrorManager(glTexParameteri(TYPE, GL_TEXTURE_WRAP_S, GL_REPEAT));
     GLErrorManager(glTexParameteri(TYPE, GL_TEXTURE_WRAP_T, GL_REPEAT));
     GLErrorManager(glTexParameteri(TYPE, GL_TEXTURE_WRAP_R, GL_REPEAT));
+
+    return textureID;
+}
+
+unsigned int Texture3D::loadHDR(const std::string &path) {
+    unsigned int textureID;
+    GLErrorManager(glGenTextures(1, &textureID));
+    GLErrorManager(glBindTexture(TYPE, textureID));
+
+    stbi_set_flip_vertically_on_load(false);
+
+    int width, height, nrChannels;
+    float *data = stbi_loadf(path.c_str(), &width, &height, &nrChannels, 0);
+    if (data) {
+        GLErrorManager(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data));
+    } else {
+        throw std::runtime_error("HDR texture failed to load at path: " + path);
+    }
+
+    stbi_image_free(data);
+
+    GLErrorManager(glTexParameteri(TYPE, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+    GLErrorManager(glTexParameteri(TYPE, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+    GLErrorManager(glTexParameteri(TYPE, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+    GLErrorManager(glTexParameteri(TYPE, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
     return textureID;
 }

@@ -29,8 +29,9 @@ anisor 0.000000
 map_Kd BaseColor.png
 map_Ks Roughness.png
 map_Pr Roughness.png
-map_d BaseColor.png
+map_d Metalness.png
 map_Bump NormalMap.png
+map_Ka AOMap.png
 
 newmtl Material.002
 Ks 0.500000 0.500000 0.500000

@@ -48,14 +48,14 @@ namespace test {
 
 
         {
-            lightVA = std::make_unique<VertexArray>();
-            lightVB = std::make_unique<VertexBuffer>(lightVertices, sizeof(lightVertices));
+            cubeVA = std::make_unique<VertexArray>();
+            cubeVB = std::make_unique<VertexBuffer>(lightVertices, sizeof(lightVertices));
 
             VertexBufferLayout layout;
             layout.Push<float>(3);
-            lightVA->AddBuffer(*lightVB, layout);
+            cubeVA->AddBuffer(*cubeVB, layout);
 
-            lightIB = std::make_unique<IndexBuffer>(lightIndices, 36);
+            cubeIB = std::make_unique<IndexBuffer>(lightIndices, 36);
         }
 
         helmetModel = std::make_unique<Model>("../../resources/models/Samurai_Helmet/SamuraiHelmet.obj");
@@ -63,7 +63,6 @@ namespace test {
 
         modelShader = std::make_unique<Shader>("../../src/shaders/PBR.vert", "../../src/shaders/PBR.frag");
         solidShader = std::make_unique<Shader>("../../src/shaders/SolidLit.vert", "../../src/shaders/SolidLit.frag");
-
 
         camera = std::make_unique<Camera>(glm::vec3(0.0f), 1280, 720);
     }
@@ -114,7 +113,7 @@ namespace test {
             modelShader->SetVec3("viewPos", camera->position());
 
             modelShader->SetInt("numLights", lightPositions.size());
-            modelShader->SetInt("gamma", true);
+            modelShader->SetInt("gamma", false);
             for (int i = 0; i < lightPositions.size(); ++i) {
                 std::string index = std::to_string(i);
                 modelShader->SetVec3(("lightPositions[" + index + "]"), lightPositions[i]);
@@ -137,7 +136,7 @@ namespace test {
 
                 solidShader->SetVec3("color", lightColors[i]);
                 solidShader->SetMat4("model", model);
-                Renderer::Draw(*solidShader, *lightVA, *lightIB);
+                Renderer::Draw(*solidShader, *cubeVA, *cubeIB);
             }
 
         }
@@ -148,7 +147,7 @@ namespace test {
     void test::TestPBR::OnImGuiRender() {
         if(ImGui::Button("Create Light")){
             lightPositions.emplace_back(0.0f, 1.0f, 0.0f);
-            lightColors.emplace_back(0.1f, 0.1f, 0.1f);
+            lightColors.emplace_back(1.0f, 1.0f, 1.0f);
         }
 
         for(int i = 0; i < lightPositions.size(); i++){

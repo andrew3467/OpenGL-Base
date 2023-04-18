@@ -32,7 +32,11 @@ private:
     std::unique_ptr<VertexBuffer> VB;
     std::unique_ptr<IndexBuffer> IB;
 
-    std::vector<std::pair<std::string, Texture2D>> textures;
+    std::unique_ptr<Texture2D> texDiffuse;
+    std::unique_ptr<Texture2D> texRoughness;
+    std::unique_ptr<Texture2D> texNormal;
+    std::unique_ptr<Texture2D> texAO;
+    std::unique_ptr<Texture2D> texMetallic;
 
 public:
     Model(const std::string& path);

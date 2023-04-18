@@ -27,9 +27,9 @@ namespace test {
         std::unique_ptr<Shader> modelShader;
         std::unique_ptr<Shader> solidShader;
 
-        std::unique_ptr<VertexArray> lightVA;
-        std::unique_ptr<VertexBuffer> lightVB;
-        std::unique_ptr<IndexBuffer> lightIB;
+        std::unique_ptr<VertexArray> cubeVA;
+        std::unique_ptr<VertexBuffer> cubeVB;
+        std::unique_ptr<IndexBuffer> cubeIB;
 
         std::vector<glm::vec3> lightPositions;
         std::vector<glm::vec3> lightColors;

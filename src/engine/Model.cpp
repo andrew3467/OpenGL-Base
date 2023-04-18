@@ -16,14 +16,16 @@ Model::~Model() {
 }
 
 void Model::Draw(Shader &shader) {
-    if(!textures.empty()) {
-        shader.Bind();
-
-        for(unsigned int i = 0; i < textures.size(); i++) {
-            textures[i].second.Bind(i);
-            shader.SetInt("texture_" + textures[i].first, i);
-        }
-    }
+    texDiffuse->Bind(0);
+    shader.SetInt("texture_diffuse", 0);
+    texRoughness->Bind(1);
+    shader.SetInt("texture_roughness", 1);
+    texNormal->Bind(2);
+    shader.SetInt("texture_normal", 2);
+    texAO->Bind(3);
+    shader.SetInt("texture_ao", 3);
+    texMetallic->Bind(4);
+    shader.SetInt("texture_metallic", 4);
 
     Renderer::Draw(shader, *VA, *IB);
 }
@@ -58,9 +60,11 @@ void Model::loadObj(const std::string& path) {
     if (!loader.LoadedMaterials.empty()) {
         auto material = loader.LoadedMaterials[1];
 
-        textures.emplace_back("diffuse", m_Directory + "/" + material.map_Kd);
-        textures.emplace_back("roughness", m_Directory + "/" + material.map_Ks);
-
+        texDiffuse = std::make_unique<Texture2D>(m_Directory + "/" + material.map_Kd);
+        texRoughness = std::make_unique<Texture2D>(m_Directory + "/" + material.map_Ks);
+        texNormal = std::make_unique<Texture2D>(m_Directory + "/" + material.map_bump);
+        texAO = std::make_unique<Texture2D>(m_Directory + "/" + material.map_Ka);
+        texMetallic = std::make_unique<Texture2D>(m_Directory + "/" + material.map_d);
 
         //Create VAO
         VA = std::make_unique<VertexArray>();

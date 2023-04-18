@@ -17,7 +17,7 @@ namespace test {
         virtual ~Test() {}
 
         virtual void OnUpdate(float deltaTime, void* window){}
-        virtual void OnRender() {}
+        virtual void OnRender();
         virtual void OnImGuiRender();
     };
 
