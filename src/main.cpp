@@ -15,6 +15,9 @@
 #include "tests/TestTexture2D.h"
 #include "tests/Test3DCamera.h"
 #include "tests/TestLighting.h"
+#include "tests/TestTextureMapping.h"
+#include "tests/TestModelLoading.h"
+#include "tests/TestPBR.h"
 
 
 #include <iostream>
@@ -72,6 +75,9 @@ int main() {
     testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
     testMenu->RegisterTest<test::Test3DCamera>("3D Camera");
     testMenu->RegisterTest<test::TestLighting>("Lighting Test");
+    testMenu->RegisterTest<test::TestTextureMapping>("Texture Mapping");
+    testMenu->RegisterTest<test::TestModelLoading>("Model Loading");
+    testMenu->RegisterTest<test::TestPBR>("PBR");
 
 
     //Disable cursor
@@ -79,40 +85,46 @@ int main() {
 
     GLErrorManager(glViewport(0, 0, windowWidth, windowHeight));
 
-    while(!glfwWindowShouldClose(window)) {
-        renderer.Clear();
-        GLErrorManager(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+    try {
+        while (!glfwWindowShouldClose(window)) {
+            renderer.Clear();
+            GLErrorManager(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 
 
-        //Draw ImGui Windows
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+            //Draw ImGui Windows
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
 
-        if(currentTest){
-            currentTest->OnUpdate(deltaTime, window);
-            currentTest->OnRender();
+            if (currentTest) {
+                currentTest->OnUpdate(deltaTime, window);
+                currentTest->OnRender();
 
-            ImGui::Begin("test");
+                ImGui::Begin("test");
 
-            if(currentTest != testMenu && ImGui::Button("<-")){
-                delete currentTest;
-                currentTest = testMenu;
+                if (currentTest != testMenu && ImGui::Button("<-")) {
+                    delete currentTest;
+                    currentTest = testMenu;
+                }
+
+                currentTest->OnImGuiRender();
+
+                ImGui::End();
             }
 
-            currentTest->OnImGuiRender();
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-            ImGui::End();
+            float currentFrame = static_cast<float>(glfwGetTime());
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+
+            tick();
         }
-
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        float currentFrame = static_cast<float>(glfwGetTime());
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-
-        tick();
+    }
+    catch (std::exception& e){
+        std::cerr << e.what() << "\n";
+        return EXIT_FAILURE;
     }
 
 
@@ -129,7 +141,7 @@ int main() {
     glfwDestroyWindow(window);
     glfwTerminate();
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void initGlFW() {

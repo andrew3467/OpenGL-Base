@@ -5,13 +5,13 @@
 #include "engine/ErrorManager.h"
 
 
-void Renderer::Draw(const Shader& shader, const VertexArray &va, const IndexBuffer &ib) const {
+void Renderer::Draw(const Shader& shader, const VertexArray &va, const IndexBuffer &ib) {
     shader.Bind();
     va.Bind();
     GLErrorManager(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
 
-void Renderer::Draw(const Shader &shader, const VertexArray &va, unsigned int count) const {
+void Renderer::Draw(const Shader &shader, const VertexArray &va, unsigned int count) {
     shader.Bind();
     va.Bind();
     GLErrorManager(glDrawArrays(GL_TRIANGLES, 0, count));

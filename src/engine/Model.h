@@ -9,32 +9,39 @@
 #include <vector>
 
 #include "renderer/Shader.h"
-#include "engine/Mesh.h"
 
-#include "assimp/scene.h"
-#include "stb_image.h"
+#include "renderer/VertexArray.h"
+#include "renderer/IndexBuffer.h"
+#include "renderer/Renderer.h"
+#include "renderer/Texture2D.h"
 
+class Model {
+    struct Vertex{
+        glm::vec3 position;
+        glm::vec3 normal;
+        glm::vec2 uv;
+    };
 
-class Model{
 private:
-    std::vector<Mesh> meshes;
-    std::string directory;
-    std::vector<Mesh::Texture> textures_loaded;
+    std::string m_Directory;
 
-    bool gammaCorrection;
+    std::vector<Vertex> vertices;
+    std::vector<unsigned int> indices;
+
+    std::unique_ptr<VertexArray> VA;
+    std::unique_ptr<VertexBuffer> VB;
+    std::unique_ptr<IndexBuffer> IB;
+
+    std::vector<std::pair<std::string, Texture2D>> textures;
 
 public:
-    Model();
-    Model(const char* path, bool gamma = false);
-    void draw(Shader* shader, int numInstances = 1);
+    Model(const std::string& path);
+    ~Model();
+
+    void Draw(Shader& shader);
 
 private:
-    void loadModel(std::string const &path);
-    void processNode(aiNode* node, const aiScene* scene);
-    Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-    std::vector<Mesh::Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string name);
-
-    unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma);
+    void loadObj(const std::string& path);
 };
 
 #endif //OPENGL_BASE_MODEL_H

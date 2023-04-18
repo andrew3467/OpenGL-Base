@@ -93,7 +93,7 @@ struct Header
 } PACK_STRUCT;
 
 // ---------------------------------------------------------------------------
-/** \brief Data structure for a MD2 OpenGl draw command
+/** \brief Data structure for a MD2 OpenGl Draw command
  */
 struct GLCommand
 {

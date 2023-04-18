@@ -31,6 +31,7 @@ public:
 
     inline int GetWidth() const {return m_Width;}
     inline int GetHeight() const {return m_Height;}
+    inline int GetHandle() const {return m_RendererID;}
 };
 
 #endif //OPENGL_BASE_TEXTURE2D_H
