@@ -14,7 +14,7 @@ namespace test{
         TestClearColor();
         ~TestClearColor();
 
-        void OnRender();
+        void OnRender(glm::vec2 windowSize);
         void OnImGuiRender();
 
     private:

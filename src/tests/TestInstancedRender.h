@@ -1,25 +1,31 @@
 //
-// Created by Andrew Graser on 4/17/2023.
+// Created by Andrew Graser on 4/18/2023.
 //
 
-#ifndef OPENGL_BASE_TESTPBR_H
-#define OPENGL_BASE_TESTPBR_H
+#ifndef OPENGL_BASE_TESTINSTANCEDRENDER_H
+#define OPENGL_BASE_TESTINSTANCEDRENDER_H
 
-#include "Test.h"
+#include <tests/Test.h>
 #include "engine/Camera.h"
 #include "engine/Model.h"
 
+
 namespace test {
-    class TestPBR : public Test {
+    class TestInstancedRender : public Test {
     public:
-        TestPBR();
-        ~TestPBR() override;
+        TestInstancedRender();
+
+        ~TestInstancedRender() override;
 
         void OnUpdate(float deltaTime, void *window) override;
+
         void OnRender(glm::vec2 windowSize) override;
+
         void OnImGuiRender() override;
 
     private:
+        std::vector<glm::vec3> positions;
+
         std::unique_ptr<Camera> camera;
 
         std::unique_ptr<Model> helmetModel;
@@ -29,12 +35,10 @@ namespace test {
 
         std::unique_ptr<VertexArray> cubeVA;
         std::unique_ptr<VertexBuffer> cubeVB;
+        std::unique_ptr<VertexBuffer> instanceVB;
         std::unique_ptr<IndexBuffer> cubeIB;
-
-        std::vector<glm::vec3> lightPositions;
-        std::vector<glm::vec3> lightColors;
     };
 }
 
 
-#endif //OPENGL_BASE_TESTPBR_H
+#endif //OPENGL_BASE_TESTINSTANCEDRENDER_H

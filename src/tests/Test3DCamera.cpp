@@ -127,7 +127,7 @@ namespace test{
         Test::OnUpdate(deltaTime, window);
     }
 
-    void Test3DCamera::OnRender() {
+    void Test3DCamera::OnRender(glm::vec2 windowSize) {
         glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
         glm::mat4 proj = camera->projection();
@@ -158,7 +158,7 @@ namespace test{
             renderer.Draw(*shader, *planeVA, *planeIB);
         }
 
-        Test::OnRender();
+        Test::OnRender(windowSize);
     }
 
     void Test3DCamera::OnImGuiRender() {

@@ -22,7 +22,7 @@ namespace test {
         ~TestLighting();
 
         void OnUpdate(float deltaTime, void* window) override;
-        void OnRender() override;
+        void OnRender(glm::vec2 windowSize) override;
         void OnImGuiRender() override;
 
     private:

@@ -26,7 +26,7 @@ namespace test{
                     ImGui::GetIO().Framerate);
     }
 
-    void Test::OnRender() {
-        glViewport(0, 0, 1280, 720);
+    void Test::OnRender(glm::vec2 windowSize) {
+        glViewport(0, 0, windowSize.x, windowSize.y);
     }
 }

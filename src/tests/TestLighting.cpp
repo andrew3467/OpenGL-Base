@@ -127,7 +127,7 @@ void test::TestLighting::OnUpdate(float deltaTime, void *window) {
     Test::OnUpdate(deltaTime, window);
 }
 
-void test::TestLighting::OnRender() {
+void test::TestLighting::OnRender(glm::vec2 windowSize) {
     glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
     glm::mat4 proj = camera->projection();
@@ -176,7 +176,7 @@ void test::TestLighting::OnRender() {
     }
     tex->Unbind();
 
-    Test::OnRender();
+    Test::OnRender(windowSize);
 }
 
 void test::TestLighting::OnImGuiRender() {

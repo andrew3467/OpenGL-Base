@@ -98,7 +98,7 @@ namespace test {
         Test::OnUpdate(deltaTime, window);
     }
 
-    void test::TestPBR::OnRender() {
+    void test::TestPBR::OnRender(glm::vec2 windowSize) {
         glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
 
@@ -141,7 +141,7 @@ namespace test {
 
         }
 
-        Test::OnRender();
+        Test::OnRender(windowSize);
     }
 
     void test::TestPBR::OnImGuiRender() {

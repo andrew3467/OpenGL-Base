@@ -9,6 +9,7 @@
 #include <string>
 #include <functional>
 #include <iostream>
+#include "glm/vec2.hpp"
 
 namespace test {
     class Test {
@@ -17,7 +18,7 @@ namespace test {
         virtual ~Test() {}
 
         virtual void OnUpdate(float deltaTime, void* window){}
-        virtual void OnRender();
+        virtual void OnRender(glm::vec2 windowSize);
         virtual void OnImGuiRender();
     };
 

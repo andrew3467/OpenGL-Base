@@ -97,7 +97,7 @@ namespace test {
         Test::OnUpdate(deltaTime, window);
     }
 
-    void TestModelLoading::OnRender() {
+    void TestModelLoading::OnRender(glm::vec2 windowSize) {
         glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
         //Train
@@ -140,6 +140,8 @@ namespace test {
             }
 
         }
+
+        Test::OnRender(windowSize);
     }
 
     void TestModelLoading::OnImGuiRender() {

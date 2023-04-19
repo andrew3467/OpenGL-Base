@@ -174,7 +174,7 @@ namespace test {
         Test::OnUpdate(deltaTime, window);
     }
 
-    void TestTextureMapping::OnRender() {
+    void TestTextureMapping::OnRender(glm::vec2 windowSize) {
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
         shader->Bind();
@@ -215,7 +215,7 @@ namespace test {
             Renderer::Draw(*solidShader, *lightVA, *lightIB);
         }
 
-        Test::OnRender();
+        Test::OnRender(windowSize);
     }
 
     void TestTextureMapping::OnImGuiRender() {

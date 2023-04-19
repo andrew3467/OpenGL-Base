@@ -60,7 +60,7 @@ namespace test {
         Test::OnUpdate(deltaTime, window);
     }
 
-    void TestTexture2D::OnRender() {
+    void TestTexture2D::OnRender(glm::vec2 windowSize) {
         GLErrorManager(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         GLErrorManager(glClear(GL_COLOR_BUFFER_BIT));
 
@@ -81,7 +81,7 @@ namespace test {
             renderer.Draw(*shader, *va, *ib);
         }
 
-        Test::OnRender();
+        Test::OnRender(windowSize);
     }
 
     void TestTexture2D::OnImGuiRender() {

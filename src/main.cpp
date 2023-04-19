@@ -18,6 +18,7 @@
 #include "tests/TestTextureMapping.h"
 #include "tests/TestModelLoading.h"
 #include "tests/TestPBR.h"
+#include "tests/TestInstancedRender.h"
 
 
 #include <iostream>
@@ -78,6 +79,7 @@ int main() {
     testMenu->RegisterTest<test::TestTextureMapping>("Texture Mapping");
     testMenu->RegisterTest<test::TestModelLoading>("Model Loading");
     testMenu->RegisterTest<test::TestPBR>("PBR");
+    testMenu->RegisterTest<test::TestInstancedRender>("Instanced Renderer");
 
 
     //Disable cursor
@@ -98,7 +100,7 @@ int main() {
 
             if (currentTest) {
                 currentTest->OnUpdate(deltaTime, window);
-                currentTest->OnRender();
+                currentTest->OnRender(glm::vec2(windowWidth, windowHeight));
 
                 ImGui::Begin("test");
 
