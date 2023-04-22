@@ -23,8 +23,6 @@ namespace test {
     private:
         bool cursorEnabled;
 
-        std::unique_ptr<Camera> camera;
-
         std::unique_ptr<VertexArray> cubeVA;
         std::unique_ptr<VertexBuffer> cubeVB;
 

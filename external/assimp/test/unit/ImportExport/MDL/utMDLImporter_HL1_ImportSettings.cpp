@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /** @file utMDLImporter_HL1_ImportSettings.cpp
- *  @brief Half-Life 1 MDL loader import settings tests.
+ *  @brief Half-LifeTime 1 MDL loader import settings tests.
  */
 
 #include "AbstractImportExportBase.h"

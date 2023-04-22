@@ -22,8 +22,6 @@ namespace test {
         void OnImGuiRender() override;
 
     private:
-        std::unique_ptr<Camera> camera;
-
         std::unique_ptr<Model> trainModel;
 
         std::unique_ptr<Shader> modelShader;

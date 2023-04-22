@@ -27,8 +27,6 @@ namespace test{
 
         Renderer renderer;
 
-        std::unique_ptr<Camera> camera;
-
         std::unique_ptr<VertexArray> cubeVA;
         std::unique_ptr<VertexBuffer> cubeVB;
         std::unique_ptr<IndexBuffer> cubeIB;

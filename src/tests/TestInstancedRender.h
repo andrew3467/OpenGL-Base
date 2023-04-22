@@ -26,8 +26,6 @@ namespace test {
     private:
         std::vector<glm::vec3> positions;
 
-        std::unique_ptr<Camera> camera;
-
         std::unique_ptr<Model> helmetModel;
 
         std::unique_ptr<Shader> modelShader;

@@ -132,7 +132,7 @@ protected:
     void InternReadFile_3DGS_MDL7( );
 
     // -------------------------------------------------------------------
-    /** Import a Half-Life 1 MDL file
+    /** Import a Half-LifeTime 1 MDL file
     */
     void InternReadFile_HL1(const std::string& pFile, const uint32_t iMagicWord);
 

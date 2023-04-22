@@ -56,7 +56,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Assimp    {
 namespace MDL   {
 
-// magic bytes used in Half Life 2 MDL models
+// magic bytes used in Half LifeTime 2 MDL models
 #define AI_MDL_MAGIC_NUMBER_BE_HL2a AI_MAKE_MAGIC("IDST")
 #define AI_MDL_MAGIC_NUMBER_LE_HL2a AI_MAKE_MAGIC("TSDI")
 #define AI_MDL_MAGIC_NUMBER_BE_HL2b AI_MAKE_MAGIC("IDSQ")

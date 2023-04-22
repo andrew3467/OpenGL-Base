@@ -83,7 +83,7 @@ add_executable(OpenGl_Base
         ${IMGUI_PATH}/imgui_impl_opengl3.h
         ${IMGUI_PATH}/imgui_impl_opengl3.cpp
         ${IMGUI_PATH}/imgui_impl_opengl3_loader.h
-        ${IMGUI_PATH}/imgui_impl_glfw.cpp src/engine/application.cpp src/engine/application.h src/tests/TestLighting.cpp src/tests/TestLighting.h src/tests/TestTextureMapping.cpp src/tests/TestTextureMapping.h src/tests/TestModelLoading.cpp src/tests/TestModelLoading.h src/engine/Model.cpp src/engine/Model.h src/engine/OBJ_Loader.h src/tests/TestPBR.cpp src/tests/TestPBR.h src/tests/TestInstancedRender.cpp src/tests/TestInstancedRender.h)
+        ${IMGUI_PATH}/imgui_impl_glfw.cpp src/engine/application.cpp src/engine/application.h src/tests/TestLighting.cpp src/tests/TestLighting.h src/tests/TestTextureMapping.cpp src/tests/TestTextureMapping.h src/tests/TestModelLoading.cpp src/tests/TestModelLoading.h src/engine/Model.cpp src/engine/Model.h src/engine/OBJ_Loader.h src/tests/TestPBR.cpp src/tests/TestPBR.h src/tests/TestInstancedRender.cpp src/tests/TestInstancedRender.h src/tests/TestParticles.cpp src/tests/TestParticles.h src/engine/ParticleEmitter.cpp src/engine/ParticleEmitter.h src/engine/Random.cpp src/engine/Random.h)
 
 target_link_libraries(OpenGl_Base
         opengl32

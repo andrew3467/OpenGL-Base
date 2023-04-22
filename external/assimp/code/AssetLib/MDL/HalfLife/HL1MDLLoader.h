@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /** @file HL1MDLLoader.h
- *  @brief Declaration of the Half-Life 1 MDL loader.
+ *  @brief Declaration of the Half-LifeTime 1 MDL loader.
  */
 
 #ifndef AI_HL1MDLLOADER_INCLUDED
@@ -82,7 +82,7 @@ public:
     void load_file();
 
 protected:
-    /** \brief Validate the header data structure of a Half-Life 1 MDL file.
+    /** \brief Validate the header data structure of a Half-LifeTime 1 MDL file.
      * \param[in] header Input header to be validated.
      * \param[in] is_texture_header Whether or not we are reading an MDL
      *   texture file.

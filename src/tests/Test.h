@@ -10,6 +10,7 @@
 #include <functional>
 #include <iostream>
 #include "glm/vec2.hpp"
+#include "engine/Camera.h"
 
 namespace test {
     class Test {
@@ -17,9 +18,11 @@ namespace test {
         Test() {}
         virtual ~Test() {}
 
-        virtual void OnUpdate(float deltaTime, void* window){}
+        virtual void OnUpdate(float deltaTime, void* window);
         virtual void OnRender(glm::vec2 windowSize);
         virtual void OnImGuiRender();
+
+        std::unique_ptr<Camera> camera;
     };
 
 

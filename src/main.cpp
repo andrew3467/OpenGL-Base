@@ -19,6 +19,7 @@
 #include "tests/TestModelLoading.h"
 #include "tests/TestPBR.h"
 #include "tests/TestInstancedRender.h"
+#include "tests/TestParticles.h"
 
 
 #include <iostream>
@@ -80,6 +81,7 @@ int main() {
     testMenu->RegisterTest<test::TestModelLoading>("Model Loading");
     testMenu->RegisterTest<test::TestPBR>("PBR");
     testMenu->RegisterTest<test::TestInstancedRender>("Instanced Renderer");
+    testMenu->RegisterTest<test::TestParticles>("Particles");
 
 
     //Disable cursor

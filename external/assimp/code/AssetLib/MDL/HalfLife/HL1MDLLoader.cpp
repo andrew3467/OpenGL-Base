@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /** @file HL1MDLLoader.cpp
- *  @brief Implementation for the Half-Life 1 MDL loader.
+ *  @brief Implementation for the Half-LifeTime 1 MDL loader.
  */
 
 #include "HL1MDLLoader.h"
@@ -62,7 +62,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef MDL_HALFLIFE_LOG_WARN_HEADER
 #undef MDL_HALFLIFE_LOG_WARN_HEADER
 #endif
-#define MDL_HALFLIFE_LOG_HEADER "[Half-Life 1 MDL] "
+#define MDL_HALFLIFE_LOG_HEADER "[Half-LifeTime 1 MDL] "
 #include "LogFunctions.h"
 
 namespace Assimp {
@@ -216,7 +216,7 @@ void HL1MDLLoader::load_file() {
 // ------------------------------------------------------------------------------------------------
 void HL1MDLLoader::validate_header(const Header_HL1 *header, bool is_texture_header) {
     if (is_texture_header) {
-        // Every single Half-Life model is assumed to have at least one texture.
+        // Every single Half-LifeTime model is assumed to have at least one texture.
         if (!header->numtextures) {
             throw DeadlyImportError(MDL_HALFLIFE_LOG_HEADER "There are no textures in the file");
         }
@@ -261,7 +261,7 @@ void HL1MDLLoader::validate_header(const Header_HL1 *header, bool is_texture_hea
 /*
     Load textures.
 
-    There are two ways for textures to be stored in a Half-Life model:
+    There are two ways for textures to be stored in a Half-LifeTime model:
 
     1. Directly in the MDL file (m_FilePath) or
     2. In an external MDL file.
@@ -502,7 +502,7 @@ void HL1MDLLoader::read_bones() {
 /*
     Read meshes.
 
-    Half-Life MDLs are structured such that each MDL
+    Half-LifeTime MDLs are structured such that each MDL
     contains one or more 'bodypart(s)', which contain one
     or more 'model(s)', which contains one or more mesh(es).
 
@@ -536,7 +536,7 @@ void HL1MDLLoader::read_bones() {
     With the details above, there are several things to
     take into consideration.
 
-    * The Half-Life models store the vertices by sub model
+    * The Half-LifeTime models store the vertices by sub model
     rather than by mesh. Due to Assimp's structure, it
     is necessary to remap each model vertex to be used
     per mesh. Unfortunately, this has the consequence
@@ -1018,7 +1018,7 @@ void HL1MDLLoader::read_animations() {
                     }
 
                     position_key->mTime = rotation_key->mTime = static_cast<double>(frame);
-                    /* The Half-Life engine uses X as forward, Y as left, Z as up. Therefore,
+                    /* The Half-LifeTime engine uses X as forward, Y as left, Z as up. Therefore,
                        pitch,yaw,roll is represented as (YZX). */
                     rotation_key->mValue = aiQuaternion(angle1.y, angle1.z, angle1.x);
                     rotation_key->mValue.Normalize();

@@ -32,8 +32,6 @@ namespace test {
 
         Renderer renderer;
 
-        std::unique_ptr<Camera> camera;
-
         std::unique_ptr<VertexArray> planeVA;
         std::unique_ptr<VertexBuffer> planeVB;
 

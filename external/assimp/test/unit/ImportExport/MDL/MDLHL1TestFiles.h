@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /** @file MDLHL1TestFiles.h
- *  @brief Definitions for Half-Life 1 MDL loader tests.
+ *  @brief Definitions for Half-LifeTime 1 MDL loader tests.
  */
 
 #ifndef AI_MDLHL1TESTFILES_INCLUDED

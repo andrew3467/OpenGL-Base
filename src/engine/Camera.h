@@ -50,11 +50,13 @@ public:
     inline float GetYaw() const { return yaw;}
     inline float GetPitch() const { return pitch;}
 
+    inline glm::mat4 viewProjection() const {return projection() * view();}
     inline glm::mat4 projection() const {return glm::perspective(glm::radians(60.0f),
                                                                  (float)windowWidth / (float)windowHeight,0.1f, 100.0f);}
-    inline glm::mat4 view() const {return glm::lookAt(camPos, camPos + camFront, camUp);}
+    inline glm::mat4 view() const {return glm::lookAt(camPos, center(), camUp);}
     inline glm::vec3 position() const {return camPos;}
     inline glm::vec3 front() const {return camFront;}
+    inline glm::vec3 center() const {return camPos + camFront;}
 };
 
 

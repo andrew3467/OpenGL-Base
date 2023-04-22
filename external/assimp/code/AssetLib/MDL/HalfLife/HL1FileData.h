@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /** @file  HL1FileData.h
  *  @brief Definition of in-memory structures for the
- *         Half-Life 1 MDL file format.
+ *         Half-LifeTime 1 MDL file format.
  */
 
 #ifndef AI_HL1FILEDATA_INCLUDED

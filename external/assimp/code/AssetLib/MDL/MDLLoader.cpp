@@ -131,7 +131,7 @@ void MDLImporter::SetupProperties(const Importer *pImp) {
     // AI_CONFIG_IMPORT_MDL_COLORMAP - palette file
     configPalette = pImp->GetPropertyString(AI_CONFIG_IMPORT_MDL_COLORMAP, "colormap.lmp");
 
-    // Read configuration specific to MDL (Half-Life 1).
+    // Read configuration specific to MDL (Half-LifeTime 1).
     mHL1ImportSettings.read_animations = pImp->GetPropertyBool(AI_CONFIG_IMPORT_MDL_HL1_READ_ANIMATIONS, true);
     if (mHL1ImportSettings.read_animations) {
         mHL1ImportSettings.read_animation_events = pImp->GetPropertyBool(AI_CONFIG_IMPORT_MDL_HL1_READ_ANIMATION_EVENTS, true);
@@ -238,7 +238,7 @@ void MDLImporter::InternReadFile(const std::string &pFile,
 
             HalfLife::HalfLifeMDLBaseHeader *pHeader = (HalfLife::HalfLifeMDLBaseHeader *)mBuffer;
             if (pHeader->version == AI_MDL_HL1_VERSION) {
-                ASSIMP_LOG_DEBUG("MDL subtype: Half-Life 1/Goldsrc Engine, magic word is IDST/IDSQ");
+                ASSIMP_LOG_DEBUG("MDL subtype: Half-LifeTime 1/Goldsrc Engine, magic word is IDST/IDSQ");
                 InternReadFile_HL1(pFile, iMagicWord);
             } else {
                 ASSIMP_LOG_DEBUG("MDL subtype: Source(tm) Engine, magic word is IDST/IDSQ");

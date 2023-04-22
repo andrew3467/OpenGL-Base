@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /** @file HL1ImportSettings.h
- *  @brief Half-Life 1 MDL loader configuration settings.
+ *  @brief Half-LifeTime 1 MDL loader configuration settings.
  */
 
 #ifndef AI_HL1IMPORTSETTINGS_INCLUDED

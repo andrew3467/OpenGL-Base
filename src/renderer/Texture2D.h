@@ -23,7 +23,7 @@ private:
 
 public:
     Texture2D();
-    Texture2D(const std::string& path, bool HDR = false);
+    Texture2D(const std::string& path, bool alpha = false);
     ~Texture2D();
 
     void Bind(unsigned int slot = 0) const;
