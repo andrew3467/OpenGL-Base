@@ -59,7 +59,7 @@ namespace test {
             lightIB = std::make_unique<IndexBuffer>(lightIndices, 36);
         }
 
-        modelShader = std::make_unique<Shader>("../../src/shaders/texturedLit.vert", "../../src/shaders/texturedLit.frag");
+        modelShader = std::make_unique<Shader>("../../src/shaders/TexturedLit.vert", "../../src/shaders/TexturedLit.frag");
         solidShader = std::make_unique<Shader>("../../src/shaders/SolidLit.vert", "../../src/shaders/SolidLit.frag");
 
 

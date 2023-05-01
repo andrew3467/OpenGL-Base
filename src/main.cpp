@@ -20,6 +20,7 @@
 #include "tests/TestPBR.h"
 #include "tests/TestInstancedRender.h"
 #include "tests/TestParticles.h"
+#include "tests/TestScene.h"
 
 
 #include <iostream>
@@ -82,6 +83,7 @@ int main() {
     testMenu->RegisterTest<test::TestPBR>("PBR");
     testMenu->RegisterTest<test::TestInstancedRender>("Instanced Renderer");
     testMenu->RegisterTest<test::TestParticles>("Particles");
+    testMenu->RegisterTest<test::TestScene>("3D Environment");
 
 
     //Disable cursor

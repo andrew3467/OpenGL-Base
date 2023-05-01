@@ -21,7 +21,7 @@ namespace test {
         particleConfig.SizeBegin = 0.5f, particleConfig.SizeVariation = 0.3f, particleConfig.SizeEnd = 0.0f;
         particleConfig.LifeTime = 1.0f;
         particleConfig.Velocity = {0.0f, 0.0f, 0.0f};
-        particleConfig.VelocityVariation = {3.0f, 1.0f, 3.0f};
+        particleConfig.VelocityVariation = {1.0f, 2.0f, 1.0f};
         particleConfig.Position = {0.0f, 0.0f, 0.0f};
 
         //Alpha transparency
@@ -43,7 +43,7 @@ namespace test {
     void TestParticles::OnRender(glm::vec2 windowSize) {
         //glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
-        particleEmitter->Draw(camera->viewProjection());
+        particleEmitter->Draw(camera->viewProjection(), camera->position(), camera->cameraUp());
 
         Test::OnRender(windowSize);
     }
@@ -51,6 +51,19 @@ namespace test {
     void TestParticles::OnImGuiRender() {
         ImGui::SliderFloat3("ColorBegin", &particleConfig.ColorBegin.x, 0.0f, 1.0f);
         ImGui::SliderFloat3("ColorEnd", &particleConfig.ColorEnd.x, 0.0f, 1.0f);
+
+        ImGui::Spacing();
+        ImGui::SliderFloat("SizeBegin", &particleConfig.SizeBegin, 0.1f, 4.0f);
+        ImGui::SliderFloat("SizeEnd", &particleConfig.SizeEnd, 0.1f, 4.0f);
+        ImGui::SliderFloat("Size Variation", &particleConfig.SizeVariation, 0.0f, 1.0f);
+
+        ImGui::Spacing();
+        ImGui::SliderFloat3("Velocity", &particleConfig.Velocity.x, 0.0f, 10.0f);
+        ImGui::SliderFloat3("Velocity Variation", &particleConfig.VelocityVariation.x, 0.0f, 2.0f);
+
+        ImGui::Spacing();
+        ImGui::SliderFloat("Life Time", &particleConfig.LifeTime, 0.5f, 10.0f);
+
 
         Test::OnImGuiRender();
     }

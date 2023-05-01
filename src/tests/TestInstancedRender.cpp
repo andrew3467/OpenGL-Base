@@ -5,6 +5,7 @@
 #include "TestInstancedRender.h"
 #include "renderer/VertexBufferLayout.h"
 #include "GLFW/glfw3.h"
+#include "renderer/Renderer.h"
 
 #define NUM_INSTANCES 10000
 #define PI 3.141592653589793238

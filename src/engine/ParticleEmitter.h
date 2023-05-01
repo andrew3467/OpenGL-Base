@@ -57,7 +57,7 @@ private:
     std::unique_ptr<Texture2D> particleTexture;
 
 public:
-    void Draw(const glm::mat4& viewproj);
+    void Draw(const glm::mat4& viewproj, glm::vec3 camPos, glm::vec3 camUp);
     void UpdateParticles(float deltaTime);
     void Emit(const ParticleProps& config);
 };

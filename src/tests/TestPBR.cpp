@@ -6,6 +6,7 @@
 #include "renderer/VertexBufferLayout.h"
 #include "imgui.h"
 #include "GLFW/glfw3.h"
+#include "renderer/Renderer.h"
 
 namespace test {
     test::TestPBR::TestPBR() {
@@ -72,29 +73,6 @@ namespace test {
     }
 
     void test::TestPBR::OnUpdate(float deltaTime, void *window) {
-        GLFWwindow *w = (GLFWwindow *) window;
-
-        //Camera Input
-        if (glfwGetKey(w, GLFW_KEY_W) == GLFW_PRESS) {
-            camera->Move(Forward, deltaTime);
-        }
-        if (glfwGetKey(w, GLFW_KEY_S) == GLFW_PRESS) {
-            camera->Move(Backward, deltaTime);
-        }
-        if (glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS) {
-            camera->Move(Left, deltaTime);
-        }
-        if (glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS) {
-            camera->Move(Right, deltaTime);
-        }
-
-        //Mouse Input
-        if (glfwGetMouseButton(w, GLFW_MOUSE_BUTTON_MIDDLE)) {
-            double mouseX, mouseY;
-            glfwGetCursorPos(w, &mouseX, &mouseY);
-            camera->Rotate((float) mouseX, (float) mouseY);
-        }
-
         Test::OnUpdate(deltaTime, window);
     }
 
@@ -138,7 +116,6 @@ namespace test {
                 solidShader->SetMat4("model", model);
                 Renderer::Draw(*solidShader, *cubeVA, *cubeIB);
             }
-
         }
 
         Test::OnRender(windowSize);

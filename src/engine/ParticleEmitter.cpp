@@ -19,7 +19,7 @@ ParticleEmitter::ParticleEmitter(const std::string texPath, glm::vec3 position, 
     particleShader = std::make_unique<Shader>("../../src/shaders/Particle.vert", "../../src/shaders/Particle.frag");
 }
 
-void ParticleEmitter::Draw(const glm::mat4& viewproj) {
+void ParticleEmitter::Draw(const glm::mat4& viewproj, glm::vec3 camPos, glm::vec3 camUp) {
     for(auto& particle : particlePool){
         if(!particle.Active){
             continue;
@@ -74,6 +74,7 @@ void ParticleEmitter::Emit(const ParticleProps& config) {
     particle.Velocity.x += config.VelocityVariation.x * (Random::Float() - 0.5f);
     particle.Velocity.y += config.VelocityVariation.y * (Random::Float() - 0.5f);
     particle.Velocity.z += config.VelocityVariation.z * (Random::Float() - 0.5f);
+    particle.Velocity.y = particle.Velocity.y * particle.Velocity.y - particle.Velocity.y;
 
     particle.ColorBegin = config.ColorBegin;
     particle.ColorEnd = config.ColorEnd;

@@ -57,6 +57,7 @@ public:
     inline glm::vec3 position() const {return camPos;}
     inline glm::vec3 front() const {return camFront;}
     inline glm::vec3 center() const {return camPos + camFront;}
+    inline glm::vec3 cameraUp() const {return camUp;}
 };
 
 
