@@ -5,35 +5,42 @@
 #ifndef OPENGL_BASE_MODEL_H
 #define OPENGL_BASE_MODEL_H
 
-#include <string>
+#include <glad/glad.h>
+
+#include <assimp/scene.h>
+#include <glm/glm.hpp>
+
 #include "Mesh.h"
-#include "assimp/scene.h"
-#include <assimp/IOStream.hpp>
-#include <assimp/IOSystem.hpp>
+
+#include <string>
 
 
-typedef std::pair<std::vector<Mesh::Vertex>, std::vector<unsigned int>> MeshData;
+#include <vector>
 
 
-class Model {
+unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
+
+class Model
+{
 public:
-    Model(const std::string& path);
-    ~Model();
+    std::vector<Texture> textures_loaded;
+    std::vector<Mesh>    meshes;
+    std::string directory;
+    bool gammaCorrection;
 
-    void Draw(const Shader& shader);
+
+    Model(std::string const &path, bool gamma = false);
+
+    void Draw(Shader &shader);
 
 private:
-    void loadModelData(const std::string& modelPath);
-    void processNode(const aiNode* node, const aiScene* scene);
-    MeshData processMesh(const aiMesh* mesh, const aiScene* scene);
+    void loadModel(std::string const &path);
+    void processNode(aiNode *node, const aiScene *scene);
+    Mesh processMesh(aiMesh *mesh, const aiScene *scene);
 
-
-private:
-    std::string m_Filename;
-    std::vector<Mesh> m_Meshes;
+    std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+    unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
 };
-
-
 
 
 #endif //OPENGL_BASE_MODEL_H

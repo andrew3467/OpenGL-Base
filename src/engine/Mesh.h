@@ -5,39 +5,48 @@
 #ifndef OPENGL_BASE_MESH_H
 #define OPENGL_BASE_MESH_H
 
-
-#include <memory>
+#include <string>
 #include <vector>
-#include "renderer/VertexArray.h"
-#include "renderer/IndexBuffer.h"
+#include "glm/glm.hpp"
 #include "renderer/Shader.h"
-#include <glm/glm.hpp>
+
+#define MAX_BONE_INFLUENCE 4
+
+struct Vertex {
+    glm::vec3 Position;
+    glm::vec3 Normal;
+
+    glm::vec2 TexCoords;
+    glm::vec3 Tangent;
+    glm::vec3 Bitangent;
+
+    int m_BoneIDs[MAX_BONE_INFLUENCE];
+    float m_Weights[MAX_BONE_INFLUENCE];
+};
+
+struct Texture {
+    unsigned int id;
+    std::string type;
+    std::string path;
+};
 
 class Mesh {
 public:
-    struct Vertex{
-        glm::vec3 Position;
-        glm::vec3 Normal;
-        glm::vec2 UV;
-    };
+    std::vector<Vertex> vertices;
+    std::vector<unsigned int> indices;
+    std::vector<Texture> textures;
+    unsigned int VAO;
 
-public:
-    Mesh(const Mesh &){}
-    Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
-    ~Mesh();
+    // constructor
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
 
-    void Draw(const Shader& shader);
+    // render the mesh
+    void Draw(Shader &shader);
 
 private:
-    std::vector<Vertex> m_Vertices;
-    std::vector<unsigned int> m_Indices;
+    unsigned int VBO, EBO;
 
-    std::unique_ptr<VertexArray> VA;
-    std::unique_ptr<VertexBuffer> VB;
-    std::unique_ptr<IndexBuffer> IB;
-
-    unsigned int VBO, EBO, VAO;
+    void setupMesh();
 };
-
 
 #endif //OPENGL_BASE_MESH_H

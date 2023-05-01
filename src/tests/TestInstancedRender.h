@@ -8,6 +8,8 @@
 #include <tests/Test.h>
 #include "engine/Camera.h"
 #include "engine/Model.h"
+#include "renderer/VertexArray.h"
+#include "renderer/IndexBuffer.h"
 
 
 namespace test {
