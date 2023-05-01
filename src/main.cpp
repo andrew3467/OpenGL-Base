@@ -11,11 +11,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-#include "tests/TestClearColor.h"
-#include "tests/TestTexture2D.h"
-#include "tests/Test3DCamera.h"
 #include "tests/TestLighting.h"
-#include "tests/TestTextureMapping.h"
 #include "tests/TestModelLoading.h"
 #include "tests/TestPBR.h"
 #include "tests/TestInstancedRender.h"
@@ -74,11 +70,8 @@ int main() {
     test::TestMenu* testMenu = new test::TestMenu(currentTest);
     currentTest = testMenu;
 
-    testMenu->RegisterTest<test::TestClearColor>("Clear Color");
-    testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
-    testMenu->RegisterTest<test::Test3DCamera>("3D Camera");
+
     testMenu->RegisterTest<test::TestLighting>("Lighting Test");
-    testMenu->RegisterTest<test::TestTextureMapping>("Texture Mapping");
     testMenu->RegisterTest<test::TestModelLoading>("Model Loading");
     testMenu->RegisterTest<test::TestPBR>("PBR");
     testMenu->RegisterTest<test::TestInstancedRender>("Instanced Renderer");

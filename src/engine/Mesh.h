@@ -9,6 +9,8 @@
 #include <vector>
 #include "glm/glm.hpp"
 #include "renderer/Shader.h"
+#include "renderer/VertexArray.h"
+#include "renderer/IndexBuffer.h"
 
 #define MAX_BONE_INFLUENCE 4
 
@@ -45,6 +47,10 @@ public:
 
 private:
     unsigned int VBO, EBO;
+
+    std::unique_ptr<VertexArray> VA;
+    std::unique_ptr<VertexBuffer> VB;
+    std::unique_ptr<IndexBuffer> IB;
 
     void setupMesh();
 };

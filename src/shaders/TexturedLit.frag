@@ -18,6 +18,7 @@ uniform vec3 lightColors[MAX_POINT_LIGHTS];
 uniform vec3 viewPos;
 uniform bool gamma;
 
+
 vec3 BlinnPhong(vec3 normal, vec3 fragPos, vec3 lightPos, vec3 lightColor)
 {
     // diffuse

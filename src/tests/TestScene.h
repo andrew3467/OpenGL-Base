@@ -21,6 +21,8 @@ namespace test {
         void OnImGuiRender() override;
 
     private:
+        bool useGamma = false;
+
         std::unique_ptr<Shader> modelShader;
         std::unique_ptr<Shader> solidShader;
 
@@ -29,8 +31,18 @@ namespace test {
         //Smoke Particles
         glm::vec3 smokePos = {0.0f, 0.0f, 0.0f};
 
-        std::vector<glm::vec3> lightPositions;
-        std::vector<glm::vec3> lightColors;
+        std::vector<glm::vec3> lightPositions = {
+                {-2.0f, 1.0f, -2.0f},
+                {-2.0f, 1.0f, 2.0f},
+                {2.0f, 1.0f, -2.0f},
+                {2.0f, 1.0f, 2.0f},
+        };
+        std::vector<glm::vec3> lightColors = {
+                {1.0f, 1.0f, 1.0f},
+                {1.0f, 1.0f, 1.0f},
+                {1.0f, 1.0f, 1.0f},
+                {1.0f, 1.0f, 1.0f},
+        };
     };
 }
 
