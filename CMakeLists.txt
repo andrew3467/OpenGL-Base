@@ -34,7 +34,7 @@ set(IMGUI_PATH ${LIB_DIR}/imgui)
 
 #imgui static library
 file(GLOB IMGUI_SOURCES ${IMGUI_PATH}/*.cpp)
-add_library("ImGui" STATIC ${IMGUI_SOURCES} src/tests/Test.h src/tests/TestClearColor.h src/tests/TestClearColor.cpp src/tests/Test.cpp)
+add_library("ImGui" STATIC ${IMGUI_SOURCES})
 
 
 
@@ -83,7 +83,8 @@ add_executable(OpenGl_Base
         ${IMGUI_PATH}/imgui_impl_opengl3.h
         ${IMGUI_PATH}/imgui_impl_opengl3.cpp
         ${IMGUI_PATH}/imgui_impl_opengl3_loader.h
-        ${IMGUI_PATH}/imgui_impl_glfw.cpp src/engine/application.cpp src/engine/application.h src/tests/TestLighting.cpp src/tests/TestLighting.h src/tests/TestTextureMapping.cpp src/tests/TestTextureMapping.h src/tests/TestModelLoading.cpp src/tests/TestModelLoading.h src/engine/Model.cpp src/engine/Model.h src/tests/TestPBR.cpp src/tests/TestPBR.h src/tests/TestInstancedRender.cpp src/tests/TestInstancedRender.h src/tests/TestParticles.cpp src/tests/TestParticles.h src/engine/ParticleEmitter.cpp src/engine/ParticleEmitter.h src/engine/Random.cpp src/engine/Random.h src/tests/TestScene.cpp src/tests/TestScene.h src/engine/Mesh.cpp src/engine/Mesh.h)
+        ${IMGUI_PATH}/imgui_impl_glfw.cpp
+        )
 
 target_link_libraries(OpenGl_Base
         opengl32

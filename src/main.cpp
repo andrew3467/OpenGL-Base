@@ -22,6 +22,9 @@
 #include <iostream>
 
 
+#define DEBUG 1
+
+
 int windowWidth = 1280;
 int windowHeight = 720;
 const char* windowTitle = "OpenGL Base";
@@ -39,6 +42,9 @@ void initGlFW();
 void initGLAD();
 
 void processInput(GLFWwindow* window);
+
+void RunTests();
+void RunSandbox();
 
 void update();
 void tick();
@@ -66,6 +72,29 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
+#if DEBUG
+    RunTests();
+#else
+    RunSandbox();
+#endif
+
+
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+
+    return EXIT_SUCCESS;
+}
+
+void RunSandbox(){
+
+}
+
+void RunTests() {
     test::Test* currentTest = nullptr;
     test::TestMenu* testMenu = new test::TestMenu(currentTest);
     currentTest = testMenu;
@@ -123,7 +152,6 @@ int main() {
     }
     catch (std::exception& e){
         std::cerr << e.what() << "\n";
-        return EXIT_FAILURE;
     }
 
 
@@ -131,16 +159,6 @@ int main() {
         delete testMenu;
     }
     delete currentTest;
-
-
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-
-    glfwDestroyWindow(window);
-    glfwTerminate();
-
-    return EXIT_SUCCESS;
 }
 
 void initGlFW() {
